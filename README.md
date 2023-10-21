@@ -9,10 +9,17 @@ Our team will develop a fitness app for users to create and  save workouts. User
 - Filtering workouts by type, difficulty, and muscles.
 - Creating, saving, and tracking custom workouts.
 
-# User Stories
+# User Stories:
 - Kayla, a fitness beginner, finds suitable workouts.
 - Nicholas sets up his fitness profile.
 - Daniel tracks muscle-specific exercises.
+
+# User Cases:
+- Sign up
+- Log in
+- Search and save a workout
+- Access past workouts
+- Delete user
 
 # Proposed Entities:
 - Client: Username, Password, Experience.
