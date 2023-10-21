@@ -6,6 +6,4 @@ public interface User {
     String getName();
     String getUsername();
     String getPassword();
-    String getWorkoutExperience();
-    LocalDateTime getCreationTime();
 }
