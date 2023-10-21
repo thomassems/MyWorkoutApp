@@ -1,19 +1,15 @@
 package entity;
 
-import java.time.LocalDateTime;
-
-class RegularUser implements User {
+class RegularClient implements Client {
     private final String name;
     private final String username;
     private final String password;
     private final String workoutExperience;
-    private final LocalDateTime creationTime;
-    RegularUser(String name, String username, String password, String workoutExperience, LocalDateTime creationTime) {
+    RegularClient(String name, String username, String password, String workoutExperience) {
         this.name = name;
         this.username = username;
         this.password = password;
-        this. workoutExperience = workoutExperience;
-        this.creationTime = creationTime;
+        this.workoutExperience = workoutExperience;
     }
 
     @Override
@@ -36,8 +32,4 @@ class RegularUser implements User {
         return workoutExperience;
     }
 
-    @Override
-    public LocalDateTime getCreationTime() {
-        return creationTime;
-    }
 }
