@@ -12,7 +12,7 @@ class RegularUser implements User {
         this.name = name;
         this.username = username;
         this.password = password;
-        this. workoutExperience = workoutExperience;
+        this.workoutExperience = workoutExperience;
         this.creationTime = creationTime;
     }
 

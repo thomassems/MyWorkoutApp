@@ -1,0 +1,35 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Client -> SearchView: Client selects exerciseType, muscleGroup, difficulty
+SearchView -> SearchController:
+SearchController -> SearchInputBoundary:
+SearchInputBoundary --> SearchUseCaseInteractor:
+SearchUseCaseInteractor -> SearchDataAccessInterface:
+SearchDataAccessInterface --> SearchDataAccess:
+SearchDataAccess -> SearchDatabaseApi: searchInApi
+SearchDataAccess <- SearchDatabaseApi: retrieveFromApi
+SearchDataAccessInterface <-- SearchDataAccess:
+SearchUseCaseInteractor <-- SearchDataAccessInterface:
+SearchOutputBoundary <-- SearchUseCaseInteractor:
+SearchPresenter <-- SearchOutputBoundary:
+SearchViewModel <-- SearchPresenter:
+SearchView <-- SearchViewModel:
+Client <-- SearchView: Client gets all the exercises
+
+
+
+'Client -> Exercise: searchExercise
+'Client <-- Exercise: saveExercise
+
+
+
+'Alice -> Bob: Authentication Request
+'Bob --> Alice: Authentication Response
+'
+'
+'Alice -> Bob: Another authentication Request
+'Alice <-- Bob: another authentication Response
+@enduml

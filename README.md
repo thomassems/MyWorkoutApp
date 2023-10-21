@@ -19,3 +19,12 @@ Our team will develop a fitness app for users to create and  save workouts. User
 - Workout: ID, Type, Muscle group, Equipment, Difficulty, Instructions.
 - User-Created Workout: Sets, Reps.
 - Fitness Progress/History Tracker: Tracker ID, Username, Progress Logs.
+
+# API:
+- https://api-ninjas.com/api/exercises
+
+# Project Blueprint:
+- https://docs.google.com/presentation/d/1oGg363olvigj77IwsNAJisb0NmsgHAeBxkNnJOlKSR8/edit?usp=sharing
+
+# User Interface:
+![img.png](img.png)
