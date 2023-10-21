@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Client {
+String name
+String username
+String password
+ArrayList<exerciseId>[] clientExercise
+}
+
+class Exercise {
+int exerciseId
+String exerciseType
+String muscleGroup
+String equipment
+String difficulty
+String instructions
+}
+@enduml
