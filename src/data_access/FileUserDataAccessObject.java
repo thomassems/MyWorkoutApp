@@ -64,21 +64,6 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         return accounts.get(username);
     }
 
-    @Override
-    public void clear() {
-        accounts.clear();
-        save();
-    }
-
-    @Override
-    public String getUsers() {
-        String users = "";
-        for (String user: accounts.keySet()) {
-            users += "\n "+user;
-        }
-        return users;
-    }
-
     private void save() {
         BufferedWriter writer;
         try {
