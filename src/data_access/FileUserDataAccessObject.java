@@ -72,7 +72,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
 
             for (User user : accounts.values()) {
                 String line = String.format("%s,%s,%s",
-                        user.getName(), user.getPassword(), user.getCreationTime());
+                        user.getName(), user.getPassword());
                 writer.write(line);
                 writer.newLine();
             }
