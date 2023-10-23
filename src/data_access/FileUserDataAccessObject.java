@@ -25,9 +25,9 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         this.userFactory = userFactory;
 
         csvFile = new File(csvPath);
-        headers.put("username", 0);
-        headers.put("password", 1);
-        headers.put("creation_time", 2);
+        headers.put("name", 0);
+        headers.put("username", 1);
+        headers.put("password", 2);
 
         if (csvFile.length() == 0) {
             save();
@@ -37,16 +37,15 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                 String header = reader.readLine();
 
                 // For later: clean this up by creating a new Exception subclass and handling it in the UI.
-                assert header.equals("username,password,creation_time");
+                assert header.equals("name,username,password");
 
                 String row;
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(",");
+                    String name = String.valueOf(col[headers.get("name")]);
                     String username = String.valueOf(col[headers.get("username")]);
                     String password = String.valueOf(col[headers.get("password")]);
-                    String creationTimeText = String.valueOf(col[headers.get("creation_time")]);
-                    LocalDateTime ldt = LocalDateTime.parse(creationTimeText);
-                    User user = userFactory.create(username, password, ldt);
+                    User user = userFactory.create(name, username, password);
                     accounts.put(username, user);
                 }
             }
