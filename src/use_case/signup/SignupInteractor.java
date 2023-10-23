@@ -1,4 +1,32 @@
 package use_case.signup;
 
-public class SignupInteractor {
+import entity.Client;
+import entity.User;
+import entity.UserFactory;
+
+public class SignupInteractor implements SignupInputBoundary {
+    final UserFactory userFactory;
+    final SignupOutputBoundary presenter;
+    final SignupUserDataAccessInterface userDataAccessObject;
+    public SignupInteractor(SignupUserDataAccessInterface signupUserDataAccessInterface, SignupOutputBoundary signupOutputBoundary, UserFactory userFactory){
+        this.userFactory = userFactory;
+        this.presenter = signupOutputBoundary;
+        this.userDataAccessObject = signupUserDataAccessInterface;
+    }
+
+    @Override
+    public void execute(SignupInputData signupInputData) {
+        if (userDataAccessObject.existsByName(signupInputData.getUsername())) {
+            presenter.prepareFailView("Client already exists.");
+        }
+        else if (signupInputData.getPassword().equals(signupInputData.getRepeatPassword())){
+            presenter.prepareFailView("Passwords don't coincide.");
+        }else{
+            User client = userFactory.create(signupInputData.getName(), signupInputData.getUsername(), signupInputData.getPassword());
+            userDataAccessObject.save(client);
+            SignUpOutputData signUpOutputData = new SignUpOutputData(client.getUsername());
+            presenter.prepareSuccessView(signUpOutputData);
+        }
+    }
 }
+
