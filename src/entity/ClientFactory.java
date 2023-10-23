@@ -1,6 +1,6 @@
 package entity;
 
-class ClientFactory implements UserFactory{
+public class ClientFactory implements UserFactory{
 
     @Override
     public User create(String name, String username, String password) {
