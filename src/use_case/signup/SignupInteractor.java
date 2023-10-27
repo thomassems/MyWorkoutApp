@@ -4,6 +4,8 @@ import entity.Client;
 import entity.User;
 import entity.UserFactory;
 
+import java.util.Objects;
+
 public class SignupInteractor implements SignupInputBoundary {
     final UserFactory userFactory;
     final SignupOutputBoundary presenter;
@@ -19,7 +21,7 @@ public class SignupInteractor implements SignupInputBoundary {
         if (userDataAccessObject.existsByUsername(signupInputData.getUsername())) {
             presenter.prepareFailView("Client already exists.");
         }
-        else if (signupInputData.getPassword().equals(signupInputData.getRepeatPassword())){
+        else if (signupInputData.getPassword().compareTo(signupInputData.getRepeatPassword()) != 0){
             presenter.prepareFailView("Passwords don't coincide.");
         }else{
             User client = userFactory.create(signupInputData.getName(), signupInputData.getUsername(), signupInputData.getPassword());
