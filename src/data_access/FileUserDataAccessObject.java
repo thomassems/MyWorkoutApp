@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-package data_access;
+//package data_access;
 
 import entity.User;
 import entity.UserFactory;
@@ -55,6 +55,11 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                 }
             }
         }}
+
+    public boolean existsByUsername(String username) {
+        return accounts.containsKey(username);
+    }
+
     @Override
     public void save(User user) {
         accounts.put(user.getUsername(), user);
@@ -64,11 +69,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
     public User get(String username) {
         return accounts.get(username);
     }
-    @Override
-    public boolean existsByName(String username) {
 
-        return accounts.containsKey(username);
-    }
     private void save() {
         BufferedWriter writer;
         try {

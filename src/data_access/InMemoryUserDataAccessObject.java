@@ -15,7 +15,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
      * @return whether the user exists
      */
     @Override
-    public boolean existsByName(String identifier) {
+    public boolean existsByUsername(String identifier) {
         return users.containsKey(identifier);
     }
 
@@ -24,7 +24,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
      */
     @Override
     public void save(User user) {
-        users.put(user.getName(), user);
+        users.put(user.getUsername(), user);
     }
 }
 
