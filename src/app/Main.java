@@ -36,7 +36,7 @@ public class Main {
         FileUserDataAccessObject userDataAccessObject;
 
         try {
-            userDataAccessObject = new FileUserDataAccessObject("./users.csv", new ClientFactory());
+            userDataAccessObject = new FileUserDataAccessObject("./users.csv", "./exercises.csv", new ClientFactory());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -20,7 +20,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     public final String viewName = "sign up";
 
     private final SignupViewModel signupViewModel;
-    private final LoginViewModel loginViewModel;
+    //private final LoginViewModel loginViewModel;
 
     private final JTextField nameInputField = new JTextField(15);
     private final JTextField usernameInputField = new JTextField(15);
@@ -30,14 +30,13 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final SignupController signupController;
 
     private final JButton signUp;
-    private final JButton logIn;
+    //private final JButton logIn;
 
     public SignupView(SignupController controller,
-                      SignupViewModel signupViewModel,
-                      LoginViewModel loginViewModel) {
+                      SignupViewModel signupViewModel) {
         this.signupController = controller;
         this.signupViewModel = signupViewModel;
-        this.loginViewModel = loginViewModel;
+        //this.loginViewModel = loginViewModel;
 
         signupViewModel.addPropertyChangeListener(this);
 
@@ -56,8 +55,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         JPanel buttons = new JPanel();
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
-        logIn = new JButton(SignupViewModel.LOGIN_BUTTON_LABEL);
-        buttons.add(logIn);
+        // logIn = new JButton(SignupViewModel.LOGIN_BUTTON_LABEL);
+        // buttons.add(logIn);
 
         signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -77,17 +76,17 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         );
 
 
-        logIn.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(logIn)) {
-                            LoginState currentState = loginViewModel.getState();
-                        }
-
-                    }
-                }
-        );
+//        logIn.addActionListener(
+//                new ActionListener() {
+//                    @Override
+//                    public void actionPerformed(ActionEvent evt) {
+//                        if (evt.getSource().equals(logIn)) {
+//                            LoginState currentState = loginViewModel.getState();
+//                        }
+//
+//                    }
+//                }
+//        );
 
         // This makes a new KeyListener implementing class, instantiates it, and makes it listen to keystrokes in the
         // usernameInputField.

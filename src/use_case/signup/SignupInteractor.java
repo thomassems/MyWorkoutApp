@@ -16,7 +16,7 @@ public class SignupInteractor implements SignupInputBoundary {
 
     @Override
     public void execute(SignupInputData signupInputData) {
-        if (userDataAccessObject.existsByName(signupInputData.getUsername())) {
+        if (userDataAccessObject.existsByUsername(signupInputData.getUsername())) {
             presenter.prepareFailView("Client already exists.");
         }
         else if (signupInputData.getPassword().equals(signupInputData.getRepeatPassword())){
