@@ -1,13 +1,11 @@
 package view;
 
-import interface_adapter.login.LoginState;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -37,19 +35,18 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.searchViewModel.addPropertyChangeListener(this);
         JLabel title = new JLabel("Search Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        LabelTextPanel exerciseTypeInfo = new LabelTextPanel(
-                new JLabel("Exercise Type"), exerciseTypeInputField);
-        LabelTextPanel muscleGroupInfo = new LabelTextPanel(
-                new JLabel("Muscle Group"), muscleGroupInputField);
-        LabelTextPanel difficultyInfo = new LabelTextPanel(
-                new JLabel("Difficulty"), difficultyInputField);
+
+        JLabel exerciseTypeLabel = new JLabel("Exercise Type");
+        JLabel muscleGroupLabel = new JLabel("Muscle Group");
+        JLabel difficultyLabel = new JLabel("Difficulty");
+
         JPanel buttons = new JPanel();
         search = new JButton(searchViewModel.SEARCH_BUTTON_LABEL);
         buttons.add(search);
         cancel = new JButton(searchViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(cancel);
 
-        search.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
+        search.addActionListener(          // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(search)) {
@@ -98,11 +95,14 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
-        this.add(exerciseTypeInfo);
+        this.add(exerciseTypeLabel);
+        this.add(exerciseTypeInputField);
         this.add(exerciseTypeErrorField);
-        this.add(muscleGroupInfo);
+        this.add(muscleGroupLabel);
+        this.add(muscleGroupInputField);
         this.add(muscleGroupErrorField);
-        this.add(difficultyInfo);
+        this.add(difficultyLabel);
+        this.add(difficultyInputField);
         this.add(difficultyErrorField);
         this.add(buttons);
 
