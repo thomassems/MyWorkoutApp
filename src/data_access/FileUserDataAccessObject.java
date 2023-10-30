@@ -134,7 +134,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                 String line = username + ";";
                 ArrayList<Exercise> exerList = exercises.get(username);
                 for (Exercise exer: exerList){
-                    line = String.format("%s,%s,%s;", exer.getTitle(), exer.getMuscle(), exer.getDescription(), exer.getDifficulty());
+                    line = line + String.format("%s,%s,%s, %s;", exer.getTitle(), exer.getMuscle(), exer.getDescription(), exer.getDifficulty());
                 }
                 writer.write(line);
                 writer.newLine();
