@@ -21,27 +21,27 @@ public class SearchPresenter {
     }
     @Override
     public void prepareSuccessView(SearchOutputData response) {
-        // On success, switch to the logged in view.
+        // On success, update the switch view.
         SearchState searchState = searchViewModel.getState();
-        // Gets the state from the LoggedInViewModel in order to make changes.
+        // Gets the state from the SearchViewModel in order to make changes.
         searchState.setExerciseSearchResults(response.getExerciseSearchResults());
-        // Sets the username in the LoggedInState.
+        // Sets the exerciseSearchResults in the SearchState.
         this.searchViewModel.setState(searchState);
-        // Updates the state in the LoggedInViewModel.
-        this.loggedInViewModel.firePropertyChanged();
+        // Updates the state in the SearchViewModel.
+        this.searchViewModel.firePropertyChanged();
         // Notifies observers of the ViewModel change.
-        this.viewManagerModel.setActiveView(loggedInViewModel.getViewName());
+        this.viewManagerModel.setActiveView(searchViewModel.getViewName());
         // Sets the active view in the ViewManagerModel to the logged-in view.
         this.viewManagerModel.firePropertyChanged();
         // Notifies observers of the ViewManagerModel change.
     }
     @Override
     public void prepareFailView(String error) {
-        LoginState loginState = loginViewModel.getState();
-        // Gets the state from the LoginViewModel.
-        loginState.setUsernameError(error);
-        // Sets the username error message in the LoginState.
-        loginViewModel.firePropertyChanged();
+        SearchState searchState = searchViewModel.getState();
+        // Gets the state from the SearchViewModel.
+        searchState.setExerciseSearchResultsError(error);
+        // Sets the username error message in the SearchState.
+        searchViewModel.firePropertyChanged();
         // Notifies observers of the ViewModel change.
     }
 }
