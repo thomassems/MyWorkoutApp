@@ -9,8 +9,8 @@ public class SearchController {
         this.searchUseCaseInteractor = searchUseCaseInteractor;
     }
 
-    public void execute(String name, String muscle, String difficulty) {
-        SearchInputData searchInputData = new SearchInputData(name, muscle, difficulty);
+    public void execute(String type, String muscle, String difficulty) {
+        SearchInputData searchInputData = new SearchInputData(type, muscle, difficulty);
         searchUseCaseInteractor.execute(signupInputData);
     }
 }
