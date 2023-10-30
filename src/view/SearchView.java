@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.login.LoginState;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
@@ -11,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "search";
@@ -46,17 +48,19 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         buttons.add(search);
         cancel = new JButton(searchViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(cancel);
+
         search.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(search)) {
                             SearchState currentState = searchViewModel.getState();
 
-                            searchController.execute(
+                            ArrayList<String> searchQuery = searchController.execute(
                                     currentState.getExerciseType(),
                                     currentState.getMuscleGroup(),
                                     currentState.getDifficulty()
                             );
+                            displaySearchResults(searchQuery);
                         }
                     }
                 }
@@ -101,6 +105,26 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.add(difficultyInfo);
         this.add(difficultyErrorField);
         this.add(buttons);
+
+        JLabel subTitle = new JLabel("Search Result Screen");
+        subTitle.setAlignmentX(CENTER_ALIGNMENT);
+        JPanel buttonsResult = new JPanel();
+    }
+
+    private void displaySearchResults(ArrayList<String> query){
+        buttonsResult.removeAll();
+        for (String result : query) {
+            JButton resultButton = new JButton("Result " + result);
+            resultButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    SearchState currentState = searchViewModel.getState();
+                    currentState.setExercise(exerciseInputField.getText() + e.getKeyChar());
+                    searchViewModel.setState(currentState);
+                }
+            });
+            this.add(resultButton);
+        }
     }
 
     /**
