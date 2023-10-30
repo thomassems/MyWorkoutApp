@@ -1,15 +1,13 @@
 package data_access;
 
-import entity.User;
-import entity.UserFactory;
+import entity.*;
 import use_case.login.LoginUserDataAccessInterface;
+import use_case.search.SearchUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 //package data_access;
 
@@ -24,20 +22,24 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface{
+public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, SearchUserDataAccessInterface {
     private final File accountsFile;
     private final File exerciseFile;
     private UserFactory userFactory;
+    private ExerciseFactory exerciseFactory;
     private final Map<String, User> accounts = new HashMap<>();
+    private final Map<String, ArrayList<Exercise>> exercises = new HashMap<>();
     private final Map<String, Integer> headers = new LinkedHashMap<>();
 
-    public FileUserDataAccessObject(String accountPath, String exercisePath, UserFactory userFactory) throws IOException{
+    public FileUserDataAccessObject(String accountPath, String exercisePath, UserFactory userFactory, ExerciseFactory exerciseFactory) throws IOException{
         this.userFactory = userFactory;
+        this.exerciseFactory = exerciseFactory;
         exerciseFile = new File(exercisePath);
         accountsFile = new File(accountPath);
         headers.put("username", 0);
         headers.put("name", 1);
         headers.put("password", 2);
+
         if (accountsFile.length() == 0) {
             save();
         } else {
@@ -54,7 +56,31 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                     accounts.put(username, user);
                 }
             }
-        }}
+        }if (exerciseFile.length() == 0) {
+            saveExercise();
+        } else {
+            try (BufferedReader reader = new BufferedReader(new FileReader(exerciseFile))) {
+                String header2 = reader.readLine();
+                String row;
+                while ((row = reader.readLine()) != null) {
+                    String[] col = row.split(";");
+                    String name = "";
+                    ArrayList<Exercise> exerciselist = new ArrayList<>();
+                    for (String i: col){
+                        String[] element = i.split(",");
+                        if (element.length == 1){
+                            name = element[0];
+                        }
+                        else{
+                            Exercise a = exerciseFactory.create(element[0], element[1], element[2], element[3]);
+                            exerciselist.add(a);
+                        }
+                    }
+                    exercises.put(name, exerciselist);
+                }
+            }
+        }
+    }
 
     public boolean existsByUsername(String username) {
         return accounts.containsKey(username);
@@ -90,21 +116,29 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
             throw new RuntimeException(e);
         }
     }
-    private void saveExercise() {
-        //needs to be modified
+    private void saveExercise(String username,String title, String muscle, String description, String difficulty) {
+        if (!exercises.containsKey(username)){
+            exercises.put(username, new ArrayList<Exercise>());
+        }
+        exercises.get(username).add(exerciseFactory.create(title, muscle, description, difficulty));
+        this.saveExercise();
+    }
+    public void saveExercise(){
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new FileWriter(exerciseFile));
-            writer.write(String.join(",", headers.keySet()));
+            writer.write("username; exercises(title, muscle, description, difficulty)");
             writer.newLine();
 
-            for (User user : accounts.values()) {
-                String line = String.format("%s,%s,%s",
-                        user.getName(), user.getName(), user.getPassword());
+            for (String username : exercises.keySet()) {
+                String line = username + ";";
+                ArrayList<Exercise> exerList = exercises.get(username);
+                for (Exercise exer: exerList){
+                    line = String.format("%s,%s,%s;", exer.getTitle(), exer.getMuscle(), exer.getDescription(), exer.getDifficulty());
+                }
                 writer.write(line);
                 writer.newLine();
             }
-
             writer.close();
 
         } catch (IOException e) {
