@@ -8,6 +8,8 @@ import interface_adapter.login.LoginViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
 
+import java.util.ArrayList;
+
 public class SearchPresenter {
     private final SearchViewModel searchViewModel;
     // Creates a private field for the SearchViewModel.
@@ -36,11 +38,11 @@ public class SearchPresenter {
         // Notifies observers of the ViewManagerModel change.
     }
     @Override
-    public void prepareFailView(String error) {
+    public void prepareFailView(ArrayList<ArrayList<String>> error) {
         SearchState searchState = searchViewModel.getState();
         // Gets the state from the SearchViewModel.
         searchState.setExerciseSearchResultsError(error);
-        // Sets the username error message in the SearchState.
+        // Sets the exercise error message in the SearchState.
         searchViewModel.firePropertyChanged();
         // Notifies observers of the ViewModel change.
     }

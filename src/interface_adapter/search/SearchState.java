@@ -7,26 +7,30 @@ import java.util.ArrayList;
 
 public class SearchState {
     // Initialize private member variable for list of exercise results
-    private ArrayList<ArrayList<String>> searchExerciseResults = new ArrayList<ArrayList<String>>();
-    private ArrayList<ArrayList<String>> searchExerciseResultsError = null;
+    private ArrayList<ArrayList<String>> exerciseSearchResults = new ArrayList<ArrayList<String>>();
+    private ArrayList<ArrayList<String>> exerciseSearchResultsError = null;
 
     // Copy constructor for creating a new LoginState instance as a copy of another LoginState
     public SearchState(SearchState copy) {
         // Copy the values of the username, usernameError, password, and passwordError from the provided 'copy' instance
-        searchExerciseResults = copy.searchExerciseResults;
+        exerciseSearchResults = copy.exerciseSearchResults;
     }
     // Default constructor to create an empty LoginState (required due to the presence of a copy constructor)
     public SearchState() {}
-    // Getter methods to retrieve the values of username, usernameError, password, and passwordError
+    // Getter methods to retrieve the values of exerciseSearchResults
     public ArrayList<ArrayList<String>> getSearchExerciseResults() {
-        return searchExerciseResults;
+        return exerciseSearchResults;
     }
 
-    // Setter methods to set the values of username, usernameError, password, and passwordError
-    public void setSearchExerciseResults(ArrayList<ArrayList<String>> searchExerciseResults) {
-        this.searchExerciseResults = searchExerciseResults;
+    public ArrayList<ArrayList<String>> getExerciseSearchResults() {
+        return exerciseSearchResults;
     }
-    public void setSearchExerciseResultsError(ArrayList<ArrayList<String>> searchExerciseResultsError) {
-        this.searchExerciseResultsError = searchExerciseResultsError;
+
+    // Setter methods to set the values of exerciseSearchResults
+    public void setExerciseSearchResults(ArrayList<ArrayList<String>> searchExerciseResults) {
+        this.exerciseSearchResults = searchExerciseResults;
+    }
+    public void setExerciseSearchResultsError(ArrayList<ArrayList<String>> searchExerciseResultsError) {
+        this.exerciseSearchResultsError = searchExerciseResultsError;
     }
 }
