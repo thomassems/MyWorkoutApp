@@ -1,6 +1,5 @@
 package app;
 
-import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
@@ -24,21 +23,19 @@ public class SignupUseCaseFactory {
 
     public static SignupView create(
             ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, SignupUserDataAccessInterface userDataAccessObject) {
-
         try {
             SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject);
-            LoginController loginController = null;
-            return new SignupView(signupController, signupViewModel, loginController, loginViewModel);
+            return new SignupView(signupController, signupViewModel, loginViewModel, viewManagerModel);
+
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
 
+
         return null;
     }
-
     private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, SignupUserDataAccessInterface userDataAccessObject) throws IOException {
 
-        // Notice how we pass this method's parameters to the Presenter.
         SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
 
         UserFactory userFactory = new ClientFactory();
@@ -48,5 +45,4 @@ public class SignupUseCaseFactory {
 
         return new SignupController(userSignupInteractor);
     }
-
 }
