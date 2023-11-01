@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
@@ -18,9 +19,10 @@ import java.beans.PropertyChangeListener;
 
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "sign up";
+    private ViewManagerModel viewManagerModel;
 
     private final SignupViewModel signupViewModel;
-    //private final LoginViewModel loginViewModel;
+    private LoginViewModel loginViewModel = null;
 
     private final JTextField nameInputField = new JTextField(15);
     private final JTextField usernameInputField = new JTextField(15);
@@ -28,15 +30,17 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
 
     private final SignupController signupController;
+    private  final LoginController loginController;
 
     private final JButton signUp;
-    //private final JButton logIn;
+    private final JButton logIn;
 
     public SignupView(SignupController controller,
-                      SignupViewModel signupViewModel) {
+                      SignupViewModel signupViewModel, LoginController loginController, LoginViewModel loginViewModel) {
         this.signupController = controller;
         this.signupViewModel = signupViewModel;
-        //this.loginViewModel = loginViewModel;
+        this.loginController = loginController;
+        this.loginViewModel = loginViewModel;
 
         signupViewModel.addPropertyChangeListener(this);
 
@@ -55,8 +59,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         JPanel buttons = new JPanel();
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
-        // logIn = new JButton(SignupViewModel.LOGIN_BUTTON_LABEL);
-        // buttons.add(logIn);
+        logIn = new JButton(SignupViewModel.LOGIN_BUTTON_LABEL);
+        buttons.add(logIn);
 
         signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -76,17 +80,16 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         );
 
 
-//        logIn.addActionListener(
-//                new ActionListener() {
-//                    @Override
-//                    public void actionPerformed(ActionEvent evt) {
-//                        if (evt.getSource().equals(logIn)) {
-//                            LoginState currentState = loginViewModel.getState();
-//                        }
-//
-//                    }
-//                }
-//        );
+        logIn.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(logIn)) {
+                            LoginState loginState = loginViewModel.getState();
+                        }
+                    }
+                }
+        );
 
         // This makes a new KeyListener implementing class, instantiates it, and makes it listen to keystrokes in the
         // usernameInputField.
@@ -181,11 +184,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.add(repeatPasswordInfo);
         this.add(buttons);
     }
-
-    /**
-     * React to a button click that results in evt.
-     */
-
+    
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         SignupState state = (SignupState) evt.getNewValue();
@@ -195,5 +194,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {}
+    public void actionPerformed(ActionEvent e) {
+
+    }
 }
