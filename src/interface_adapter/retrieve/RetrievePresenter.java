@@ -25,7 +25,7 @@ public class RetrievePresenter {
         // On success, switch to the logged in view.
         RetrieveState retrieveState = retrieveViewModel.getState();
         // Gets the state from the LoggedInViewModel in order to make changes.
-        RetrieveState.setExercises(response.getExercises());
+        RetrieveState.setSavedExercises(response.getSavedExercises());
         // Sets the username in the LoggedInState.
         this.retrieveViewModel.setState(retrieveState);
         // Updates the state in the LoggedInViewModel.
@@ -40,7 +40,7 @@ public class RetrievePresenter {
     public void prepareFailView(String error) {
         RetrieveState loginState = retrieveViewModel.getState();
         // Gets the state from the LoginViewModel.
-        loginState.setExercisesError(error);
+        retrieveState.setSavedExercisesError(error);
         // Sets the username error message in the LoginState.
         retrieveViewModel.firePropertyChanged();
         // Notifies observers of the ViewModel change.
