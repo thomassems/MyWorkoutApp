@@ -9,7 +9,7 @@ import java.beans.PropertyChangeSupport;
 public class RetrieveViewModel extends ViewModel {
 
     public static final String TITLE_LABEL = "Saved Exercises";
-    public static final String EXERCISE_LABEL = "Saved exercises";
+    public static final String SAVED_EXERCISES_LABEL = "Saved exercises";
     public static final String RETURN_BUTTON_LABEL = "Cancel";
 
     private RetrieveState state = new RetrieveState();

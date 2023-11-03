@@ -10,7 +10,7 @@ public class RetrieveController {
     }
 
     public void execute(String username) {
-        RetrieveInputData retrieveInputData = new SearchInputData(username);
+        RetrieveInputData retrieveInputData = new RetrieveInputData(username);
         retrieveUseCaseInteractor.execute(retrieveInputData);
     }
 }

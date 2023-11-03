@@ -8,10 +8,10 @@ import use_case.login.LoginUserDataAccessInterface;
 
 public class RetrieveInteractor {
     final RetrieveUserDataAccessInterface userDataAccessObject;
-    final RetrieveOutputBoundary searchPresenter;
+    final RetrieveOutputBoundary retrievePresenter;
 
     public RetrieveInteractor(RetrieveUserDataAccessInterface userDataAccessInterface,
-                           LoginOutputBoundary loginOutputBoundary) {
+                           RetrieveOutputBoundary retrieveOutputBoundary) {
         this.userDataAccessObject = userDataAccessInterface;
         this.retrievePresenter = retrieveOutputBoundary;
     }

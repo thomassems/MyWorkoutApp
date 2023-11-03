@@ -1,11 +1,8 @@
 package interface_adapter.retrieve;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.logged_in.LoggedInState;
-import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.login.LoginState;
-import interface_adapter.login.LoginViewModel;
-import use_case.login.LoginOutputData;
+
+import java.util.ArrayList;
 
 public class RetrievePresenter {
     // Creates a private field for the LoginViewModel.
@@ -37,8 +34,8 @@ public class RetrievePresenter {
         // Notifies observers of the ViewManagerModel change.
     }
     @Override
-    public void prepareFailView(String error) {
-        RetrieveState loginState = retrieveViewModel.getState();
+    public void prepareFailView(ArrayList<ArrayList<String>> error) {
+        RetrieveState retrieveState = retrieveViewModel.getState();
         // Gets the state from the LoginViewModel.
         retrieveState.setSavedExercisesError(error);
         // Sets the username error message in the LoginState.
