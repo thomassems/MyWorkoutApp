@@ -5,6 +5,7 @@ import entity.ClientFactory;
 import entity.ExerciseFactory;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.search.SearchViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.login.LoginUserDataAccessInterface;
@@ -48,7 +49,11 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
+        // Create an isntance of SearchViewModel
+        SearchViewModel searchViewModel = new SearchViewModel();
+
+        // Create a LoggedInView
+        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, viewManagerModel, searchViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
