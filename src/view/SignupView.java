@@ -1,7 +1,6 @@
 package view;
 
-import interface_adapter.login.LoginController;
-import interface_adapter.login.LoginState;
+import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupState;
@@ -18,9 +17,11 @@ import java.beans.PropertyChangeListener;
 
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "sign up";
+    private final ViewManagerModel viewManagerModel;
 
     private final SignupViewModel signupViewModel;
-    //private final LoginViewModel loginViewModel;
+
+    private final LoginViewModel loginViewModel;
 
     private final JTextField nameInputField = new JTextField(15);
     private final JTextField usernameInputField = new JTextField(15);
@@ -30,13 +31,14 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final SignupController signupController;
 
     private final JButton signUp;
-    //private final JButton logIn;
+    private final JButton logIn;
 
-    public SignupView(SignupController controller,
-                      SignupViewModel signupViewModel) {
+    public SignupView(SignupController controller, SignupViewModel signupViewModel, LoginViewModel loginViewModel, ViewManagerModel viewManagerModel) {
         this.signupController = controller;
         this.signupViewModel = signupViewModel;
-        //this.loginViewModel = loginViewModel;
+        this.loginViewModel = loginViewModel;
+        this.viewManagerModel = viewManagerModel;
+
 
         signupViewModel.addPropertyChangeListener(this);
 
@@ -55,8 +57,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         JPanel buttons = new JPanel();
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
-        // logIn = new JButton(SignupViewModel.LOGIN_BUTTON_LABEL);
-        // buttons.add(logIn);
+        logIn = new JButton(SignupViewModel.LOGIN_BUTTON_LABEL);
+        buttons.add(logIn);
+
 
         signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -75,18 +78,19 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 }
         );
 
-
-//        logIn.addActionListener(
-//                new ActionListener() {
-//                    @Override
-//                    public void actionPerformed(ActionEvent evt) {
-//                        if (evt.getSource().equals(logIn)) {
-//                            LoginState currentState = loginViewModel.getState();
-//                        }
-//
-//                    }
-//                }
-//        );
+        logIn.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        // Check if button is clicked.
+                        if (evt.getSource().equals(logIn)) {
+                            // Set the active view of the viewManagerModel to the login view.
+                            viewManagerModel.setActiveView(loginViewModel.getViewName());
+                            // view switch trigger
+                            viewManagerModel.firePropertyChanged();
+                        }
+                    }
+                });
 
         // This makes a new KeyListener implementing class, instantiates it, and makes it listen to keystrokes in the
         // usernameInputField.
@@ -182,10 +186,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.add(buttons);
     }
 
-    /**
-     * React to a button click that results in evt.
-     */
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         SignupState state = (SignupState) evt.getNewValue();
@@ -195,5 +195,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {}
+    public void actionPerformed(ActionEvent e) {
+
+    }
 }
