@@ -7,6 +7,7 @@ import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
+import use_case.search.SearchOutputBoundary;
 import use_case.search.SearchOutputData;
 
 import java.util.ArrayList;
