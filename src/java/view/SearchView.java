@@ -30,6 +30,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     final JButton cancel;
     private final SearchController searchController;
 
+    private JPanel searchResultPanel;  // Create a panel to contain the search results
+
     public SearchView(SearchViewModel searchViewModel, SearchController controller) {
         this.searchController = controller;
         this.searchViewModel = searchViewModel;
@@ -47,6 +49,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         cancel = new JButton(searchViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(cancel);
 
+        searchResultPanel = new JPanel(); // Initialize the panel for search results
+        searchResultPanel.setLayout(new BoxLayout(searchResultPanel, BoxLayout.Y_AXIS)); // Set layout for search results panel
 
         search.addActionListener(          // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
@@ -108,6 +112,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.add(difficultyInputField);
         this.add(difficultyErrorField);
         this.add(buttons);
+        this.add(searchResultPanel); // Add the search results panel to the main view
 
         JLabel subTitle = new JLabel("Search Result Screen");
         subTitle.setAlignmentX(CENTER_ALIGNMENT);
@@ -131,14 +136,19 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 //    }
 
     private void displaySearchResults(ArrayList<String> query) {
+        searchResultPanel.removeAll(); // Clear previous search results
         for (String result : query) {
             JButton resultButton = new JButton("Result " + result);
             resultButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    // Handle the result button click here if needed ?? check
                 }
             });
+            searchResultPanel.add(resultButton); // Add result button to the search results panel
         }
+        searchResultPanel.revalidate(); // Update the layout
+        searchResultPanel.repaint(); // Repaint the panel
     }
 
     /**
