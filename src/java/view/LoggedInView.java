@@ -4,6 +4,7 @@ import interface_adapter.delete.DeleteController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.search.SearchViewModel;
+import interface_adapter.search.SearchController;
 import interface_adapter.ViewManagerModel;
 
 import javax.swing.*;
@@ -12,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
 
 public class LoggedInView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -21,6 +21,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final ViewManagerModel viewManagerModel;
     private final SearchViewModel searchViewModel;
 
+
     JLabel username;
     final JButton logOut;
     final JButton searchButton;
@@ -28,12 +29,14 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     final JButton delete;
     JLabel user;
 
-    public LoggedInView(LoggedInViewModel loggedInViewModel, ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, DeleteController deleteController) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel,
+                        ViewManagerModel viewManagerModel,
+                        SearchViewModel searchViewModel,
+                        DeleteController deleteController) {
         this.loggedInViewModel = loggedInViewModel;
         this.viewManagerModel = viewManagerModel;
         this.searchViewModel = searchViewModel;
         this.deleteController = deleteController;
-
 
         this.loggedInViewModel.addPropertyChangeListener(this);
 
@@ -42,6 +45,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
         JLabel usernameInfo = new JLabel("Currently logged in: ");
         user = new JLabel();
+
         JLabel userInfo = new JLabel("Account: ");
         username = new JLabel();
 
@@ -52,6 +56,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         // Create a button for searching
         searchButton = new JButton("Search");
         buttons.add(searchButton);
+
         delete = new JButton("Delete User");
         buttons.add(delete);
 
@@ -65,17 +70,19 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                     }
                 }
         );
+
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(searchButton)) {
+
                     // Switch to the SearchView
                     viewManagerModel.setActiveView(searchViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
+                    System.out.println("Active view set to: " + searchViewModel.getViewName());
                 }
             }
         });
-
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
@@ -92,6 +99,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println("Property changed: " + evt.getPropertyName());
         LoggedInState state = (LoggedInState) evt.getNewValue();
         username.setText(state.getUsername());
         user.setText(state.getUser());

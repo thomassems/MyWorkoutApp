@@ -13,7 +13,6 @@ import interface_adapter.ViewManagerModel;
 import use_case.delete.DeleteInputBoundary;
 import use_case.delete.DeleteInteractor;
 import use_case.delete.DeleteOutputBoundary;
-import use_case.login.LoginUserDataAccessInterface;
 import view.LoggedInView;
 import view.LoginView;
 import view.SignupView;
@@ -39,6 +38,7 @@ public class Main {
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
+        SearchViewModel searchViewModel = new SearchViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
 
@@ -54,13 +54,11 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-        // Create an isntance of SearchViewModel
-        SearchViewModel searchViewModel = new SearchViewModel();
-
         // Create a LoggedInView
         DeleteOutputBoundary deletepresenter = new DeletePresenter(signupViewModel, viewManagerModel);
         DeleteInputBoundary deleteInteractor = new DeleteInteractor(userDataAccessObject, deletepresenter);
         DeleteController deleteController = new DeleteController(deleteInteractor);
+
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel, viewManagerModel, searchViewModel, deleteController);
         views.add(loggedInView, loggedInView.viewName);
 

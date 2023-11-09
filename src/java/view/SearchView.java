@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
@@ -68,7 +69,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
-//                            displaySearchResults(searchQuery);
                         }
                     }
                 }
