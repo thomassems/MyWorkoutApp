@@ -13,8 +13,8 @@ public class SearchController {
         this.searchUseCaseInteractor = searchUseCaseInteractor;
     }
 
-    public void execute(String type, String muscle, String difficulty) throws IOException {
-        SearchInputData searchInputData = new SearchInputData(type, muscle, difficulty);
+    public void execute(String exerciseType, String muscleGroup, String difficulty) throws IOException {
+        SearchInputData searchInputData = new SearchInputData(exerciseType, muscleGroup, difficulty);
         searchUseCaseInteractor.execute(searchInputData);
     }
 }
