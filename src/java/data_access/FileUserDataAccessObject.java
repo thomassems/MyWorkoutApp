@@ -1,11 +1,17 @@
 package data_access;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.*;
+import use_case.delete.DeleteUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.search.SearchUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -22,7 +28,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, SearchUserDataAccessInterface {
+public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, SearchUserDataAccessInterface, DeleteUserDataAccessInterface {
     private final File accountsFile;
     private final File exerciseFile;
     private UserFactory userFactory;
@@ -141,6 +147,58 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
             }
             writer.close();
 
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void delete(String username) {
+        accounts.remove(username);
+        save();
+        if (exercises.containsKey(username)){
+            exercises.remove(username);
+            saveExercise();
+        }
+    }
+    @Override
+    public JsonNode getApi(String type, String muscle, String difficulty) {
+        String apiKey = "KE8a7QjrGwSZ2jx3+4URNg==aPNxCl8ULpu4Trvb";
+
+        StringBuilder apiUrl = new StringBuilder("https://api.api-ninjas.com/v1/exercises?");
+
+        if (type != null){
+            apiUrl.append(String.format("type=%s&", type));
+        }
+        if (muscle != null){
+            apiUrl.append(String.format("muscle=%s&", muscle));
+        }
+        if (difficulty != null) {
+            apiUrl.append(String.format("difficulty=%s&", difficulty));
+        }
+        URL url = null;
+        try {
+            url = new URL(apiUrl.toString());
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        connection.setRequestProperty("Accept", "application/json");
+        connection.addRequestProperty("X-Api-Key", apiKey);
+        InputStream responseStream = null;
+        try {
+            responseStream = connection.getInputStream();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.readTree(responseStream);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

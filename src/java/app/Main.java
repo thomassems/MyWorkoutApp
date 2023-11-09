@@ -3,11 +3,16 @@ package app;
 import data_access.FileUserDataAccessObject;
 import entity.ClientFactory;
 import entity.ExerciseFactory;
+import interface_adapter.delete.DeleteController;
+import interface_adapter.delete.DeletePresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.search.SearchViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
+import use_case.delete.DeleteInputBoundary;
+import use_case.delete.DeleteInteractor;
+import use_case.delete.DeleteOutputBoundary;
 import use_case.login.LoginUserDataAccessInterface;
 import view.LoggedInView;
 import view.LoginView;
@@ -53,7 +58,10 @@ public class Main {
         SearchViewModel searchViewModel = new SearchViewModel();
 
         // Create a LoggedInView
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, viewManagerModel, searchViewModel);
+        DeleteOutputBoundary deletepresenter = new DeletePresenter(signupViewModel, viewManagerModel);
+        DeleteInputBoundary deleteInteractor = new DeleteInteractor(userDataAccessObject, deletepresenter);
+        DeleteController deleteController = new DeleteController(deleteInteractor);
+        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, viewManagerModel, searchViewModel, deleteController);
         views.add(loggedInView, loggedInView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);

@@ -29,6 +29,7 @@ public class LoginPresenter implements LoginOutputBoundary {
         LoggedInState loggedInState = loggedInViewModel.getState();
         // Gets the state from the LoggedInViewModel in order to make changes.
         loggedInState.setUsername(response.getUsername());
+        loggedInState.setUser(response.getUser());
         // Sets the username in the LoggedInState.
         this.loggedInViewModel.setState(loggedInState);
         // Updates the state in the LoggedInViewModel.

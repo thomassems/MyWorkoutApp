@@ -19,28 +19,7 @@ public class SearchInteractor implements SearchInputBoundary {
 
     @Override
     public void execute(SearchInputData searchInputData) throws IOException {
-        String apiKey = "KE8a7QjrGwSZ2jx3+4URNg==aPNxCl8ULpu4Trvb"; // Replace with your actual API key
-
-        StringBuilder apiUrl = new StringBuilder("https://api.api-ninjas.com/v1/exercises?");
-
-        if (searchInputData.getWorkoutType() != null){
-            apiUrl.append(String.format("type=%s&",searchInputData.getWorkoutType()));
-        }
-        if (searchInputData.getMuscleGroup() != null){
-            apiUrl.append(String.format("muscle=%s&", searchInputData.getMuscleGroup()));
-        }
-        if (searchInputData.getDifficulty() != null) {
-            apiUrl.append(String.format("difficulty=%s&",searchInputData.getDifficulty()));
-        }
-        URL url = new URL(apiUrl.toString());
-
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestProperty("Accept", "application/json");
-        connection.addRequestProperty("X-Api-Key", apiKey);
-        InputStream responseStream = connection.getInputStream();
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode root = mapper.readTree(responseStream);
-
+        JsonNode root = userDataAccessObject.getApi(searchInputData.getWorkoutType(), searchInputData.getMuscleGroup(), searchInputData.getDifficulty());
         if (root == null) {
             ArrayList<ArrayList<String>> errorArr = new ArrayList<>();
             ArrayList<String> stringArr = new ArrayList<>();
