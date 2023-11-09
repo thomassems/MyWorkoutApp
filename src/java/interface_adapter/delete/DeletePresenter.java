@@ -9,12 +9,15 @@ import use_case.delete.DeleteOutputData;
 
 public class DeletePresenter implements DeleteOutputBoundary {
     private final SignupViewModel signUpViewModel;
+    private final ViewManagerModel viewManagerModel;
 
-    public DeletePresenter(SignupViewModel signUpViewModel){
+    public DeletePresenter(SignupViewModel signUpViewModel, ViewManagerModel viewManagerModel){
         this.signUpViewModel = signUpViewModel;
+        this.viewManagerModel = viewManagerModel;
     }
     @Override
     public void prepareSuccessViews(DeleteOutputData data){
+        viewManagerModel.setActiveView(signUpViewModel.getViewName());
         signUpViewModel.firePropertyChanged();
     }
 
