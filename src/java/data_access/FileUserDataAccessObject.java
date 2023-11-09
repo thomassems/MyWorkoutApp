@@ -1,6 +1,7 @@
 package data_access;
 
 import entity.*;
+import use_case.delete.DeleteUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.search.SearchUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, SearchUserDataAccessInterface {
+public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, SearchUserDataAccessInterface, DeleteUserDataAccessInterface {
     private final File accountsFile;
     private final File exerciseFile;
     private UserFactory userFactory;
@@ -143,6 +144,16 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
 
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void delete(String username) {
+        accounts.remove(username);
+        save();
+        if (exercises.containsKey(username)){
+            exercises.remove(username);
+            saveExercise();
         }
     }
 }
