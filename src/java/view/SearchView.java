@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -58,12 +59,16 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         if (evt.getSource().equals(search)) {
                             SearchState currentState = searchViewModel.getState();
 
-                            ArrayList<String> searchQuery = searchController.execute(
-                                    currentState.getExerciseType(),
-                                    currentState.getMuscleGroup(),
-                                    currentState.getDifficulty()
-                            );
-                            displaySearchResults(searchQuery);
+                            try {
+                                searchController.execute(
+                                        currentState.getExerciseType(),
+                                        currentState.getMuscleGroup(),
+                                        currentState.getDifficulty()
+                                );
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+//                            displaySearchResults(searchQuery);
                         }
                     }
                 }
