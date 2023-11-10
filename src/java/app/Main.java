@@ -59,7 +59,8 @@ public class Main {
         DeleteInputBoundary deleteInteractor = new DeleteInteractor(userDataAccessObject, deletepresenter);
         DeleteController deleteController = new DeleteController(deleteInteractor);
 
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, viewManagerModel, searchViewModel, deleteController);
+
+        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, viewManagerModel, signupViewModel, searchViewModel, deleteController);
         views.add(loggedInView, loggedInView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);

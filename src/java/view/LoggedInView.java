@@ -6,6 +6,7 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.search.SearchViewModel;
 import interface_adapter.search.SearchController;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.signup.SignupViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,8 +20,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     public final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
     private final ViewManagerModel viewManagerModel;
+    private final SignupViewModel signupViewModel;
     private final SearchViewModel searchViewModel;
-
 
     JLabel username;
     final JButton logOut;
@@ -31,10 +32,12 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
     public LoggedInView(LoggedInViewModel loggedInViewModel,
                         ViewManagerModel viewManagerModel,
+                        SignupViewModel signupViewModel,
                         SearchViewModel searchViewModel,
                         DeleteController deleteController) {
         this.loggedInViewModel = loggedInViewModel;
         this.viewManagerModel = viewManagerModel;
+        this.signupViewModel = signupViewModel;
         this.searchViewModel = searchViewModel;
         this.deleteController = deleteController;
 
@@ -50,6 +53,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         username = new JLabel();
 
         JPanel buttons = new JPanel();
+
         logOut = new JButton(loggedInViewModel.LOGOUT_BUTTON_LABEL);
         buttons.add(logOut);
 
@@ -60,7 +64,19 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         delete = new JButton("Delete User");
         buttons.add(delete);
 
-        logOut.addActionListener(this);
+        logOut.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(logOut)) {
+
+                    // Switch to the SignupView
+                    viewManagerModel.setActiveView(signupViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
+                    System.out.println("Active view set to: " + signupViewModel.getViewName());
+                }
+            }
+        }
+        );;
+
         delete.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
