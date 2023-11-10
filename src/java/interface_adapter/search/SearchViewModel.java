@@ -8,17 +8,18 @@ import java.beans.PropertyChangeSupport;
 
 public class SearchViewModel extends ViewModel {
 
+
     public static final String TITLE_LABEL = "Search Exercise";
-    public static final String NAME_LABEL = "Exercise Name";
-    public static final String MUSCLE_LABEL = "Select muscle";
-    public static final String DIFFICULTY_LABEL = "Select difficulty";
+    public static final String EXERCISE_LABEL = "Exercise Type";
+    public static final String MUSCLE_LABEL = "Muscle Group";
+    public static final String DIFFICULTY_LABEL = "Difficulty";
     public static final String SEARCH_BUTTON_LABEL = "Search";
     public static final String CANCEL_BUTTON_LABEL = "Cancel";
 
     private SearchState state = new SearchState();
 
     public SearchViewModel() {
-        super("search exercises");
+        super("search");
     }
 
     public void setState(SearchState state) {

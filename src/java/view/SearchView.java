@@ -1,6 +1,9 @@
 package view;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.logged_in.LoggedInState;
+import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.login.LoginViewModel;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
@@ -18,6 +21,8 @@ import java.util.ArrayList;
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "search";
     private final SearchViewModel searchViewModel;
+    private final ViewManagerModel viewManagerModel;
+    private final LoggedInViewModel loggedInViewModel;
 
     final JComboBox<String> exerciseTypeInputField = new JComboBox<String>();
     private final JLabel exerciseTypeErrorField = new JLabel();
@@ -34,16 +39,22 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     private JPanel searchResultPanel;  // Create a panel to contain the search results
 
-    public SearchView(SearchViewModel searchViewModel, SearchController controller) {
+    public SearchView(SearchViewModel searchViewModel,
+                      SearchController controller,
+                      ViewManagerModel viewManagerModel,
+                      LoggedInViewModel loggedInViewModel) {
         this.searchController = controller;
         this.searchViewModel = searchViewModel;
+        this.viewManagerModel = viewManagerModel;
+        this.loggedInViewModel = loggedInViewModel;
         this.searchViewModel.addPropertyChangeListener(this);
-        JLabel title = new JLabel("Search Screen");
+
+        JLabel title = new JLabel(SearchViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel exerciseTypeLabel = new JLabel("Exercise Type");
-        JLabel muscleGroupLabel = new JLabel("Muscle Group");
-        JLabel difficultyLabel = new JLabel("Difficulty");
+        JLabel exerciseTypeLabel = new JLabel(SearchViewModel.EXERCISE_LABEL);
+        JLabel muscleGroupLabel = new JLabel(SearchViewModel.MUSCLE_LABEL);
+        JLabel difficultyLabel = new JLabel(SearchViewModel.DIFFICULTY_LABEL);
 
         JPanel buttons = new JPanel();
         search = new JButton(searchViewModel.SEARCH_BUTTON_LABEL);
@@ -73,7 +84,18 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                     }
                 }
         );
-        cancel.addActionListener(this);
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                if (evt.getSource().equals(cancel)) {
+
+                    // Switch to the SearchView
+                    viewManagerModel.setActiveView(loggedInViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
+                    System.out.println("Active view set to: " + loggedInViewModel.getViewName());
+                }
+            }
+        });
 
         exerciseTypeInputField.addActionListener(new ActionListener() {
             @Override
@@ -165,6 +187,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println("Property changed: " + evt.getPropertyName());
         SearchState state = (SearchState) evt.getNewValue();
         setFields(state);
     }
