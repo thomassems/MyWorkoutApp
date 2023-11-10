@@ -145,4 +145,8 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
             throw new RuntimeException(e);
         }
     }
+
+    public ArrayList<Exercise> getExercises(String username) {
+            return exercises.get(username);
+    }
 }
