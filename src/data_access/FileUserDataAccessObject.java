@@ -4,6 +4,7 @@ import entity.*;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.search.SearchUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
+import use_case.retrieve.RetrieveUserDataAccessInterface;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, SearchUserDataAccessInterface {
+public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, SearchUserDataAccessInterface, RetrieveUserDataAccessInterface {
     private final File accountsFile;
     private final File exerciseFile;
     private UserFactory userFactory;
@@ -146,6 +147,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         }
     }
 
+    @Override
     public ArrayList<Exercise> getExercises(String username) {
             return exercises.get(username);
     }
