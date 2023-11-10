@@ -57,7 +57,7 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject, signupViewModel);
         views.add(loginView, loginView.viewName);
 
-        SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, userDataAccessObject);
+        SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, loggedInViewModel, userDataAccessObject);
         views.add(searchView, searchView.viewName);
 
         // Create a LoggedInView

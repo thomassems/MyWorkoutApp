@@ -24,11 +24,12 @@ public class SearchUseCaseFactory {
     public static SearchView create(
             ViewManagerModel viewManagerModel,
             SearchViewModel searchViewModel,
+            LoggedInViewModel loggedInViewModel,
             SearchUserDataAccessInterface userDataAccessObject) {
 
         try {
             SearchController searchController = createSearchUseCase(viewManagerModel, searchViewModel, userDataAccessObject);
-            return new SearchView(searchViewModel, searchController);
+            return new SearchView(searchViewModel, searchController, viewManagerModel, loggedInViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open search data.");
         }
