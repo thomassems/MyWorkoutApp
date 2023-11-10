@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.delete.DeleteController;
+import interface_adapter.delete.DeleteViewModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.search.SearchViewModel;
@@ -22,10 +23,11 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final ViewManagerModel viewManagerModel;
     private final SignupViewModel signupViewModel;
     private final SearchViewModel searchViewModel;
+//    private final DeleteViewModel deleteViewModel;
 
     JLabel username;
     final JButton logOut;
-    final JButton searchButton;
+    final JButton search;
     private final DeleteController deleteController;
     final JButton delete;
     JLabel user;
@@ -34,11 +36,13 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                         ViewManagerModel viewManagerModel,
                         SignupViewModel signupViewModel,
                         SearchViewModel searchViewModel,
+//                        DeleteViewModel deleteViewModel,
                         DeleteController deleteController) {
         this.loggedInViewModel = loggedInViewModel;
         this.viewManagerModel = viewManagerModel;
         this.signupViewModel = signupViewModel;
         this.searchViewModel = searchViewModel;
+//        this.deleteViewModel = deleteViewModel;
         this.deleteController = deleteController;
 
         this.loggedInViewModel.addPropertyChangeListener(this);
@@ -58,10 +62,10 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         buttons.add(logOut);
 
         // Create a button for searching
-        searchButton = new JButton("Search");
-        buttons.add(searchButton);
+        search = new JButton(searchViewModel.SEARCH_BUTTON_LABEL);
+        buttons.add(search);
 
-        delete = new JButton("Delete User");
+        delete = new JButton("Delete Account");
         buttons.add(delete);
 
         logOut.addActionListener(new ActionListener() {
@@ -77,6 +81,19 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         }
         );;
 
+        search.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                if (evt.getSource().equals(search)) {
+
+                    // Switch to the SearchView
+                    viewManagerModel.setActiveView(searchViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
+                    System.out.println("Active view set to: " + searchViewModel.getViewName());
+                }
+            }
+        });
+
         delete.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -86,19 +103,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                     }
                 }
         );
-
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                if (evt.getSource().equals(searchButton)) {
-
-                    // Switch to the SearchView
-                    viewManagerModel.setActiveView(searchViewModel.getViewName());
-                    viewManagerModel.firePropertyChanged();
-                    System.out.println("Active view set to: " + searchViewModel.getViewName());
-                }
-            }
-        });
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);

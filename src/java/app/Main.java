@@ -5,6 +5,7 @@ import entity.ClientFactory;
 import entity.ExerciseFactory;
 import interface_adapter.delete.DeleteController;
 import interface_adapter.delete.DeletePresenter;
+import interface_adapter.delete.DeleteViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.search.SearchViewModel;
@@ -16,6 +17,7 @@ import use_case.delete.DeleteOutputBoundary;
 import view.LoggedInView;
 import view.LoginView;
 import view.SignupView;
+import view.SearchView;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -39,6 +41,7 @@ public class Main {
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         SearchViewModel searchViewModel = new SearchViewModel();
+//        DeleteViewModel deleteViewModel = new DeleteViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
 
@@ -54,13 +57,17 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject, signupViewModel);
         views.add(loginView, loginView.viewName);
 
+        SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, userDataAccessObject);
+        views.add(searchView, searchView.viewName);
+
         // Create a LoggedInView
         DeleteOutputBoundary deletepresenter = new DeletePresenter(signupViewModel, viewManagerModel);
         DeleteInputBoundary deleteInteractor = new DeleteInteractor(userDataAccessObject, deletepresenter);
         DeleteController deleteController = new DeleteController(deleteInteractor);
 
-
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, viewManagerModel, signupViewModel, searchViewModel, deleteController);
+        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, viewManagerModel, signupViewModel, searchViewModel,
+//                deleteViewModel,
+                deleteController);
         views.add(loggedInView, loggedInView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);

@@ -2,6 +2,7 @@ package use_case.search;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import entity.ExerciseFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,11 +11,16 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class SearchInteractor implements SearchInputBoundary {
+    final ExerciseFactory exerciseFactory;
     final SearchOutputBoundary presenter;
     final SearchUserDataAccessInterface userDataAccessObject;
-    public SearchInteractor(SearchUserDataAccessInterface searchUserDataAccessInterface, SearchOutputBoundary searchOutputBoundary){
+
+    public SearchInteractor(SearchUserDataAccessInterface searchUserDataAccessInterface,
+                            SearchOutputBoundary searchOutputBoundary,
+                            ExerciseFactory exerciseFactory){
         this.presenter = searchOutputBoundary;
         this.userDataAccessObject = searchUserDataAccessInterface;
+        this.exerciseFactory = exerciseFactory;
     }
 
     @Override

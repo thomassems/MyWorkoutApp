@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
@@ -38,12 +39,12 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.searchController = controller;
         this.searchViewModel = searchViewModel;
         this.searchViewModel.addPropertyChangeListener(this);
-        JLabel title = new JLabel("Search Screen");
+        JLabel title = new JLabel(SearchViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel exerciseTypeLabel = new JLabel("Exercise Type");
-        JLabel muscleGroupLabel = new JLabel("Muscle Group");
-        JLabel difficultyLabel = new JLabel("Difficulty");
+        JLabel exerciseTypeLabel = new JLabel(SearchViewModel.EXERCISE_LABEL);
+        JLabel muscleGroupLabel = new JLabel(SearchViewModel.MUSCLE_LABEL);
+        JLabel difficultyLabel = new JLabel(SearchViewModel.DIFFICULTY_LABEL);
 
         JPanel buttons = new JPanel();
         search = new JButton(searchViewModel.SEARCH_BUTTON_LABEL);
@@ -165,6 +166,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println("Property changed: " + evt.getPropertyName());
         SearchState state = (SearchState) evt.getNewValue();
         setFields(state);
     }
