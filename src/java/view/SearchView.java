@@ -56,6 +56,14 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         JLabel muscleGroupLabel = new JLabel(SearchViewModel.MUSCLE_LABEL);
         JLabel difficultyLabel = new JLabel(SearchViewModel.DIFFICULTY_LABEL);
 
+        // Create an array of items for the JComboBox
+        String[] exerciseTypes = {"cardio", "olympic_weightlifting", "plyometrics", "powerlifting", "strength", "stretching", "strongman"};
+        JComboBox<String> exerciseTypeInputField = new JComboBox<>(exerciseTypes);
+        String[] muscleGroups = {"abdominals", "abductors", "adductors", "biceps", "calves", "chest", "forearms", "glutes", "hamstrings", "lats", "lower_back", "middle_back", "neck", "quadriceps", "traps", "triceps"};
+        JComboBox<String> muscleGroupInputField = new JComboBox<>(muscleGroups);
+        String[] difficulties = {"beginner", "intermediate", "expert"};
+        JComboBox<String> difficultyInputField = new JComboBox<>(difficulties);
+
         JPanel buttons = new JPanel();
         search = new JButton(searchViewModel.SEARCH_BUTTON_LABEL);
         buttons.add(search);
@@ -70,6 +78,12 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(search)) {
                             SearchState currentState = searchViewModel.getState();
+
+                            currentState.setExerciseType((String) exerciseTypeInputField.getSelectedItem());
+                            currentState.setMuscleGroup((String) muscleGroupInputField.getSelectedItem());
+                            currentState.setDifficulty((String) difficultyInputField.getSelectedItem());
+
+                            searchViewModel.setState(currentState);
 
                             try {
                                 searchController.execute(
@@ -97,35 +111,34 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             }
         });
 
-        exerciseTypeInputField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SearchState currentState = searchViewModel.getState();
-                JComboBox<String> comboBox = (JComboBox<String>) e.getSource();
-                currentState.setExerciseType((String) comboBox.getSelectedItem());
-                searchViewModel.setState(currentState);
-            }
-        });
-
-        muscleGroupInputField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SearchState currentState = searchViewModel.getState();
-                JComboBox<String> comboBox = (JComboBox<String>) e.getSource();
-                currentState.setMuscleGroup((String) comboBox.getSelectedItem());
-                searchViewModel.setState(currentState);
-            }
-        });
-
-        difficultyInputField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SearchState currentState = searchViewModel.getState();
-                JComboBox<String> comboBox = (JComboBox<String>) e.getSource();
-                currentState.setDifficulty((String) comboBox.getSelectedItem());
-                searchViewModel.setState(currentState);
-            }
-        });
+//        exerciseTypeInputField.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                SearchState currentState = searchViewModel.getState();
+//                currentState.setExerciseType((String) comboBox.getSelectedItem());
+//                searchViewModel.setState(currentState);
+//            }
+//        });
+//
+//        muscleGroupInputField.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                SearchState currentState = searchViewModel.getState();
+//                JComboBox<String> selectedItem = (JComboBox<String>) e.getSource();
+//                currentState.setMuscleGroup((String) selectedItem.getSelectedItem());
+//                searchViewModel.setState(currentState);
+//            }
+//        });
+//
+//        difficultyInputField.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                SearchState currentState = searchViewModel.getState();
+//                JComboBox<String> selectedItem = (JComboBox<String>) e.getSource();
+//                currentState.setDifficulty((String) selectedItem.getSelectedItem());
+//                searchViewModel.setState(currentState);
+//            }
+//        });
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);

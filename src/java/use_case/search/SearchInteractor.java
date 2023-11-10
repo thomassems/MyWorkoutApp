@@ -25,7 +25,7 @@ public class SearchInteractor implements SearchInputBoundary {
 
     @Override
     public void execute(SearchInputData searchInputData) throws IOException {
-        JsonNode root = userDataAccessObject.getApi(searchInputData.getWorkoutType(), searchInputData.getMuscleGroup(), searchInputData.getDifficulty());
+        JsonNode root = userDataAccessObject.getApi(searchInputData.getExerciseType(), searchInputData.getMuscleGroup(), searchInputData.getDifficulty());
         if (root == null) {
             ArrayList<ArrayList<String>> errorArr = new ArrayList<>();
             ArrayList<String> stringArr = new ArrayList<>();

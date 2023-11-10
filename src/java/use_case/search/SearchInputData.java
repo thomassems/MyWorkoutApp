@@ -3,16 +3,16 @@ package use_case.search;
 import java.util.ArrayList;
 
 public class SearchInputData {
-    final private String workoutType;
+    final private String exerciseType;
     final private String muscleGroup;
     final private String difficulty;
-    public SearchInputData(String workoutType, String muscleGroup, String difficulty){
-        this.workoutType = workoutType;
+    public SearchInputData(String exerciseType, String muscleGroup, String difficulty){
+        this.exerciseType = exerciseType;
         this.muscleGroup = muscleGroup;
         this.difficulty = difficulty;
     }
-    public String getWorkoutType(){
-        return workoutType;
+    public String getExerciseType(){
+        return exerciseType;
     }
     public String getMuscleGroup(){
         return muscleGroup;
@@ -22,7 +22,7 @@ public class SearchInputData {
     }
     public ArrayList<String> getSearchParameters() {
         ArrayList<String> parameters = new ArrayList<>();
-        parameters.add(workoutType);
+        parameters.add(exerciseType);
         parameters.add(muscleGroup);
         parameters.add(difficulty);
         return parameters;
