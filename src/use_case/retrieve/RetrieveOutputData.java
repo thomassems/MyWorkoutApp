@@ -7,8 +7,11 @@ import java.util.ArrayList;
 public class RetrieveOutputData {
     final private ArrayList<Exercise> exercises;
 
-    public RetrieveOutputData(ArrayList<Exercise> exercises) {
+    private boolean useCaseFailed;
+
+    public RetrieveOutputData(ArrayList<Exercise> exercises, boolean useCaseFailed) {
         this.exercises = exercises;
+        this.useCaseFailed = useCaseFailed;
     }
 
     ArrayList<Exercise> getExercises() {
