@@ -1,18 +1,12 @@
 package interface_adapter.search;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.logged_in.LoggedInState;
-import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.login.LoginState;
-import interface_adapter.login.LoginViewModel;
-import use_case.login.LoginOutputBoundary;
-import use_case.login.LoginOutputData;
 import use_case.search.SearchOutputBoundary;
 import use_case.search.SearchOutputData;
 
 import java.util.ArrayList;
 
-public class SearchPresenter {
+public class SearchPresenter implements SearchOutputBoundary{
     private final SearchViewModel searchViewModel;
     // Creates a private field for the SearchViewModel.
     private ViewManagerModel viewManagerModel;
