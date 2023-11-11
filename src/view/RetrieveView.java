@@ -39,7 +39,7 @@ public class RetrieveView implements ActionListener, PropertyChangeListener {
 
         retrieveController.execute(currentState.getUsername());
 
-        for (Exercise exercise: )
+        for (Exercise exercise: currentState.getSavedExercises())
         LabelTextPanel savedExercisesInfo = new LabelTextPanel(savedExercisesList);
 
         JPanel buttons = new JPanel();
