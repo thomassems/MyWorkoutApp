@@ -14,7 +14,7 @@ public class RetrieveOutputData {
         this.useCaseFailed = useCaseFailed;
     }
 
-    ArrayList<Exercise> getSavedExercises() {
+    public ArrayList<Exercise> getSavedExercises() {
         return exercises;
     }
 }

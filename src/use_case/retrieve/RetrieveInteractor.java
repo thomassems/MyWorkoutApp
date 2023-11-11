@@ -1,12 +1,15 @@
 package use_case.retrieve;
 
+import entity.Exercise;
 import entity.User;
 import use_case.login.LoginInputData;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
 import use_case.login.LoginUserDataAccessInterface;
 
-public class RetrieveInteractor {
+import java.util.ArrayList;
+
+public class RetrieveInteractor implements RetrieveInputBoundary {
     final RetrieveUserDataAccessInterface userDataAccessObject;
     final RetrieveOutputBoundary retrievePresenter;
 
@@ -19,19 +22,13 @@ public class RetrieveInteractor {
     @Override
     public void execute(RetrieveInputData retrieveInputData) {
         String username = retrieveInputData.getUsername();
-        if (!userDataAccessObject.existsByUsername(username)) {
-            retrievePresenter.prepareFailView(username + ": Account does not exist.");
+        if (userDataAccessObject.getSavedExercises(username) != null) {
+            retrievePresenter.prepareFailView(username + ": No Saved Exercises.");
         } else {
-            String pwd = userDataAccessObject.get(username).getPassword();
-            if (!password.equals(pwd)) {
-                loginPresenter.prepareFailView("Incorrect password for " + username + ".");
-            } else {
+            ArrayList<Exercise> exercises = userDataAccessObject.getSavedExercises(username);
 
-                User user = userDataAccessObject.get(loginInputData.getUsername());
-
-                LoginOutputData loginOutputData = new LoginOutputData(user.getName(), false);
-                loginPresenter.prepareSuccessView(loginOutputData);
-            }
+            RetrieveOutputData retrieveOutputData = new RetrieveOutputData(exercises, false);
+            retrievePresenter.prepareSuccessView(retrieveOutputData);
         }
     }
 }

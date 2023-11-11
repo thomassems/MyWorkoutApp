@@ -6,5 +6,6 @@ import entity.User;
 import java.util.ArrayList;
 
 public interface RetrieveUserDataAccessInterface {
-    ArrayList<Exercise> getExercises(String username);
+    ArrayList<Exercise> getSavedExercises(String username);
+
 }

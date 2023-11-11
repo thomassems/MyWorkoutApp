@@ -148,7 +148,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
     }
 
     @Override
-    public ArrayList<Exercise> getExercises(String username) {
+    public ArrayList<Exercise> getSavedExercises(String username) {
             return exercises.get(username);
     }
 }

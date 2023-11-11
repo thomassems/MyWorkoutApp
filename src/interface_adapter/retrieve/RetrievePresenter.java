@@ -1,10 +1,12 @@
 package interface_adapter.retrieve;
 
 import interface_adapter.ViewManagerModel;
+import use_case.retrieve.RetrieveOutputBoundary;
+import use_case.retrieve.RetrieveOutputData;
 
 import java.util.ArrayList;
 
-public class RetrievePresenter {
+public class RetrievePresenter implements RetrieveOutputBoundary {
     // Creates a private field for the LoginViewModel.
     private final RetrieveViewModel retrieveViewModel;
     // Creates a private field for the LoggedInViewModel.
@@ -17,15 +19,15 @@ public class RetrievePresenter {
         this.retrieveViewModel = retrieveViewModel;
         // Constructor: Initializes the LoginViewModel field.
     }
-    @Override
+@Override
     public void prepareSuccessView(RetrieveOutputData response) {
-        // On success, switch to the logged in view.
+        // On success, switch to the search view.
         RetrieveState retrieveState = retrieveViewModel.getState();
-        // Gets the state from the LoggedInViewModel in order to make changes.
+        // Gets the state from the SearchViewModel in order to make changes.
         RetrieveState.setSavedExercises(response.getSavedExercises());
-        // Sets the username in the LoggedInState.
+        // Sets the exercises in the SearchState.
         this.retrieveViewModel.setState(retrieveState);
-        // Updates the state in the LoggedInViewModel.
+        // Updates the state in the SearchViewModel.
         this.retrieveViewModel.firePropertyChanged();
         // Notifies observers of the ViewModel change.
         this.viewManagerModel.setActiveView(retrieveViewModel.getViewName());
@@ -33,8 +35,9 @@ public class RetrievePresenter {
         this.viewManagerModel.firePropertyChanged();
         // Notifies observers of the ViewManagerModel change.
     }
+
     @Override
-    public void prepareFailView(ArrayList<ArrayList<String>> error) {
+    public void prepareFailView(String error) {
         RetrieveState retrieveState = retrieveViewModel.getState();
         // Gets the state from the LoginViewModel.
         retrieveState.setSavedExercisesError(error);
