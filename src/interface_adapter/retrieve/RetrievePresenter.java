@@ -1,10 +1,12 @@
 package interface_adapter.retrieve;
 
+import entity.Exercise;
 import interface_adapter.ViewManagerModel;
 import use_case.retrieve.RetrieveOutputBoundary;
 import use_case.retrieve.RetrieveOutputData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RetrievePresenter implements RetrieveOutputBoundary {
     // Creates a private field for the LoginViewModel.
@@ -24,7 +26,11 @@ public class RetrievePresenter implements RetrieveOutputBoundary {
         // On success, switch to the search view.
         RetrieveState retrieveState = retrieveViewModel.getState();
         // Gets the state from the SearchViewModel in order to make changes.
-        RetrieveState.setSavedExercises(response.getSavedExercises());
+        ArrayList<ArrayList<String>> exercisesList = new ArrayList<ArrayList<String>>();
+        for (Exercise exercise: response.getSavedExercises()) {
+            exercisesList.add(new ArrayList<String>(List.of(exercise.getTitle(),exercise.getDifficulty(),exercise.getMuscle(),exercise.getDescription())));
+        }
+        RetrieveState.setSavedExercises(exercisesList);
         // Sets the exercises in the SearchState.
         this.retrieveViewModel.setState(retrieveState);
         // Updates the state in the SearchViewModel.
