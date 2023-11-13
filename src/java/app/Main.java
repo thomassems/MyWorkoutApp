@@ -62,13 +62,13 @@ public class Main {
         ResultsView resultsView = ResultsUseCaseFactory.create(viewManagerModel, resultsViewModel, searchViewModel, loggedInViewModel, userDataAccessObject);
         views.add(resultsView, resultsView.viewName);
 
+        RetrieveView retrieveView = RetrieveUseCaseFactory.create(viewManagerModel, retrieveViewModel, loggedInViewModel, userDataAccessObject);
+        views.add(retrieveView, retrieveView.viewName);
+
         // Create a LoggedInView
         DeleteOutputBoundary deletepresenter = new DeletePresenter(signupViewModel, viewManagerModel);
         DeleteInputBoundary deleteInteractor = new DeleteInteractor(userDataAccessObject, deletepresenter);
         DeleteController deleteController = new DeleteController(deleteInteractor);
-
-        RetrieveView retrieveView = RetrieveUseCaseFactory.create(viewManagerModel, retrieveViewModel, userDataAccessObject);
-        views.add(retrieveView, retrieveView.viewName);
         
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel, viewManagerModel, signupViewModel, searchViewModel,
 //                deleteViewModel,
