@@ -5,6 +5,7 @@ import interface_adapter.search.SearchState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 
 public class ResultsViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Search Results";
@@ -15,6 +16,7 @@ public class ResultsViewModel extends ViewModel {
     public static final String MUSCLE_GROUP_LABEL = "Muscle Group";
     public static final String DESCRIPTION_LABEL = "Description";
     public static final String NAME_LABEL = "Name";
+    private ArrayList<ArrayList<String>> workouts;
 
     private ResultsState state = new ResultsState();
 
@@ -35,6 +37,12 @@ public class ResultsViewModel extends ViewModel {
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
+    }
+    public void setExercise(ArrayList<ArrayList<String>> workouts){
+        this.workouts = workouts;
+    }
+    public ArrayList<ArrayList<String>> getExercise(){
+        return workouts;
     }
 
     public ResultsState getState() {
