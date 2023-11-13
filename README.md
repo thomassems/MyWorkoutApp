@@ -1,31 +1,33 @@
 # MyWorkoutApp
 # Domain Description:
-Our team will develop a fitness app for users to create and  save workouts. Users sign up and log in to access their workouts.
+Our team will develop a fitness app for users to search and  save workouts. Users sign up and log in to access their workouts.
 
 # Software Specification:
 - User signup and login.
-- Personalized workout recommendations.
 - Access to a workout database via the "API Ninjas."
+- Access to previously saved workouts.
 - Filtering workouts by type, difficulty, and muscles.
-- Creating, saving, and tracking custom workouts.
+- Delete user
+- User logout.
 
 # User Stories:
-- Kayla, a fitness beginner, finds suitable workouts.
+- Kayla, a fitness beginner, searches suitable workouts.
 - Nicholas sets up his fitness profile.
-- Daniel tracks muscle-specific exercises.
+- Tom wants to delete his fitness profile.
+- Daniel searches and then saves exercises into his profile.
+- Julian logs in into his user, looks at his past workouts,and logs out.
 
 # User Cases:
 - Sign up
 - Log in
-- Search and save a workout
-- Access past workouts
+- Search 
+- Retrieve (search workouts)
 - Delete user
+- Results (select and save searched workouts)
 
 # Proposed Entities:
-- Client: Username, Password, Experience.
-- Workout: ID, Type, Muscle group, Equipment, Difficulty, Instructions.
-- User-Created Workout: Sets, Reps.
-- Fitness Progress/History Tracker: Tracker ID, Username, Progress Logs.
+- Client: Name, Username(Unique), Password.
+- Exercise: Title, Muscle group, Description, Difficulty.
 
 # API:
 - https://api-ninjas.com/api/exercises
