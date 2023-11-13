@@ -4,6 +4,7 @@ import interface_adapter.delete.DeleteController;
 import interface_adapter.delete.DeleteViewModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.retrieve.RetrieveViewModel;
 import interface_adapter.search.SearchViewModel;
 import interface_adapter.search.SearchController;
 import interface_adapter.ViewManagerModel;
@@ -23,6 +24,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final ViewManagerModel viewManagerModel;
     private final SignupViewModel signupViewModel;
     private final SearchViewModel searchViewModel;
+
+    private final RetrieveViewModel retrieveViewModel;
 //    private final DeleteViewModel deleteViewModel;
 
     JLabel username;
@@ -37,12 +40,14 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                         ViewManagerModel viewManagerModel,
                         SignupViewModel signupViewModel,
                         SearchViewModel searchViewModel,
+                        RetrieveViewModel retrieveViewModel,
 //                        DeleteViewModel deleteViewModel,
                         DeleteController deleteController) {
         this.loggedInViewModel = loggedInViewModel;
         this.viewManagerModel = viewManagerModel;
         this.signupViewModel = signupViewModel;
         this.searchViewModel = searchViewModel;
+        this.retrieveViewModel = retrieveViewModel;
 //        this.deleteViewModel = deleteViewModel;
         this.deleteController = deleteController;
 
@@ -84,6 +89,17 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
             }
         }
         );;
+
+        workouts.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                if (evt.getSource().equals(workouts)) {
+                    viewManagerModel.setActiveView(retrieveViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
+                    System.out.println("Active view set to: " + retrieveViewModel.getViewName());
+                }
+            }
+        });
 
         search.addActionListener(new ActionListener() {
             @Override

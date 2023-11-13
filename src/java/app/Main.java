@@ -72,6 +72,7 @@ public class Main {
         
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel, viewManagerModel, signupViewModel, searchViewModel,
 //                deleteViewModel,
+                retrieveViewModel,
                 deleteController);
         views.add(loggedInView, loggedInView.viewName);
 
