@@ -9,6 +9,7 @@ import interface_adapter.delete.DeleteViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.results.ResultsViewModel;
+import interface_adapter.retrieve.RetrieveViewModel;
 import interface_adapter.search.SearchViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
@@ -61,13 +62,13 @@ public class Main {
         ResultsView resultsView = ResultsUseCaseFactory.create(viewManagerModel, resultsViewModel, searchViewModel, loggedInViewModel, userDataAccessObject);
         views.add(resultsView, resultsView.viewName);
 
+        RetrieveView retrieveView = RetrieveUseCaseFactory.create(viewManagerModel, retrieveViewModel, loggedInViewModel, userDataAccessObject);
+        views.add(retrieveView, retrieveView.viewName);
+
         // Create a LoggedInView
         DeleteOutputBoundary deletepresenter = new DeletePresenter(signupViewModel, viewManagerModel);
         DeleteInputBoundary deleteInteractor = new DeleteInteractor(userDataAccessObject, deletepresenter);
         DeleteController deleteController = new DeleteController(deleteInteractor);
-
-        RetrieveView retrieveView = RetrieveUseCaseFactory.create(viewManagerModel, retrieveViewModel, userDataAccessObject);
-        views.add(retrieveView, retrieveView.viewName);
         
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel, viewManagerModel, signupViewModel, searchViewModel,
 //                deleteViewModel,

@@ -3,6 +3,7 @@ package app;
 import entity.ClientFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.retrieve.RetrieveController;
 import interface_adapter.retrieve.RetrievePresenter;
@@ -33,7 +34,7 @@ public class RetrieveUseCaseFactory {
     }
 
     public static RetrieveView create(
-            ViewManagerModel viewManagerModel, RetrieveViewModel retrieveViewModel,RetrieveUserDataAccessInterface userDataAccessObject) {
+            ViewManagerModel viewManagerModel, RetrieveViewModel retrieveViewModel, LoggedInViewModel loggedInViewModel, RetrieveUserDataAccessInterface userDataAccessObject) {
         try {
             RetrieveController retrieveController = createUserRetrieveUseCase(viewManagerModel, retrieveViewModel, userDataAccessObject);
             return new RetrieveView(retrieveViewModel, retrieveController);
