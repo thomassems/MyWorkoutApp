@@ -4,6 +4,7 @@ import entity.Exercise;
 import interface_adapter.ViewManagerModel;
 import use_case.retrieve.RetrieveOutputBoundary;
 import use_case.retrieve.RetrieveOutputData;
+import interface_adapter.retrieve.RetrieveState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class RetrievePresenter implements RetrieveOutputBoundary {
         for (Exercise exercise: response.getSavedExercises()) {
             exercisesList.add(new ArrayList<String>(List.of(exercise.getTitle(),exercise.getDifficulty(),exercise.getMuscle(),exercise.getDescription())));
         }
-        RetrieveState.setSavedExercises(exercisesList);
+        retrieveState.setSavedExercises(exercisesList);
         // Sets the exercises in the SearchState.
         this.retrieveViewModel.setState(retrieveState);
         // Updates the state in the SearchViewModel.

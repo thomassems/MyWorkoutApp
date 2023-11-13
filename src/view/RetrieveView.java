@@ -1,9 +1,6 @@
 package view;
 
 import entity.Exercise;
-import interface_adapter.login.LoginController;
-import interface_adapter.login.LoginState;
-import interface_adapter.login.LoginViewModel;
 import interface_adapter.retrieve.RetrieveController;
 import interface_adapter.retrieve.RetrieveState;
 import interface_adapter.retrieve.RetrieveViewModel;
@@ -13,19 +10,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
-public class RetrieveView implements ActionListener, PropertyChangeListener {
+public class RetrieveView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "Saved Exercises";
     private final RetrieveViewModel retrieveViewModel;
 
-    private final ArrayList<JLabel> savedExercisesList = new JLabel();
-    final ArrayList<JButton> deleteButtons;
+    private final ArrayList<JLabel> savedExercisesList = new ArrayList<JLabel>();
+    final ArrayList<JButton> deleteButtons = new ArrayList<JButton>();
     final JButton returnButton;
     private final RetrieveController retrieveController;
     public RetrieveView(RetrieveViewModel retrieveViewModel, RetrieveController controller) {
@@ -39,39 +34,43 @@ public class RetrieveView implements ActionListener, PropertyChangeListener {
 
         retrieveController.execute(currentState.getUsername());
 
-        for (Exercise exercise: currentState.getSavedExercises())
-        LabelTextPanel savedExercisesInfo = new LabelTextPanel(savedExercisesList);
-
         JPanel buttons = new JPanel();
-        deleteButtons = new JButton(retrieveViewModel.LOGIN_BUTTON_LABEL);
-        buttons.add(deleteButtons);
-        returnButton = new JButton(retrieveViewModel.CANCEL_BUTTON_LABEL);
-        buttons.add(returnButton);
 
-        logIn.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(logIn)) {
-                            LoginState currentState = loginViewModel.getState();
+        for (ArrayList<String> exercise: retrieveViewModel.getSavedExercises()) {
+            JLabel newExerciseLabel = new JLabel();
+            newExerciseLabel.setName(exercise.get(0));
+            newExerciseLabel.setText("Name: " +exercise.get(0)+" "+exercise.get(1)+" | "+exercise.get(2)+"\n"+exercise.get(3));
+            savedExercisesList.add(newExerciseLabel);
+            JButton newDeleteButton = new JButton(retrieveViewModel.DELETE_BUTTON_LABEL);
+            newDeleteButton.setName(exercise.get(0));
 
-                            loginController.execute(
-                                    currentState.getUsername(),
-                                    currentState.getPassword()
-                            );
+            newDeleteButton.addActionListener(
+                    new ActionListener() {
+                        public void actionPerformed(ActionEvent evt) {
+                            if (evt.getSource().equals(deleteButtons)) {
+                                RetrieveState currentState = retrieveViewModel.getState();
+
+                                retrieveController.execute(
+                                        currentState.getUsername()
+                                );
+                            }
                         }
                     }
-                }
-        );
-        cancel.addActionListener(this);
+            );
+            deleteButtons.add(newDeleteButton);
+            newExerciseLabel.add(newDeleteButton);
+            buttons.add(newExerciseLabel);
+        }
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        returnButton = new JButton(retrieveViewModel.RETURN_BUTTON_LABEL);
+        buttons.add(returnButton);
+
+
+        this.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
 
         this.add(title);
-        this.add(usernameInfo);
-        this.add(usernameErrorField);
-        this.add(passwordInfo);
-        this.add(passwordErrorField);
         this.add(buttons);
+
     }
 
     /**
