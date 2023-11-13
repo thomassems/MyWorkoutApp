@@ -9,6 +9,7 @@ import interface_adapter.delete.DeleteViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.results.ResultsViewModel;
+import interface_adapter.retrieve.RetrieveViewModel;
 import interface_adapter.search.SearchViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
