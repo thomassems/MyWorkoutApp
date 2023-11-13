@@ -36,13 +36,17 @@ public class SearchInteractor implements SearchInputBoundary {
         else {
             ArrayList<ArrayList<String>> workouts = new ArrayList<>();
             for (int i = 0; i < root.size(); i++) {
+                String name = root.get(i).get("name").asText();
                 String workoutType = root.get(i).get("type").asText();
                 String muscleGroup = root.get(i).get("muscle").asText();
                 String difficulty = root.get(i).get("difficulty").asText();
+                String description = root.get(i).get("instructions").asText();
                 ArrayList<String> exercises = new ArrayList<>();
+                exercises.add(name);
                 exercises.add(workoutType);
                 exercises.add(muscleGroup);
                 exercises.add(difficulty);
+                exercises.add(description);
                 workouts.add(exercises);
             }
             SearchOutputData searchOutputData = new SearchOutputData(workouts);

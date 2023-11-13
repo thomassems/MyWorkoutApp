@@ -5,6 +5,7 @@ import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.results.ResultsViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
 import use_case.search.SearchOutputBoundary;
@@ -18,7 +19,7 @@ public class SearchPresenter implements SearchOutputBoundary {
     private ViewManagerModel viewManagerModel;
     // Creates a private field for the ViewManagerModel.
     public SearchPresenter(ViewManagerModel viewManagerModel,
-                          SearchViewModel searchViewModel) {
+                           SearchViewModel searchViewModel, ResultsViewModel resultViewModel) {
         this.viewManagerModel = viewManagerModel;
         // Constructor: Initializes the ViewManagerModel field.
         this.searchViewModel = searchViewModel;

@@ -4,6 +4,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.results.ResultsViewModel;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
@@ -23,6 +24,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final SearchViewModel searchViewModel;
     private final ViewManagerModel viewManagerModel;
     private final LoggedInViewModel loggedInViewModel;
+    private final ResultsViewModel resultsViewModel;
 
     final JComboBox<String> exerciseTypeInputField = new JComboBox<String>();
     private final JLabel exerciseTypeErrorField = new JLabel();
@@ -42,11 +44,13 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     public SearchView(SearchViewModel searchViewModel,
                       SearchController controller,
                       ViewManagerModel viewManagerModel,
-                      LoggedInViewModel loggedInViewModel) {
+                      LoggedInViewModel loggedInViewModel,
+                      ResultsViewModel resultsViewModel) {
         this.searchController = controller;
         this.searchViewModel = searchViewModel;
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
+        this.resultsViewModel = resultsViewModel;
         this.searchViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(SearchViewModel.TITLE_LABEL);
@@ -84,7 +88,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                             currentState.setDifficulty((String) difficultyInputField.getSelectedItem());
 
                             searchViewModel.setState(currentState);
-
                             try {
                                 searchController.execute(
                                         currentState.getExerciseType(),
@@ -94,6 +97,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
+                            viewManagerModel.setActiveView(resultsViewModel.getViewName());
+                            viewManagerModel.firePropertyChanged();
                         }
                     }
                 }
