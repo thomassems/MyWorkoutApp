@@ -61,9 +61,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         JLabel difficultyLabel = new JLabel(SearchViewModel.DIFFICULTY_LABEL);
 
         // Create an array of items for the JComboBox
-        String[] exerciseTypes = {"cardio", "olympic_weightlifting", "plyometrics", "powerlifting", "strength", "stretching", "strongman"};
+        String[] exerciseTypes = {"strength", "olympic_weightlifting", "plyometrics", "powerlifting", "cardio", "stretching", "strongman"};
         JComboBox<String> exerciseTypeInputField = new JComboBox<>(exerciseTypes);
-        String[] muscleGroups = {"abdominals", "abductors", "adductors", "biceps", "calves", "chest", "forearms", "glutes", "hamstrings", "lats", "lower_back", "middle_back", "neck", "quadriceps", "traps", "triceps"};
+        String[] muscleGroups = {"biceps", "abdominals", "abductors", "adductors", "calves", "chest", "forearms", "glutes", "hamstrings", "lats", "lower_back", "middle_back", "neck", "quadriceps", "traps", "triceps"};
         JComboBox<String> muscleGroupInputField = new JComboBox<>(muscleGroups);
         String[] difficulties = {"beginner", "intermediate", "expert"};
         JComboBox<String> difficultyInputField = new JComboBox<>(difficulties);
