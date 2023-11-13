@@ -39,6 +39,7 @@ public class Main {
         SignupViewModel signupViewModel = new SignupViewModel();
         SearchViewModel searchViewModel = new SearchViewModel();
         ResultsViewModel resultsViewModel = new ResultsViewModel();
+        RetrieveViewModel retrieveViewModel = new RetrieveViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
 
@@ -65,6 +66,9 @@ public class Main {
         DeleteInputBoundary deleteInteractor = new DeleteInteractor(userDataAccessObject, deletepresenter);
         DeleteController deleteController = new DeleteController(deleteInteractor);
 
+        RetrieveView retrieveView = RetrieveUseCaseFactory.create(viewManagerModel, retrieveViewModel, userDataAccessObject);
+        views.add(retrieveView, retrieveView.viewName);
+        
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel, viewManagerModel, signupViewModel, searchViewModel,
 //                deleteViewModel,
                 deleteController);
