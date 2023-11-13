@@ -5,6 +5,8 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.results.ResultsController;
 import interface_adapter.results.ResultsState;
 import interface_adapter.results.ResultsViewModel;
+import interface_adapter.search.SearchController;
+import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
 
 import javax.swing.*;
@@ -14,7 +16,6 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class ResultsView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -23,6 +24,8 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
     private final ViewManagerModel viewManagerModel;
     private final LoggedInViewModel loggedInViewModel;
     private final SearchViewModel searchViewModel;
+
+    private final ArrayList<ArrayList<String>> results;
 
     final JButton home;
     final JButton search;
@@ -40,6 +43,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.searchViewModel = searchViewModel;
+        this.results = resultsViewModel.getExercise();
         this.resultsViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(ResultsViewModel.TITLE_LABEL);
@@ -75,6 +79,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
                             // Switch back to the SearchView
                             viewManagerModel.setActiveView(searchViewModel.getViewName());
                             viewManagerModel.firePropertyChanged();
+                            System.out.println("Active view set to: " + searchViewModel.getViewName());
                         }
                     }
                 }
@@ -92,39 +97,60 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
             }
         });
 
-//        ArrayList<ArrayList<String>> results = resultsViewModel.getExercise();
 //        ArrayList<String> items = new ArrayList<>(Arrays.asList("name", "muscle group", "difficulty", "description"));
 
-//        SwingUtilities.invokeLater(() -> {
-//            searchResultPanel = new JPanel(new GridLayout(0, 4)); // Initialize the panel for search results
-//            searchResultPanel.setLayout(new BoxLayout(searchResultPanel, BoxLayout.Y_AXIS)); // Set layout for search results panel
-//
+        searchResultPanel = new JPanel(new GridLayout(0, 4)); // Initialize the panel for search results
+
+        // Set layout for search results panel
+        searchResultPanel.setLayout(new BoxLayout(searchResultPanel, BoxLayout.Y_AXIS)); // Set layout for search results panel
+
+        // Add a property change listener to the ResultsViewModel
+        resultsViewModel.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                // Handle the property change event, e.g., update the UI with new exercises
+                searchResultPanel = updateResultsPanel(resultsViewModel.getExercise());
+            }
+        });
+
+        // Initial update with the current exercises
+//        updateResultsPanel(resultsViewModel.getExercise());
+
 //            if (results != null && !results.isEmpty() && !results.get(0).isEmpty()) {
+//                searchResultPanel.removeAll();
+//
 //                for (ArrayList<String> result : results) {
-//                    JPanel exercisePanel = new JPanel(new FlowLayout());
 //                    JButton resultButton = new JButton(result.get(0));
 //                    resultButton.addActionListener(new ActionListener() {
 //                        @Override
 //                        public void actionPerformed(ActionEvent evt) {
 //                            // Handle the result button click here if needed ?? check
 //                            if (evt.getSource().equals(resultButton)) {
-//                                ResultsState currentState = ResultsViewModel.getState();
+//                                ResultsState currentState = resultsViewModel.getState();
+//
 //                                resultsViewModel.setState(currentState);
+//
+//                                searchResultPanel.add(resultButton); // Add result button to the search results panel
+//                                searchResultPanel.add(new JLabel(result.get(1)));
+//                                searchResultPanel.add(new JLabel(result.get(2)));
+//                                searchResultPanel.add(new JLabel(result.get(3)));
+//                                searchResultPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
+//
+//                                // Update the layout
+//                                searchResultPanel.revalidate();
+//                                searchResultPanel.repaint();
 //                            }
 //                        }
 //                    });
-//                    searchResultPanel.add(resultButton); // Add result button to the search results panel
-//                    searchResultPanel.add(new JLabel(result.get(1)));
-//                    searchResultPanel.add(new JLabel(result.get(2)));
-//                    searchResultPanel.add(new JLabel(result.get(3)));
-//                    searchResultPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
+//                    searchResultPanel.add(resultButton);
+//
+//
 //                }
-//                searchResultPanel.revalidate(); // Update the layout
-//                searchResultPanel.repaint(); // Repaint the panel
+////                searchResultPanel.revalidate(); // Update the layout
+////                searchResultPanel.repaint(); // Repaint the panel
 //            }
-//        });
-
-//        private void displaySearchResults(, ArrayList<ArrayList<String>> results) {
+//
+//        private void displaySearchResults(ArrayList<ArrayList<String>> results) {
 //            ArrayList<String> items = new ArrayList<>(Arrays.asList("name", "muscle group", "difficulty", "description"));
 //
 //            for (String result : results) {
@@ -149,11 +175,43 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(headings);
-        this.add(buttons);
         this.add(searchResultPanel); // Add the search results panel to the main view
+        this.add(buttons);
 
         JLabel subTitle = new JLabel("Exercises");
         subTitle.setAlignmentX(CENTER_ALIGNMENT);
+    }
+
+    private JPanel updateResultsPanel(ArrayList<ArrayList<String>> newResults) {
+        // Clear existing components
+        searchResultPanel.removeAll();
+
+        if (newResults != null && !newResults.isEmpty() && !newResults.get(0).isEmpty()) {
+            for (ArrayList<String> result : newResults) {
+                JButton resultButton = new JButton(result.get(0));
+                resultButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(resultButton)) {
+                            ResultsState currentState = resultsViewModel.getState();
+                            resultsViewModel.setState(currentState);
+
+                            // Add result components to the search results panel
+                            searchResultPanel.add(resultButton);
+                            searchResultPanel.add(new JLabel(result.get(1)));
+                            searchResultPanel.add(new JLabel(result.get(2)));
+                            searchResultPanel.add(new JLabel(result.get(3)));
+                            searchResultPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
+                        }
+                    }
+                });
+                searchResultPanel.add(resultButton);
+            }
+        }
+
+        searchResultPanel.revalidate();
+        searchResultPanel.repaint();
+        return searchResultPanel;
     }
 
     /**
