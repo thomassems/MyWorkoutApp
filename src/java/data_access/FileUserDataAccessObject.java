@@ -6,6 +6,7 @@ import entity.*;
 import use_case.delete.DeleteUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.results.ResultsDataAccessInterface;
+import use_case.retrieve.RetrieveUserDataAccessInterface;
 import use_case.search.SearchUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
@@ -29,7 +30,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, SearchUserDataAccessInterface, DeleteUserDataAccessInterface, ResultsDataAccessInterface {
+public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, SearchUserDataAccessInterface, DeleteUserDataAccessInterface, ResultsDataAccessInterface, RetrieveUserDataAccessInterface {
     private final File accountsFile;
     private final File exerciseFile;
     private UserFactory userFactory;
@@ -203,5 +204,12 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    @Override
+    public ArrayList<Exercise> getSavedExercises(String username){
+        if (exercises.containsKey(username)){
+            return exercises.get(username);
+        }
+        return new ArrayList<>();
     }
 }
