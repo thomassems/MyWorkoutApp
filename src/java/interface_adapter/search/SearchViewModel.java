@@ -15,7 +15,6 @@ public class SearchViewModel extends ViewModel {
     public static final String DIFFICULTY_LABEL = "Difficulty";
     public static final String SEARCH_BUTTON_LABEL = "Search";
     public static final String CANCEL_BUTTON_LABEL = "Cancel";
-
     private SearchState state = new SearchState();
 
     public SearchViewModel() {

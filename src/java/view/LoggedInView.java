@@ -29,6 +29,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     final JButton logOut;
     final JButton search;
     private final DeleteController deleteController;
+    final JButton workouts;
     final JButton delete;
     JLabel user;
 
@@ -65,6 +66,9 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         search = new JButton(searchViewModel.SEARCH_BUTTON_LABEL);
         buttons.add(search);
 
+        workouts = new JButton(LoggedInViewModel.WORKOUTS_BUTTON_LABEL);
+        buttons.add(workouts);
+
         delete = new JButton("Delete Account");
         buttons.add(delete);
 
@@ -90,6 +94,13 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                     viewManagerModel.setActiveView(searchViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                     System.out.println("Active view set to: " + searchViewModel.getViewName());
+                }
+            }
+        });
+
+        workouts.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(workouts)) {
                 }
             }
         });
