@@ -52,12 +52,12 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         if (evt.getSource().equals(search)) {
                             SearchState currentState = searchViewModel.getState();
 
-                            ArrayList<String> searchQuery = searchController.execute(
-                                    currentState.getExerciseType(),
-                                    currentState.getMuscleGroup(),
-                                    currentState.getDifficulty()
-                            );
-                            displaySearchResults(searchQuery);
+                            //ArrayList<String> searchQuery = searchController.execute(
+                                  //  currentState.getExerciseType(),
+                                  //  currentState.getMuscleGroup(),
+                                   // currentState.getDifficulty()
+                           // );
+                            //displaySearchResults(searchQuery);
                         }
                     }
                 }
@@ -68,7 +68,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             public void actionPerformed(ActionEvent e) {
                 SearchState currentState = searchViewModel.getState();
                 JComboBox comboBox = (JComboBox) e.getSource();
-                currentState.setExerciseType(exerciseTypeInputField.getText() + comboBox.getKeyChar());
+                //currentState.setExerciseType(exerciseTypeInputField.getText() + comboBox.getKeyChar());
                 searchViewModel.setState(currentState);
             }
         });
@@ -78,7 +78,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             public void actionPerformed(ActionEvent e) {
                 SearchState currentState = searchViewModel.getState();
                 JComboBox comboBox = (JComboBox) e.getSource();
-                currentState.setMuscleGroup(muscleGroupInputField.getText() + comboBox.getKeyChar());
+                //currentState.setMuscleGroup(muscleGroupInputField.getText() + comboBox.getKeyChar());
                 searchViewModel.setState(currentState);
             }
         });
@@ -88,7 +88,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             public void actionPerformed(ActionEvent e) {
                 SearchState currentState = searchViewModel.getState();
                 JComboBox comboBox = (JComboBox) e.getSource();
-                currentState.setDifficulty(difficultyInputField.getText() + comboBox.getKeyChar());
+                //currentState.setDifficulty(difficultyInputField.getText() + comboBox.getKeyChar());
                 searchViewModel.setState(currentState);
             }
         });
@@ -112,14 +112,14 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     }
 
     private void displaySearchResults(ArrayList<String> query){
-        buttonsResult.removeAll();
+        //buttonsResult.removeAll();
         for (String result : query) {
             JButton resultButton = new JButton("Result " + result);
             resultButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     SearchState currentState = searchViewModel.getState();
-                    currentState.setExercise(exerciseInputField.getText() + e.getKeyChar());
+                    //currentState.setExercise(exerciseInputField.getText() + e.getKeyChar());
                     searchViewModel.setState(currentState);
                 }
             });
@@ -141,8 +141,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     }
 
     private void setFields(SearchState state) {
-        exerciseTypeInputField.setText(state.getExerciseType());
-        muscleGroupInputField.setText(state.getMuscleGroup());
-        difficultyInputField.setText(state.getDifficultyType());
+      //  exerciseTypeInputField.setText(state.getExerciseType());
+      //  muscleGroupInputField.setText(state.getMuscleGroup());
+        //difficultyInputField.setText(state.getDifficultyType());
     }
 }

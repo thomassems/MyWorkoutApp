@@ -12,8 +12,8 @@ public class SearchController {
     }
 
     public void execute(String type, String muscle, String difficulty) {
-        SearchInputData searchInputData = new SearchInputData(type, muscle, difficulty);
-        searchUseCaseInteractor.execute(signupInputData);
+        //SearchInputData searchInputData = new SearchInputData(type, muscle, difficulty);
+        //searchUseCaseInteractor.execute(signupInputData);
     }
 }
 

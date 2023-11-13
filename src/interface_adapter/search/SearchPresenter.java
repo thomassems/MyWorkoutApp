@@ -22,7 +22,7 @@ public class SearchPresenter implements SearchOutputBoundary{
         // On success, update the switch view.
         SearchState searchState = searchViewModel.getState();
         // Gets the state from the SearchViewModel in order to make changes.
-        searchState.setExerciseSearchResults(response.getExerciseSearchResults());
+        //searchState.setExerciseSearchResults(response.getExerciseSearchResults());
         // Sets the exerciseSearchResults in the SearchState.
         this.searchViewModel.setState(searchState);
         // Updates the state in the SearchViewModel.
