@@ -1,6 +1,9 @@
 package view;
 
 import entity.Exercise;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.results.ResultsViewModel;
 import interface_adapter.retrieve.RetrieveController;
 import interface_adapter.retrieve.RetrieveState;
 import interface_adapter.retrieve.RetrieveViewModel;
@@ -19,13 +22,19 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
     public final String viewName = "Saved Exercises";
     private final RetrieveViewModel retrieveViewModel;
 
+    private final ViewManagerModel viewManagerModel;
+    private final LoggedInViewModel loggedInViewModel;
+
     private final ArrayList<JLabel> savedExercisesList = new ArrayList<JLabel>();
     final ArrayList<JButton> deleteButtons = new ArrayList<JButton>();
     final JButton returnButton;
     private final RetrieveController retrieveController;
-    public RetrieveView(RetrieveViewModel retrieveViewModel, RetrieveController controller) {
+    public RetrieveView(RetrieveViewModel retrieveViewModel, RetrieveController controller, ViewManagerModel viewManagerModel,
+                        LoggedInViewModel loggedInViewModel) {
         this.retrieveController = controller;
         this.retrieveViewModel = retrieveViewModel;
+        this.viewManagerModel = viewManagerModel;
+        this.loggedInViewModel = loggedInViewModel;
         this.retrieveViewModel.addPropertyChangeListener(this);
         JLabel title = new JLabel("Retrieve Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);

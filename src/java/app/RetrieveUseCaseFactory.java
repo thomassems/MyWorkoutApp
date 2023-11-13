@@ -37,7 +37,7 @@ public class RetrieveUseCaseFactory {
             ViewManagerModel viewManagerModel, RetrieveViewModel retrieveViewModel, LoggedInViewModel loggedInViewModel, RetrieveUserDataAccessInterface userDataAccessObject) {
         try {
             RetrieveController retrieveController = createUserRetrieveUseCase(viewManagerModel, retrieveViewModel, userDataAccessObject);
-            return new RetrieveView(retrieveViewModel, retrieveController);
+            return new RetrieveView(retrieveViewModel, retrieveController, viewManagerModel, loggedInViewModel);
 
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
