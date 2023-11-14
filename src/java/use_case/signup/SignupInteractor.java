@@ -72,9 +72,9 @@ public class SignupInteractor implements SignupInputBoundary {
             errorMessage.add(tru);
             if (signupInputData.getName().equals("")){
             errorMessage.add("Please provide a non-empty name");}
-            else if (signupInputData.getUsername().equals("")) {
+            if (signupInputData.getUsername().equals("")) {
                 errorMessage.add("Please provide a non-empty username");}
-            else if (signupInputData.getPassword().equals("") && signupInputData.getRepeatPassword().equals("")){
+            if (signupInputData.getPassword().equals("") && signupInputData.getRepeatPassword().equals("")){
                 errorMessage.add("Please provide a non-empty password");
             }
             return errorMessage;
