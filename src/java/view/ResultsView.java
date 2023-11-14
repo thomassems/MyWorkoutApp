@@ -156,7 +156,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
         if (newResults != null && !newResults.isEmpty() && !newResults.get(0).isEmpty()) {
             for (ArrayList<String> result : newResults) {
 
-                JButton resultButton = new JButton(result.get(0));
+                JButton resultButton = getjButton(result.get(0));
                 panel.add(resultButton, gbc);
                 gbc.gridx++;
                 panel.add(new JLabel(result.get(2)), gbc);
@@ -176,6 +176,23 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
         panel.revalidate();
         panel.repaint();
         return panel;
+    }
+
+    private JButton getjButton(String exerciseName) {
+        JButton resultButton = new JButton(exerciseName);
+        resultButton.addActionListener(          // This creates an anonymous subclass of ActionListener and instantiates it.
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(resultButton)) {
+                            ResultsState currentState = resultsViewModel.getState();
+                            resultsViewModel.setState(currentState);
+
+                            JOptionPane.showMessageDialog(null, exerciseName + " added!");
+                        }
+                    }
+                }
+        );
+        return resultButton;
     }
 
     /**
