@@ -149,7 +149,9 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
         JLabel descriptionLabel = new JLabel(ResultsViewModel.DESCRIPTION_LABEL);
         descriptionLabel.setFont(font);
         panel.add(descriptionLabel, gbc);
-        gbc.anchor = GridBagConstraints.CENTER; // Set anchor to left
+        gbc.anchor = GridBagConstraints.CENTER; // Set anchor to center
+        gbc.gridx = 0; // Move to the next row
+        gbc.gridy++;
 
         if (newResults != null && !newResults.isEmpty() && !newResults.get(0).isEmpty()) {
             for (ArrayList<String> result : newResults) {
