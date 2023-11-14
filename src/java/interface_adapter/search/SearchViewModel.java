@@ -8,7 +8,6 @@ import java.beans.PropertyChangeSupport;
 
 public class SearchViewModel extends ViewModel {
 
-
     public static final String TITLE_LABEL = "Search Exercise";
     public static final String EXERCISE_LABEL = "Exercise Type";
     public static final String MUSCLE_LABEL = "Muscle Group";

@@ -8,6 +8,7 @@ import interface_adapter.results.ResultsViewModel;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
+import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,10 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class ResultsView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -27,6 +25,10 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
     private final ViewManagerModel viewManagerModel;
     private final LoggedInViewModel loggedInViewModel;
     private final SearchViewModel searchViewModel;
+
+    ArrayList<ArrayList<String>> results = new ArrayList<ArrayList<String>>();
+    private final ArrayList<ArrayList<String>> resultsError = null;
+
 
     final JButton home;
     final JButton search;
@@ -44,6 +46,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.searchViewModel = searchViewModel;
+//        this.results = resultsViewModel.getExercise();
         this.resultsViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(ResultsViewModel.TITLE_LABEL);
@@ -51,14 +54,6 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
         Font font = new Font(f.getFontName(), Font.BOLD, 16);
         title.setFont(font);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        JPanel headings = new JPanel();
-        headings.add(new JLabel(ResultsViewModel.NAME_LABEL));
-        headings.add(Box.createHorizontalStrut(20));
-        headings.add(new JLabel(ResultsViewModel.MUSCLE_GROUP_LABEL));
-        headings.add(Box.createHorizontalStrut(20));
-        headings.add(new JLabel(ResultsViewModel.DIFFICULTY_LABEL));
-        headings.add(Box.createHorizontalStrut(20));
-        headings.add(new JLabel(ResultsViewModel.DESCRIPTION_LABEL));
 
         JPanel buttons = new JPanel();
         home = new JButton(ResultsViewModel.HOME_BUTTON_LABEL);
@@ -73,12 +68,12 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(search)) {
                             ResultsState currentState = resultsViewModel.getState();
-
                             resultsViewModel.setState(currentState);
 
                             // Switch back to the SearchView
                             viewManagerModel.setActiveView(searchViewModel.getViewName());
                             viewManagerModel.firePropertyChanged();
+                            System.out.println("Active view set to: " + searchViewModel.getViewName());
                         }
                     }
                 }
@@ -96,66 +91,89 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
             }
         });
 
-        ArrayList<ArrayList<String>> results = resultsViewModel.getExercise();
-        ArrayList<String> items = new ArrayList<>(Arrays.asList("name", "muscle group", "difficulty", "description"));
+        // Create a panel to search and all specifications for the grid.
+        searchResultPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new Insets(0, 0, 0, 10); // Set the bottom margin (space) between rows
 
-        SwingUtilities.invokeLater(() -> {
-            searchResultPanel = new JPanel(new GridLayout(0, 4)); // Initialize the panel for search results
-            searchResultPanel.setLayout(new BoxLayout(searchResultPanel, BoxLayout.Y_AXIS)); // Set layout for search results panel
+        // Add a property change listener to the ResultsViewModel
+        resultsViewModel.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                // Handle the property change event, e.g., update the UI with new exercises
+                if ("exercise".equals(evt.getPropertyName())) {
+                    searchResultPanel = updateResultsPanel(searchResultPanel, resultsViewModel.getExercise(), gridBagConstraints);
+                }
+                ResultsState currentState = resultsViewModel.getState();
+                resultsViewModel.setState(currentState);
 
-            for (ArrayList<String> result : results) {
-                JPanel exercisePanel = new JPanel(new FlowLayout());
-                JButton resultButton = new JButton(result.get(0));
-                resultButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent evt) {
-                        // Handle the result button click here if needed ?? check
-                        if (evt.getSource().equals(resultButton)) {
-                            ResultsState currentState = ResultsViewModel.getState();
-                            resultsViewModel.setState(currentState);
-                        }
-                    }
-                });
-                searchResultPanel.add(resultButton); // Add result button to the search results panel
-                searchResultPanel.add(new JLabel(result.get(1)));
-                searchResultPanel.add(new JLabel(result.get(2)));
-                searchResultPanel.add(new JLabel(result.get(3)));
-                searchResultPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
             }
-            searchResultPanel.revalidate(); // Update the layout
-            searchResultPanel.repaint(); // Repaint the panel
         });
-
-//        private void displaySearchResults(, ArrayList<ArrayList<String>> results) {
-//            ArrayList<String> items = new ArrayList<>(Arrays.asList("name", "muscle group", "difficulty", "description"));
-//
-//            for (String result : results) {
-//                JButton resultButton = new JButton(result[0]);
-//                resultButton.addActionListener(new ActionListener() {
-//                    @Override
-//                    public void actionPerformed(ActionEvent e) {
-//                        // Handle the result button click here if needed ?? check
-//                        if (evt.getSource().equals(nameResult)) {
-//                            SearchState currentState = searchViewModel.getState();
-//                            currentState.setExerciseType((String) comboBox.getSelectedItem());
-//                            searchViewModel.setState(currentState);
-//                        }
-//                    }
-//                });
-//                searchResultPanel.add(resultButton); // Add result button to the search results panel
-//            }
-//            searchResultPanel.revalidate(); // Update the layout
-//            searchResultPanel.repaint(); // Repaint the panel
-//        }
+        // Make pane scrollable
+        JScrollPane scrollPane = new JScrollPane(searchResultPanel, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
-        this.add(headings);
+//        this.add(headings);
+        this.add(scrollPane); // Add the search results panel to the main view
         this.add(buttons);
-        this.add(searchResultPanel); // Add the search results panel to the main view
+        this.setVisible(true);
+    }
 
-        JLabel subTitle = new JLabel("Exercises");
-        subTitle.setAlignmentX(CENTER_ALIGNMENT);
+    private JPanel updateResultsPanel(JPanel panel, ArrayList<ArrayList<String>> newResults, GridBagConstraints gbc) {
+        // Clear existing components
+        panel.removeAll();
+
+        JLabel nameLabel = new JLabel(ResultsViewModel.NAME_LABEL);
+        Font f = nameLabel.getFont();
+        Font font = new Font(f.getFontName(), Font.BOLD, 14);
+
+        nameLabel.setFont(font);
+        nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.add(nameLabel, gbc);
+        gbc.gridx++;
+
+        JLabel muscleGroupLabel = new JLabel(ResultsViewModel.MUSCLE_GROUP_LABEL);
+        muscleGroupLabel.setFont(font);
+        panel.add(muscleGroupLabel, gbc);
+        gbc.gridx++;
+
+        JLabel difficultyLabel = new JLabel(ResultsViewModel.DIFFICULTY_LABEL);
+        difficultyLabel.setFont(font);
+        panel.add(difficultyLabel, gbc);
+        gbc.gridx++;
+
+        gbc.anchor = GridBagConstraints.WEST; // Set anchor to left
+        JLabel descriptionLabel = new JLabel(ResultsViewModel.DESCRIPTION_LABEL);
+        descriptionLabel.setFont(font);
+        panel.add(descriptionLabel, gbc);
+        gbc.anchor = GridBagConstraints.CENTER; // Set anchor to left
+
+        if (newResults != null && !newResults.isEmpty() && !newResults.get(0).isEmpty()) {
+            for (ArrayList<String> result : newResults) {
+
+                JButton resultButton = new JButton(result.get(0));
+                panel.add(resultButton, gbc);
+                gbc.gridx++;
+                panel.add(new JLabel(result.get(2)), gbc);
+                gbc.gridx++;
+                panel.add(new JLabel(result.get(3)), gbc);
+                gbc.gridx++;
+
+                gbc.anchor = GridBagConstraints.WEST; // Set anchor to left
+                panel.add(new JLabel(result.get(4)), gbc);
+                gbc.anchor = GridBagConstraints.CENTER; // Set anchor to left
+
+                gbc.gridx = 0; // Move to the next row
+                gbc.gridy++;
+            }
+        }
+
+        panel.revalidate();
+        panel.repaint();
+        return panel;
     }
 
     /**
@@ -167,10 +185,14 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        ResultsState state = (ResultsState) evt.getNewValue();
-        setFields(state);
+        if ("exercise".equals(evt.getPropertyName())) {
+            System.out.println("Property changed: " + evt.getPropertyName());
+            ResultsState state = (ResultsState) evt.getNewValue();
+            setFields(state);
+        }
     }
 
     private void setFields(ResultsState state) {
+        results = state.getExercise();
     }
 }
