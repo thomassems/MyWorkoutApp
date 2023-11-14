@@ -16,7 +16,7 @@ public class ResultsViewModel extends ViewModel {
     public static final String MUSCLE_GROUP_LABEL = "Muscle Group";
     public static final String DESCRIPTION_LABEL = "Description";
     public static final String NAME_LABEL = "Name";
-    private ArrayList<ArrayList<String>> workouts;
+    private ArrayList<ArrayList<String>> exercise;
 
     private ResultsState state = new ResultsState();
 
@@ -32,17 +32,22 @@ public class ResultsViewModel extends ViewModel {
 
     // This is what the Signup Presenter will call to let the ViewModel know to alert the View
     public void firePropertyChanged() {
-        support.firePropertyChange("state", null, this.state);
+        // Fire property change for "exercise"
+        support.firePropertyChange("exercise", null, this.state);
     }
+//    }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
-    public void setExercise(ArrayList<ArrayList<String>> workouts){
-        this.workouts = workouts;
+    public void setExercise(ArrayList<ArrayList<String>> exercise){
+        this.exercise = exercise;
+        // Add logging to verify that exercise is being updated
+        System.out.println("Exercise updated: " + exercise.get(0));
+        firePropertyChanged();
     }
     public ArrayList<ArrayList<String>> getExercise(){
-        return workouts;
+        return exercise;
     }
 
     public ResultsState getState() {
