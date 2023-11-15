@@ -1,6 +1,8 @@
 package view;
 
+import com.fasterxml.jackson.core.JsonToken;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.results.ResultsController;
 import interface_adapter.results.ResultsState;
@@ -16,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -104,7 +107,9 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
             public void propertyChange(PropertyChangeEvent evt) {
                 // Handle the property change event, e.g., update the UI with new exercises
                 if ("exercise".equals(evt.getPropertyName())) {
-                    searchResultPanel = updateResultsPanel(searchResultPanel, resultsViewModel.getExercise(), gridBagConstraints);
+                    // TODO: Line below, is it according to CA to get the Usename?
+                    String username = loggedInViewModel.getState().getUsername();
+                    searchResultPanel = updateResultsPanel(searchResultPanel, resultsViewModel.getExercise(), gridBagConstraints, username);
                 }
                 ResultsState currentState = resultsViewModel.getState();
                 resultsViewModel.setState(currentState);
@@ -122,7 +127,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
         this.setVisible(true);
     }
 
-    private JPanel updateResultsPanel(JPanel panel, ArrayList<ArrayList<String>> newResults, GridBagConstraints gbc) {
+    private JPanel updateResultsPanel(JPanel panel, ArrayList<ArrayList<String>> newResults, GridBagConstraints gbc, String username) {
         // Clear existing components
         panel.removeAll();
 
@@ -156,7 +161,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
         if (newResults != null && !newResults.isEmpty() && !newResults.get(0).isEmpty()) {
             for (ArrayList<String> result : newResults) {
 
-                JButton resultButton = getjButton(result.get(0));
+                JButton resultButton = getjButton(result, username);
                 panel.add(resultButton, gbc);
                 gbc.gridx++;
                 panel.add(new JLabel(result.get(2)), gbc);
@@ -178,16 +183,26 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
         return panel;
     }
 
-    private JButton getjButton(String exerciseName) {
-        JButton resultButton = new JButton(exerciseName);
+    private JButton getjButton(ArrayList<String> exerciseName, String username) {
+        JButton resultButton = new JButton(exerciseName.get(0));
         resultButton.addActionListener(          // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(resultButton)) {
                             ResultsState currentState = resultsViewModel.getState();
-                            resultsViewModel.setState(currentState);
+                            System.out.println(username);
 
-                            JOptionPane.showMessageDialog(null, exerciseName + " added!");
+                            try {
+                                resultsController.execute(username,
+                                        exerciseName.get(0),
+                                        exerciseName.get(2),
+                                        exerciseName.get(4),
+                                        exerciseName.get(3));
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            JOptionPane.showMessageDialog(null, exerciseName.get(0) + " added!");
                         }
                     }
                 }

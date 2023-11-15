@@ -1,5 +1,7 @@
 package use_case.results;
 
+import entity.*;
+
 import java.io.IOException;
 
 public class ResultsInteractor implements ResultsInputBoundary{
@@ -7,16 +9,18 @@ public class ResultsInteractor implements ResultsInputBoundary{
     final ResultsDataAccessInterface userDataAccessObject;
 
     public ResultsInteractor(ResultsDataAccessInterface resultsDataAccessInterface,
-                            ResultsOutputBoundary resultsOutputBoundary){
+                             ResultsOutputBoundary resultsOutputBoundary
+    ){
         this.presenter = resultsOutputBoundary;
         this.userDataAccessObject = resultsDataAccessInterface;
     }
 
     @Override
     public void execute(ResultsInputData resultsInputData) throws IOException {
-            // userDataAccessObject.
-            ResultsOutputData resultsOutputData = new ResultsOutputData();
-            presenter.prepareSuccessView(resultsOutputData);
+        userDataAccessObject.saveExercise(resultsInputData.getUsername(), resultsInputData.getTitle(),
+                resultsInputData.getMuscle(), resultsInputData.getDescription(), resultsInputData.getDifficulty());
+        ResultsOutputData resultsOutputData = new ResultsOutputData();
+        presenter.prepareSuccessView(resultsOutputData);
         }
     }
 

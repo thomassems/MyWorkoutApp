@@ -4,6 +4,7 @@ import interface_adapter.delete.DeleteController;
 import interface_adapter.delete.DeleteViewModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.login.LoginState;
 import interface_adapter.retrieve.RetrieveViewModel;
 import interface_adapter.search.SearchViewModel;
 import interface_adapter.search.SearchController;
@@ -148,6 +149,10 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     public void propertyChange(PropertyChangeEvent evt) {
         System.out.println("Property changed: " + evt.getPropertyName());
         LoggedInState state = (LoggedInState) evt.getNewValue();
+        setFields(state);
+    }
+
+    private void setFields(LoggedInState state) {
         username.setText(state.getUsername());
         user.setText(state.getUser());
     }
