@@ -124,14 +124,14 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
             throw new RuntimeException(e);
         }
     }
-    private void saveExercise(String username,String title, String muscle, String description, String difficulty) {
-        if (!exercises.containsKey(username)){
+    public void saveExercise(String username, String title, String muscle, String description, String difficulty) {
+        if (!exercises.containsKey(username)) {
             exercises.put(username, new ArrayList<Exercise>());
         }
         exercises.get(username).add(exerciseFactory.create(title, muscle, description, difficulty));
         this.saveExercise();
     }
-    public void saveExercise(){
+    private void saveExercise(){
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new FileWriter(exerciseFile));
