@@ -325,9 +325,24 @@ public class LoginViewTest {
         assertNotEquals(loginView, viewManagerModel.getActiveView());
     }
 
-    @Test
-    public void testErrorMessages(){
-
-    }
-
+   @Test
+   public void errorMessages(){
+       LoginInputBoundary sib = null;
+       LoginController controller = new LoginController(sib);
+       LoginViewModel viewModel = new LoginViewModel();
+       ViewManagerModel viewManagerModel = new ViewManagerModel();
+       SignupViewModel loginViewModel = new SignupViewModel();
+       JPanel loginView = new LoginView(viewModel,controller,viewManagerModel,loginViewModel);
+       JFrame jf = new JFrame();
+       jf.setContentPane(loginView);
+       jf.pack();
+       jf.setVisible(true);
+       LabelTextPanel panel = (LabelTextPanel) loginView.getComponent(3);
+       try {
+           sleep(1000);
+       } catch (InterruptedException e) {
+           throw new RuntimeException(e);
+       }
+       assertNotEquals(loginView, viewManagerModel.getActiveView());
+   }
 }
