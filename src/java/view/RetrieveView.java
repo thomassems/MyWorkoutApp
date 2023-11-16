@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class RetrieveView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    public final String viewName = "Saved Exercises";
+    public final String viewName = "saved exercises";
     private final RetrieveViewModel retrieveViewModel;
 
     private final ViewManagerModel viewManagerModel;
@@ -36,7 +36,7 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.retrieveViewModel.addPropertyChangeListener(this);
-        JLabel title = new JLabel("Retrieve Screen");
+        JLabel title = new JLabel("saved exercises");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         RetrieveState currentState = retrieveViewModel.getState();
@@ -74,14 +74,24 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
         }
 
         returnButton = new JButton(retrieveViewModel.RETURN_BUTTON_LABEL);
+
+        returnButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                    }
+                }
+
+        );
+
         buttons.add(returnButton);
 
 
         //this.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
-
+        System.out.println("mark");
         this.add(title);
         this.add(buttons);
-
     }
 
     /**

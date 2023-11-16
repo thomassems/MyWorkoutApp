@@ -91,17 +91,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         }
         );;
 
-        workouts.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                if (evt.getSource().equals(workouts)) {
-                    viewManagerModel.setActiveView(retrieveViewModel.getViewName());
-                    viewManagerModel.firePropertyChanged();
-                    System.out.println("Active view set to: " + retrieveViewModel.getViewName());
-                }
-            }
-        });
-
         search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -116,8 +105,14 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         });
 
         workouts.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(workouts)) {
+
+                    // Switch to retrieve view
+                    viewManagerModel.setActiveView(retrieveViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
+                    System.out.println("Active view set to :" + retrieveViewModel.getViewName());
                 }
             }
         });
