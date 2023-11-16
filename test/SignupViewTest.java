@@ -1,7 +1,9 @@
 import app.*;
 import data_access.FileUserDataAccessObject;
 import entity.ClientFactory;
+import entity.Exercise;
 import entity.ExerciseFactory;
+import entity.User;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.delete.DeleteController;
 import interface_adapter.delete.DeletePresenter;
@@ -14,6 +16,7 @@ import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import use_case.delete.DeleteInputBoundary;
 import use_case.delete.DeleteInteractor;
@@ -24,13 +27,25 @@ import view.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 
 import static java.lang.Thread.sleep;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class SignupViewTest {
+    @Before
+    public void init(){
+        BufferedWriter writer;
+        try {
+            writer = new BufferedWriter(new FileWriter("./usersTEST.csv"));
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     @org.junit.Test
     public void testPassword() {
