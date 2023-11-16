@@ -126,13 +126,21 @@ public class LoggedInTest {
 
     @Test
     public void testDeleteButton(){
-        DeleteInputBoundary deleteInputBoundary = null;
+        SignupViewModel signupViewModel = new SignupViewModel();
+        FileUserDataAccessObject userDataAccessObject;
+
+        try {
+            userDataAccessObject = new FileUserDataAccessObject("./users.csv", "./exercises.csv", new ClientFactory(), new ExerciseFactory());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         LoggedInViewModel viewModel = new LoggedInViewModel();
         ViewManagerModel viewManagerModel = new ViewManagerModel();
-        SignupViewModel signupViewModel = new SignupViewModel();
+        DeleteOutputBoundary deletepresenter = new DeletePresenter(signupViewModel, viewManagerModel);
+        DeleteInputBoundary deleteInteractor = new DeleteInteractor(userDataAccessObject, deletepresenter);
         SearchViewModel searchViewModel = new SearchViewModel();
         RetrieveViewModel retrieveViewModel = new RetrieveViewModel();
-        DeleteController deleteController = new DeleteController(deleteInputBoundary);
+        DeleteController deleteController = new DeleteController(deleteInteractor);
         JPanel loggedinView = new LoggedInView(viewModel,viewManagerModel,signupViewModel,searchViewModel, retrieveViewModel,deleteController);
         JFrame jf = new JFrame();
         jf.setContentPane(loggedinView);
