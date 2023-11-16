@@ -25,25 +25,36 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
     private final ViewManagerModel viewManagerModel;
     private final LoggedInViewModel loggedInViewModel;
 
+    private final ResultsViewModel resultsViewModel;
+
     private final ArrayList<JLabel> savedExercisesList = new ArrayList<JLabel>();
     final ArrayList<JButton> deleteButtons = new ArrayList<JButton>();
     final JButton returnButton;
     private final RetrieveController retrieveController;
     public RetrieveView(RetrieveViewModel retrieveViewModel, RetrieveController controller, ViewManagerModel viewManagerModel,
-                        LoggedInViewModel loggedInViewModel) {
+                        LoggedInViewModel loggedInViewModel, ResultsViewModel resultsViewModel) {
         this.retrieveController = controller;
         this.retrieveViewModel = retrieveViewModel;
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
+        this.resultsViewModel = resultsViewModel;
         this.retrieveViewModel.addPropertyChangeListener(this);
         JLabel title = new JLabel("saved exercises");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         RetrieveState currentState = retrieveViewModel.getState();
-
-        retrieveController.execute(currentState.getUsername());
+        retrieveController.execute(loggedInViewModel.getState().getUsername());
 
         JPanel buttons = new JPanel();
+
+        retrieveViewModel.addPropertyChangeListener(
+                new PropertyChangeListener() {
+                    @Override
+                    public void propertyChange(PropertyChangeEvent evt) {
+
+                    }
+                }
+        );
 
         if (retrieveViewModel.getSavedExercises()!=null) {
             for (ArrayList<String> exercise : retrieveViewModel.getSavedExercises()) {
@@ -88,8 +99,7 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
         buttons.add(returnButton);
 
 
-        //this.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
-        System.out.println("mark");
+        //this.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS))
         this.add(title);
         this.add(buttons);
     }

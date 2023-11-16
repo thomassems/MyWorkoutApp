@@ -62,7 +62,7 @@ public class Main {
         ResultsView resultsView = ResultsUseCaseFactory.create(viewManagerModel, resultsViewModel, searchViewModel, loggedInViewModel, userDataAccessObject);
         views.add(resultsView, resultsView.viewName);
 
-        RetrieveView retrieveView = RetrieveUseCaseFactory.create(viewManagerModel, retrieveViewModel, loggedInViewModel, userDataAccessObject);
+        RetrieveView retrieveView = RetrieveUseCaseFactory.create(viewManagerModel, retrieveViewModel, loggedInViewModel, resultsViewModel, userDataAccessObject);
         views.add(retrieveView, retrieveView.viewName);
 
         // Create a LoggedInView

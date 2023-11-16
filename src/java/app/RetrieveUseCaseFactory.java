@@ -5,6 +5,7 @@ import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.results.ResultsViewModel;
 import interface_adapter.retrieve.RetrieveController;
 import interface_adapter.retrieve.RetrievePresenter;
 import interface_adapter.retrieve.RetrieveViewModel;
@@ -34,10 +35,10 @@ public class RetrieveUseCaseFactory {
     }
 
     public static RetrieveView create(
-            ViewManagerModel viewManagerModel, RetrieveViewModel retrieveViewModel, LoggedInViewModel loggedInViewModel, RetrieveUserDataAccessInterface userDataAccessObject) {
+            ViewManagerModel viewManagerModel, RetrieveViewModel retrieveViewModel, LoggedInViewModel loggedInViewModel, ResultsViewModel resultsViewModel, RetrieveUserDataAccessInterface userDataAccessObject) {
         try {
             RetrieveController retrieveController = createUserRetrieveUseCase(viewManagerModel, retrieveViewModel, userDataAccessObject);
-            return new RetrieveView(retrieveViewModel, retrieveController, viewManagerModel, loggedInViewModel);
+            return new RetrieveView(retrieveViewModel, retrieveController, viewManagerModel, loggedInViewModel, resultsViewModel);
 
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
