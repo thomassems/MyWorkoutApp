@@ -1,7 +1,9 @@
 import app.*;
 import data_access.FileUserDataAccessObject;
+import entity.Client;
 import entity.ClientFactory;
 import entity.ExerciseFactory;
+import entity.User;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.delete.DeleteController;
 import interface_adapter.delete.DeletePresenter;
@@ -14,6 +16,7 @@ import interface_adapter.search.SearchViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupViewModel;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import use_case.delete.DeleteInputBoundary;
 import use_case.delete.DeleteInteractor;
@@ -25,6 +28,8 @@ import view.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import static java.lang.Thread.sleep;
@@ -32,6 +37,23 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class LoginViewTest {
+    @Before
+    public void init(){
+        BufferedWriter writer;
+        BufferedWriter writer2;
+        try {
+            writer = new BufferedWriter(new FileWriter("./usersTEST.csv"));
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            writer2 = new BufferedWriter(new FileWriter("./exercisesTEST.csv"));
+            writer2.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @org.junit.Test
     public void testLoginView() {{
         JFrame application = new JFrame("MyWorkout App");
@@ -115,8 +137,7 @@ public class LoginViewTest {
 
         LabelTextPanel panel1 = (LabelTextPanel) loginView.getComponent(3);
         JTextField passwordField = (JTextField) panel1.getComponent(1);
-
-
+        userDataAccessObject.save(new Client("a", "TEST1", "A"));
         KeyEvent event1 = new KeyEvent(
                 usernameField,
                 KeyEvent.KEY_TYPED,
