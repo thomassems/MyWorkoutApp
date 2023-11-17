@@ -1,5 +1,6 @@
 import app.*;
 import data_access.FileUserDataAccessObject;
+import entity.Client;
 import entity.ClientFactory;
 import entity.ExerciseFactory;
 import interface_adapter.ViewManagerModel;
@@ -146,7 +147,7 @@ public class SearchViewTest {
 
         LabelTextPanel panel1 = (LabelTextPanel) loginView.getComponent(3);
         JTextField passwordField = (JTextField) panel1.getComponent(1);
-
+        userDataAccessObject.save(new Client("a", "TEST1", "A"));
 
         KeyEvent event1 = new KeyEvent(
                 usernameField,
