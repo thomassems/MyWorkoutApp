@@ -147,7 +147,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         setFields(state);
     }
 
-    private void setFields(LoggedInState state) {
+    public void setFields(LoggedInState state) {
         username.setText(state.getUsername());
         user.setText(state.getUser());
     }
