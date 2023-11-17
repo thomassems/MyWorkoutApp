@@ -33,6 +33,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     private final JButton signUp;
     private final JButton logIn;
+    private Boolean testing = false;
 
     public SignupView(SignupController controller,
                       SignupViewModel signupViewModel,
@@ -197,11 +198,16 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     public void propertyChange(PropertyChangeEvent evt) {
         SignupState state = (SignupState) evt.getNewValue();
         if (state.getUsernameError() != null) {
-            JOptionPane.showMessageDialog(this, state.getUsernameError());
+            if (testing == false) {
+                JOptionPane.showMessageDialog(this, state.getUsernameError());
+            }
             state.setUsernameError(null);
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {}
+    public void setTesting(){
+        this.testing=true;
+    }
 }
