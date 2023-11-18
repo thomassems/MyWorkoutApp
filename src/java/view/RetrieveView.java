@@ -43,11 +43,44 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         RetrieveState currentState = retrieveViewModel.getState();
-        retrieveController.execute(loggedInViewModel.getState().getUsername());
-
         JPanel buttons = new JPanel();
 
         retrieveViewModel.addPropertyChangeListener(
+                new PropertyChangeListener() {
+                    @Override
+                    public void propertyChange(PropertyChangeEvent evt) {
+                        if ("savedExercisesLabels".equals(evt.getPropertyName())) {
+                            for (ArrayList<String> exercise : retrieveViewModel.getSavedExercises()) {
+                                JLabel newExerciseLabel = new JLabel();
+                                newExerciseLabel.setName(exercise.get(0));
+                                newExerciseLabel.setText("Name: " + exercise.get(0) + " " + exercise.get(1) + " | " + exercise.get(2) + "\n" + exercise.get(3));
+                                savedExercisesList.add(newExerciseLabel);
+                                JButton newDeleteButton = new JButton(retrieveViewModel.DELETE_BUTTON_LABEL);
+                                newDeleteButton.setName(exercise.get(0));
+
+                                newDeleteButton.addActionListener(
+                                        new ActionListener() {
+                                            public void actionPerformed(ActionEvent evt) {
+                                                if (evt.getSource().equals(deleteButtons)) {
+                                                    RetrieveState currentState = retrieveViewModel.getState();
+
+                                                    retrieveController.execute(
+                                                            currentState.getUsername()
+                                                    );
+                                                }
+                                            }
+                                        }
+                                );
+                                deleteButtons.add(newDeleteButton);
+                                newExerciseLabel.add(newDeleteButton);
+                                buttons.add(newExerciseLabel);
+                            }
+                        }
+                    }
+                }
+        );
+
+        resultsViewModel.addPropertyChangeListener(
                 new PropertyChangeListener() {
                     @Override
                     public void propertyChange(PropertyChangeEvent evt) {
@@ -56,33 +89,6 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
                 }
         );
 
-        if (retrieveViewModel.getSavedExercises()!=null) {
-            for (ArrayList<String> exercise : retrieveViewModel.getSavedExercises()) {
-                JLabel newExerciseLabel = new JLabel();
-                newExerciseLabel.setName(exercise.get(0));
-                newExerciseLabel.setText("Name: " + exercise.get(0) + " " + exercise.get(1) + " | " + exercise.get(2) + "\n" + exercise.get(3));
-                savedExercisesList.add(newExerciseLabel);
-                JButton newDeleteButton = new JButton(retrieveViewModel.DELETE_BUTTON_LABEL);
-                newDeleteButton.setName(exercise.get(0));
-
-                newDeleteButton.addActionListener(
-                        new ActionListener() {
-                            public void actionPerformed(ActionEvent evt) {
-                                if (evt.getSource().equals(deleteButtons)) {
-                                    RetrieveState currentState = retrieveViewModel.getState();
-
-                                    retrieveController.execute(
-                                            currentState.getUsername()
-                                    );
-                                }
-                            }
-                        }
-                );
-                deleteButtons.add(newDeleteButton);
-                newExerciseLabel.add(newDeleteButton);
-                buttons.add(newExerciseLabel);
-            }
-        }
 
         returnButton = new JButton(retrieveViewModel.RETURN_BUTTON_LABEL);
 
@@ -90,6 +96,13 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        if (e.getSource().equals(returnButton)) {
+
+                            // Switch to LoggedInView
+                            viewManagerModel.setActiveView(loggedInViewModel.getViewName());
+                            viewManagerModel.firePropertyChanged();
+                            System.out.println("Active view set to: " + loggedInViewModel.getViewName());
+                        }
 
                     }
                 }
