@@ -76,7 +76,7 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
                                 JPanel singleExercise = new JPanel();
 
                                 // Create text area
-                                JTextArea newExerciseLabel = new JTextArea(1,100);
+                                JTextArea newExerciseLabel = new JTextArea(1,110);
                                 newExerciseLabel.setEditable(false);
                                 newExerciseLabel.setLineWrap(true);
                                 newExerciseLabel.setWrapStyleWord(true);
@@ -160,9 +160,10 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
 
         );
 
-//        // Add a scroll panel to the screen
-//        JScrollPane scrollPane = new JScrollPane(exercisesPanel, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-//        exercisesPanel.add(scrollPane, BorderLayout.NORTH);
+        // Add a scroll panel to the screen
+        //JScrollPane scrollPane = new JScrollPane(exercisesPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        //this.add(scrollPane);
+
         panelGridBagConstraints.gridx = 0;
         panelGridBagConstraints.gridy = 0;
         this.add(title, panelGridBagConstraints);

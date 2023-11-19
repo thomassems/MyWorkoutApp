@@ -224,7 +224,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
                             }
 
                             JOptionPane.showMessageDialog(null, exerciseName.get(0) + " added!");
-                            // retrieveController.execute(retrieveViewModel.getState().getUsername());
+                            //retrieveController.execute(retrieveViewModel.getState().getUsername());
                         }
                     }
                 }
