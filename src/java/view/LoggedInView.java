@@ -5,6 +5,8 @@ import interface_adapter.delete.DeleteViewModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginState;
+import interface_adapter.retrieve.RetrieveController;
+import interface_adapter.retrieve.RetrieveState;
 import interface_adapter.retrieve.RetrieveViewModel;
 import interface_adapter.search.SearchViewModel;
 import interface_adapter.search.SearchController;
@@ -33,6 +35,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     final JButton logOut;
     final JButton search;
     private final DeleteController deleteController;
+    private final RetrieveController retrieveController;
     final JButton workouts;
     final JButton delete;
     JLabel user;
@@ -43,7 +46,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                         SearchViewModel searchViewModel,
                         RetrieveViewModel retrieveViewModel,
 //                        DeleteViewModel deleteViewModel,
-                        DeleteController deleteController) {
+                        DeleteController deleteController, RetrieveController retrieveController) {
         this.loggedInViewModel = loggedInViewModel;
         this.viewManagerModel = viewManagerModel;
         this.signupViewModel = signupViewModel;
@@ -51,6 +54,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         this.retrieveViewModel = retrieveViewModel;
 //        this.deleteViewModel = deleteViewModel;
         this.deleteController = deleteController;
+        this.retrieveController = retrieveController;
 
         this.loggedInViewModel.addPropertyChangeListener(this);
 
@@ -108,10 +112,12 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(workouts)) {
+                    LoggedInState currentState = loggedInViewModel.getState();
 
                     // Switch to retrieve view
                     viewManagerModel.setActiveView(retrieveViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
+                    //retrieveController.execute(currentState.getUsername());
                     System.out.println("Active view set to :" + retrieveViewModel.getViewName());
                 }
             }

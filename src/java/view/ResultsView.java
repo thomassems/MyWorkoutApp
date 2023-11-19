@@ -7,6 +7,8 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.results.ResultsController;
 import interface_adapter.results.ResultsState;
 import interface_adapter.results.ResultsViewModel;
+import interface_adapter.retrieve.RetrieveController;
+import interface_adapter.retrieve.RetrieveViewModel;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
@@ -28,6 +30,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
     private final ViewManagerModel viewManagerModel;
     private final LoggedInViewModel loggedInViewModel;
     private final SearchViewModel searchViewModel;
+    private final RetrieveViewModel retrieveViewModel;
 
     ArrayList<ArrayList<String>> results = new ArrayList<ArrayList<String>>();
     private final ArrayList<ArrayList<String>> resultsError = null;
@@ -37,18 +40,21 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
     final JButton search;
     final JButton workouts;
     private final ResultsController resultsController;
+    private final RetrieveController retrieveController;
     private JPanel searchResultPanel;  // Create a panel to contain the search results
 
     public ResultsView(ResultsViewModel resultsViewModel,
                        ResultsController controller,
                        ViewManagerModel viewManagerModel,
                        LoggedInViewModel loggedInViewModel,
-                       SearchViewModel searchViewModel) {
+                       SearchViewModel searchViewModel, RetrieveViewModel retrieveViewModel, RetrieveController retrieveController) {
         this.resultsController = controller;
         this.resultsViewModel = resultsViewModel;
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.searchViewModel = searchViewModel;
+        this.retrieveViewModel = retrieveViewModel;
+        this.retrieveController = retrieveController;
 //        this.results = resultsViewModel.getExercise();
         this.resultsViewModel.addPropertyChangeListener(this);
 
@@ -81,6 +87,21 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
                     }
                 }
         );
+
+        workouts.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(workouts)) {
+                    LoggedInState currentState = loggedInViewModel.getState();
+
+                    // Switch to retrieve view
+                    viewManagerModel.setActiveView(retrieveViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
+                    System.out.println("Active view set to :" + retrieveViewModel.getViewName());
+                }
+            }
+        });
+
         home.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -203,6 +224,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
                             }
 
                             JOptionPane.showMessageDialog(null, exerciseName.get(0) + " added!");
+                            // retrieveController.execute(retrieveViewModel.getState().getUsername());
                         }
                     }
                 }

@@ -9,6 +9,8 @@ import interface_adapter.delete.DeleteViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.results.ResultsViewModel;
+import interface_adapter.retrieve.RetrieveController;
+import interface_adapter.retrieve.RetrievePresenter;
 import interface_adapter.retrieve.RetrieveViewModel;
 import interface_adapter.search.SearchViewModel;
 import interface_adapter.signup.SignupViewModel;
@@ -16,6 +18,9 @@ import interface_adapter.ViewManagerModel;
 import use_case.delete.DeleteInputBoundary;
 import use_case.delete.DeleteInteractor;
 import use_case.delete.DeleteOutputBoundary;
+import use_case.retrieve.RetrieveInputBoundary;
+import use_case.retrieve.RetrieveInteractor;
+import use_case.retrieve.RetrieveOutputBoundary;
 import view.*;
 
 import javax.swing.*;
@@ -50,6 +55,10 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        RetrieveOutputBoundary retrievePresenter = new RetrievePresenter(viewManagerModel, retrieveViewModel);
+        RetrieveInputBoundary retrieveInteractor = new RetrieveInteractor(userDataAccessObject, retrievePresenter);
+        RetrieveController retrieveController = new RetrieveController(retrieveInteractor);
+
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
@@ -59,10 +68,10 @@ public class Main {
         SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, loggedInViewModel, resultsViewModel, userDataAccessObject);
         views.add(searchView, searchView.viewName);
 
-        ResultsView resultsView = ResultsUseCaseFactory.create(viewManagerModel, resultsViewModel, searchViewModel, loggedInViewModel, userDataAccessObject);
+        ResultsView resultsView = ResultsUseCaseFactory.create(viewManagerModel, resultsViewModel, searchViewModel, loggedInViewModel, retrieveViewModel, userDataAccessObject, retrieveController);
         views.add(resultsView, resultsView.viewName);
 
-        RetrieveView retrieveView = RetrieveUseCaseFactory.create(viewManagerModel, retrieveViewModel, loggedInViewModel, userDataAccessObject);
+        RetrieveView retrieveView = RetrieveUseCaseFactory.create(viewManagerModel, retrieveViewModel, loggedInViewModel, resultsViewModel, userDataAccessObject);
         views.add(retrieveView, retrieveView.viewName);
 
         // Create a LoggedInView
@@ -73,7 +82,7 @@ public class Main {
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel, viewManagerModel, signupViewModel, searchViewModel,
 //                deleteViewModel,
                 retrieveViewModel,
-                deleteController);
+                deleteController, retrieveController);
         views.add(loggedInView, loggedInView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
