@@ -40,21 +40,19 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
     final JButton search;
     final JButton workouts;
     private final ResultsController resultsController;
-    private final RetrieveController retrieveController;
     private JPanel searchResultPanel;  // Create a panel to contain the search results
 
     public ResultsView(ResultsViewModel resultsViewModel,
                        ResultsController controller,
                        ViewManagerModel viewManagerModel,
                        LoggedInViewModel loggedInViewModel,
-                       SearchViewModel searchViewModel, RetrieveViewModel retrieveViewModel, RetrieveController retrieveController) {
+                       SearchViewModel searchViewModel, RetrieveViewModel retrieveViewModel) {
         this.resultsController = controller;
         this.resultsViewModel = resultsViewModel;
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.searchViewModel = searchViewModel;
         this.retrieveViewModel = retrieveViewModel;
-        this.retrieveController = retrieveController;
 //        this.results = resultsViewModel.getExercise();
         this.resultsViewModel.addPropertyChangeListener(this);
 
@@ -224,7 +222,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
                             }
 
                             JOptionPane.showMessageDialog(null, exerciseName.get(0) + " added!");
-                            //retrieveController.execute(retrieveViewModel.getState().getUsername());
+                            retrieveViewModel.firePropertyChanged();
                         }
                     }
                 }

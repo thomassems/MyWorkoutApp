@@ -55,10 +55,6 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        RetrieveOutputBoundary retrievePresenter = new RetrievePresenter(viewManagerModel, retrieveViewModel);
-        RetrieveInputBoundary retrieveInteractor = new RetrieveInteractor(userDataAccessObject, retrievePresenter);
-        RetrieveController retrieveController = new RetrieveController(retrieveInteractor);
-
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
@@ -68,7 +64,7 @@ public class Main {
         SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, loggedInViewModel, resultsViewModel, userDataAccessObject);
         views.add(searchView, searchView.viewName);
 
-        ResultsView resultsView = ResultsUseCaseFactory.create(viewManagerModel, resultsViewModel, searchViewModel, loggedInViewModel, retrieveViewModel, userDataAccessObject, retrieveController);
+        ResultsView resultsView = ResultsUseCaseFactory.create(viewManagerModel, resultsViewModel, searchViewModel, loggedInViewModel, retrieveViewModel, userDataAccessObject);
         views.add(resultsView, resultsView.viewName);
 
         RetrieveView retrieveView = RetrieveUseCaseFactory.create(viewManagerModel, retrieveViewModel, loggedInViewModel, resultsViewModel, userDataAccessObject);
@@ -78,6 +74,10 @@ public class Main {
         DeleteOutputBoundary deletepresenter = new DeletePresenter(signupViewModel, viewManagerModel);
         DeleteInputBoundary deleteInteractor = new DeleteInteractor(userDataAccessObject, deletepresenter);
         DeleteController deleteController = new DeleteController(deleteInteractor);
+
+        RetrieveOutputBoundary retrievePresenter = new RetrievePresenter(viewManagerModel, retrieveViewModel);
+        RetrieveInputBoundary retrieveInteractor = new RetrieveInteractor(userDataAccessObject, retrievePresenter);
+        RetrieveController retrieveController = new RetrieveController(retrieveInteractor);
         
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel, viewManagerModel, signupViewModel, searchViewModel,
 //                deleteViewModel,

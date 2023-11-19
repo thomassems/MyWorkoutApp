@@ -121,7 +121,7 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
                 new PropertyChangeListener() {
                     @Override
                     public void propertyChange(PropertyChangeEvent evt) {
-                        if ("saved exercises".equals(evt.getSource())) {
+                        if ("saved exercises".equals(evt.getPropertyName())) {
                             ArrayList<ArrayList<String>> exercises = retrieveViewModel.getSavedExercises();
                             ArrayList<String> newExercise = exercises.get(exercises.size()-1);
 
@@ -134,7 +134,11 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
                             newExerciseLabel.setText("Name: " + newExercise.get(0) + " " + newExercise.get(1) + " | " + newExercise.get(2) + " " + newExercise.get(3));
                             savedExercisesList.add(newExerciseLabel);
 
-                            exercisesPanel.add(newExerciseLabel, gridBagConstraints);
+                            JPanel singleExercise = new JPanel();
+                            singleExercise.add(newExerciseLabel);
+
+                            exercisesPanel.add(singleExercise, gridBagConstraints);
+                            gridBagConstraints.gridy++;
                         }
 
                     }
