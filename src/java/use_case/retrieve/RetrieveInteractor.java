@@ -23,12 +23,12 @@ public class RetrieveInteractor implements RetrieveInputBoundary {
     public void execute(RetrieveInputData retrieveInputData) {
         String username = retrieveInputData.getUsername();
         if (userDataAccessObject.getSavedExercises(username) != null) {
-            retrievePresenter.prepareFailView(username + ": No Saved Exercises.");
-        } else {
             ArrayList<Exercise> exercises = userDataAccessObject.getSavedExercises(username);
 
             RetrieveOutputData retrieveOutputData = new RetrieveOutputData(exercises, false);
             retrievePresenter.prepareSuccessView(retrieveOutputData);
+        } else {
+            retrievePresenter.prepareFailView(username + ": No Saved Exercises.");
         }
     }
 }

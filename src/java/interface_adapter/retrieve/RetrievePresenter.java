@@ -33,6 +33,7 @@ public class RetrievePresenter implements RetrieveOutputBoundary {
                 exercisesList.add(new ArrayList<String>(List.of(exercise.getTitle(), exercise.getDifficulty(), exercise.getMuscle(), exercise.getDescription())));
             }
         }
+        this.retrieveViewModel.setSavedExercises(exercisesList);
         retrieveState.setSavedExercises(exercisesList);
         // Sets the exercises in the SearchState.
         this.retrieveViewModel.setState(retrieveState);
