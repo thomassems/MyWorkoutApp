@@ -28,7 +28,7 @@ public class RetrieveViewModel extends ViewModel {
 
     // This is what the Signup Presenter will call to let the ViewModel know to alert the View
     public void firePropertyChanged() {
-        support.firePropertyChange("state", null, this.state);
+        support.firePropertyChange("saved exercises", null, this.state);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -45,6 +45,7 @@ public class RetrieveViewModel extends ViewModel {
 
     public void setSavedExercises(ArrayList<ArrayList<String>> savedExercises) {
         this.savedExercisesLabels = savedExercises;
+        firePropertyChanged();
     }
 }
 
