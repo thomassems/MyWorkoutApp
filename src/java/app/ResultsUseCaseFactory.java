@@ -31,12 +31,12 @@ public class ResultsUseCaseFactory {
             ViewManagerModel viewManagerModel,
             ResultsViewModel resultsViewModel,
             SearchViewModel searchViewModel,
-            LoggedInViewModel loggedInViewModel,
-            ResultsDataAccessInterface userDataAccessObject) {
+            LoggedInViewModel loggedInViewModel, RetrieveViewModel retrieveViewModel,
+            ResultsDataAccessInterface userDataAccessObject, RetrieveController retrieveController) {
 
         try {
             ResultsController resultsController = createResultsUseCase(viewManagerModel, resultsViewModel, userDataAccessObject);
-            return new ResultsView(resultsViewModel, resultsController, viewManagerModel, loggedInViewModel, searchViewModel);
+            return new ResultsView(resultsViewModel, resultsController, viewManagerModel, loggedInViewModel, searchViewModel, retrieveViewModel, retrieveController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open search data.");
         }

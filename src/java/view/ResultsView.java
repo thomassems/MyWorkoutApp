@@ -97,7 +97,6 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
                     // Switch to retrieve view
                     viewManagerModel.setActiveView(retrieveViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
-                    //retrieveController.execute(currentState.getUsername());
                     System.out.println("Active view set to :" + retrieveViewModel.getViewName());
                 }
             }
@@ -225,7 +224,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
                             }
 
                             JOptionPane.showMessageDialog(null, exerciseName.get(0) + " added!");
-                            //retrieveController.execute()
+                            // retrieveController.execute(retrieveViewModel.getState().getUsername());
                         }
                     }
                 }
