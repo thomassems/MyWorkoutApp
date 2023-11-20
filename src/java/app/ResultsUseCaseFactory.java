@@ -34,7 +34,6 @@ public class ResultsUseCaseFactory {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open search data.");
         }
-
         return null;
     }
 
