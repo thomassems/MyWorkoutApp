@@ -1,3 +1,5 @@
+package view;
+
 import app.*;
 import data_access.FileUserDataAccessObject;
 import entity.ClientFactory;
@@ -26,6 +28,7 @@ import view.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.*;
 import java.util.ArrayList;

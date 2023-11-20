@@ -1,3 +1,5 @@
+package view;
+
 import app.*;
 import data_access.FileUserDataAccessObject;
 import entity.Client;
