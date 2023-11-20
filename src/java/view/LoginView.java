@@ -50,8 +50,16 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
         JPanel buttons = new JPanel();
         logIn = new JButton(loginViewModel.LOGIN_BUTTON_LABEL);
+        logIn.setBackground(new java.awt.Color(10, 153, 255));
+        logIn.setOpaque(true);
+        logIn.setBorderPainted(false);
+        logIn.setForeground(Color.white);
         buttons.add(logIn);
         cancel = new JButton(loginViewModel.CANCEL_BUTTON_LABEL);
+        cancel.setBackground(Color.white);
+        cancel.setOpaque(true);
+        cancel.setBorderPainted(false);
+        cancel.setForeground(new java.awt.Color(10, 153, 255));
         buttons.add(cancel);
 
         logIn.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
