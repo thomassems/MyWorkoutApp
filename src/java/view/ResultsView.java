@@ -7,6 +7,7 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.results.ResultsController;
 import interface_adapter.results.ResultsState;
 import interface_adapter.results.ResultsViewModel;
+import interface_adapter.retrieve.RetrieveViewModel;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
@@ -29,6 +30,8 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
     private final LoggedInViewModel loggedInViewModel;
     private final SearchViewModel searchViewModel;
 
+    private final RetrieveViewModel retrieveViewModel;
+
     ArrayList<ArrayList<String>> results = new ArrayList<ArrayList<String>>();
     private final ArrayList<ArrayList<String>> resultsError = null;
 
@@ -42,13 +45,14 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
     public ResultsView(ResultsViewModel resultsViewModel,
                        ResultsController controller,
                        ViewManagerModel viewManagerModel,
-                       LoggedInViewModel loggedInViewModel,
+                       LoggedInViewModel loggedInViewModel, RetrieveViewModel retrieveViewModel,
                        SearchViewModel searchViewModel) {
         this.resultsController = controller;
         this.resultsViewModel = resultsViewModel;
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.searchViewModel = searchViewModel;
+        this.retrieveViewModel = retrieveViewModel;
 //        this.results = resultsViewModel.getExercise();
         this.resultsViewModel.addPropertyChangeListener(this);
 
@@ -90,6 +94,19 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
                     viewManagerModel.setActiveView(loggedInViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                     System.out.println("Active view set to: " + loggedInViewModel.getViewName());
+                }
+            }
+        });
+
+        workouts.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(workouts)) {
+
+                    // Switch to retrieve view
+                    viewManagerModel.setActiveView(retrieveViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
+                    System.out.println("Active view set to :" + retrieveViewModel.getViewName());
                 }
             }
         });

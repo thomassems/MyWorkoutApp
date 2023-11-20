@@ -6,6 +6,7 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.results.ResultsController;
 import interface_adapter.results.ResultsPresenter;
 import interface_adapter.results.ResultsViewModel;
+import interface_adapter.retrieve.RetrieveViewModel;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchViewModel;
 import use_case.results.ResultsDataAccessInterface;
@@ -24,12 +25,12 @@ public class ResultsUseCaseFactory {
             ViewManagerModel viewManagerModel,
             ResultsViewModel resultsViewModel,
             SearchViewModel searchViewModel,
-            LoggedInViewModel loggedInViewModel,
+            LoggedInViewModel loggedInViewModel, RetrieveViewModel retrieveViewModel,
             ResultsDataAccessInterface userDataAccessObject) {
 
         try {
             ResultsController resultsController = createResultsUseCase(viewManagerModel, resultsViewModel, userDataAccessObject);
-            return new ResultsView(resultsViewModel, resultsController, viewManagerModel, loggedInViewModel, searchViewModel);
+            return new ResultsView(resultsViewModel, resultsController, viewManagerModel, loggedInViewModel, retrieveViewModel, searchViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open search data.");
         }
