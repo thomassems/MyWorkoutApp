@@ -38,14 +38,7 @@ public class LoggedInViewModel extends ViewModel {
 
     public LoggedInState getState() {
         return state;
-    }
+    }}
 
 
-    public String getLoggedInUser() {
-        return loggedInUser;
-    }
 
-    public void setLoggedInUser(String loggedInUser) {
-        this.loggedInUser = loggedInUser;
-    }
-}

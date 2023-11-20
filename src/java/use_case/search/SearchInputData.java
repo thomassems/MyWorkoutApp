@@ -20,11 +20,5 @@ public class SearchInputData {
     public String getDifficulty(){
         return difficulty;
     }
-    public ArrayList<String> getSearchParameters() {
-        ArrayList<String> parameters = new ArrayList<>();
-        parameters.add(exerciseType);
-        parameters.add(muscleGroup);
-        parameters.add(difficulty);
-        return parameters;
-    }
+
 }
