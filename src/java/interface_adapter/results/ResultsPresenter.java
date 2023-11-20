@@ -17,6 +17,8 @@ public class ResultsPresenter implements ResultsOutputBoundary {
     private final RetrieveViewModel retrieveViewModel;
     private ViewManagerModel viewManagerModel;
     // Creates a private field for the ViewManagerModel.
+
+    /** Initializes the presenter with a viewmanager model, and resultsviewmodel parameter */
     public ResultsPresenter(ViewManagerModel viewManagerModel,
                             ResultsViewModel resultsViewModel,
                             RetrieveViewModel retrieveViewModel) {
@@ -25,6 +27,7 @@ public class ResultsPresenter implements ResultsOutputBoundary {
         this.resultsViewModel = resultsViewModel;
         this.retrieveViewModel = retrieveViewModel;
     }
+    /** On success, we update the view and its necessary parameters using the output data */
     @Override
     public void prepareSuccessView(ResultsOutputData response) {
         // On success, update the Results view.
