@@ -19,7 +19,8 @@ public class ResultsInteractor implements ResultsInputBoundary{
     public void execute(ResultsInputData resultsInputData) throws IOException {
         userDataAccessObject.saveExercise(resultsInputData.getUsername(), resultsInputData.getTitle(),
                 resultsInputData.getMuscle(), resultsInputData.getDescription(), resultsInputData.getDifficulty());
-        ResultsOutputData resultsOutputData = new ResultsOutputData();
+        ResultsOutputData resultsOutputData = new ResultsOutputData(resultsInputData.getTitle(),
+                resultsInputData.getMuscle(), resultsInputData.getDifficulty(), resultsInputData.getDescription());
         presenter.prepareSuccessView(resultsOutputData);
         }
     }

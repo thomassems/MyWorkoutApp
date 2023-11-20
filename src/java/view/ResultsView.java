@@ -220,6 +220,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
                             }
 
                             JOptionPane.showMessageDialog(null, exerciseName.get(0) + " added!");
+                            //retrieveViewModel.firePropertyChanged();
                         }
                     }
                 }
