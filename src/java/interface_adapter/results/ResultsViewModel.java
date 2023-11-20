@@ -1,7 +1,6 @@
 package interface_adapter.results;
 
 import interface_adapter.ViewModel;
-import interface_adapter.search.SearchState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -20,23 +19,24 @@ public class ResultsViewModel extends ViewModel {
 
     private ResultsState state = new ResultsState();
 
+    /** Instantiates ResultsViewModel with "results" parameter as the view name */
     public ResultsViewModel() {
         super("results");
     }
-
+    /** Initializes the state */
     public void setState(ResultsState state) {
         this.state = state;
     }
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    // This is what the Signup Presenter will call to let the ViewModel know to alert the View
+    /** Alerts the view of a property change. This will be called by the presenter */
     public void firePropertyChanged() {
         // Fire property change for "exercise"
         support.firePropertyChange("exercise", null, this.state);
     }
-//    }
 
+    /** Adds a property change listener to the view model */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
