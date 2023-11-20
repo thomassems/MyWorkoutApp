@@ -35,10 +35,4 @@ public class ResultsPresenter implements ResultsOutputBoundary {
         this.viewManagerModel.firePropertyChanged();
         // Notifies observers of the ViewManagerModel change.
     }
-    public void prepareFailView(String error) {
-        ResultsState resultsState = resultsViewModel.getState();
-        // Gets the state from the ResultsViewModel.
-        resultsViewModel.firePropertyChanged();
-        // Notifies observers of the ViewModel change.
-    }
 }

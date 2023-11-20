@@ -42,8 +42,6 @@ public class RetrieveUseCaseFactory {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
-
-
         return null;
     }
 
