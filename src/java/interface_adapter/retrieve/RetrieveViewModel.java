@@ -47,5 +47,10 @@ public class RetrieveViewModel extends ViewModel {
         this.savedExercisesLabels = savedExercises;
         firePropertyChanged();
     }
+
+    public void logOut() {
+        this.savedExercisesLabels = null;
+        firePropertyChanged();
+    }
 }
 

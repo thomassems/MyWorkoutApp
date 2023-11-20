@@ -109,42 +109,76 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
                                     gridBagConstraints.gridy++;
                                 }
                             }
+                            retrieveViewModel.addPropertyChangeListener(
+                                    new PropertyChangeListener() {
+                                        @Override
+                                        public void propertyChange(PropertyChangeEvent evt) {
+
+                                            if ("saved exercises".equals(evt.getPropertyName())) {
+                                                ArrayList<ArrayList<String>> exercises = retrieveViewModel.getSavedExercises();
+                                                if (!exercises.isEmpty()) {
+                                                    ArrayList<String> newExercise = exercises.get(exercises.size() - 1);
+
+                                                    JTextArea newExerciseLabel = new JTextArea(1, 110);
+                                                    newExerciseLabel.setEditable(false);
+                                                    newExerciseLabel.setLineWrap(true);
+                                                    newExerciseLabel.setWrapStyleWord(true);
+
+                                                    newExerciseLabel.setName(newExercise.get(0));
+                                                    newExerciseLabel.setText("Name: " + newExercise.get(0) + " " + newExercise.get(1) + " | " + newExercise.get(2) + " " + newExercise.get(3));
+                                                    savedExercisesList.add(newExerciseLabel);
+
+                                                    JPanel singleExercise = new JPanel();
+                                                    singleExercise.add(newExerciseLabel);
+
+                                                    exercisesPanel.add(singleExercise, gridBagConstraints);
+                                                    gridBagConstraints.gridy++;
+
+                                                }
+                                                else {
+                                                    
+                                                }
+                                            }
+
+                                        }
+                                    }
+                            );
                         }
                     }
                 }
             );
 
-        retrieveViewModel.addPropertyChangeListener(
-                new PropertyChangeListener() {
-                    @Override
-                    public void propertyChange(PropertyChangeEvent evt) {
-
-                        if ("saved exercises".equals(evt.getPropertyName())) {
-                            ArrayList<ArrayList<String>> exercises = retrieveViewModel.getSavedExercises();
-                            if (!exercises.isEmpty()) {
-                                ArrayList<String> newExercise = exercises.get(exercises.size() - 1);
-
-                                JTextArea newExerciseLabel = new JTextArea(1, 110);
-                                newExerciseLabel.setEditable(false);
-                                newExerciseLabel.setLineWrap(true);
-                                newExerciseLabel.setWrapStyleWord(true);
-
-                                newExerciseLabel.setName(newExercise.get(0));
-                                newExerciseLabel.setText("Name: " + newExercise.get(0) + " " + newExercise.get(1) + " | " + newExercise.get(2) + " " + newExercise.get(3));
-                                savedExercisesList.add(newExerciseLabel);
-
-                                JPanel singleExercise = new JPanel();
-                                singleExercise.add(newExerciseLabel);
-
-                                exercisesPanel.add(singleExercise, gridBagConstraints);
-                                gridBagConstraints.gridy++;
-
-                            }
-                        }
-
-                    }
-                }
-        );
+//        retrieveViewModel.addPropertyChangeListener(
+//                new PropertyChangeListener() {
+//                    @Override
+//                    public void propertyChange(PropertyChangeEvent evt) {
+//
+//                        if ("saved exercises".equals(evt.getPropertyName())) {
+//                            ArrayList<ArrayList<String>> exercises = retrieveViewModel.getSavedExercises();
+//                            if (!exercises.isEmpty()) {
+//                                ArrayList<String> newExercise = exercises.get(exercises.size() - 1);
+//
+//                                JTextArea newExerciseLabel = new JTextArea(1, 110);
+//                                newExerciseLabel.setEditable(false);
+//                                newExerciseLabel.setLineWrap(true);
+//                                newExerciseLabel.setWrapStyleWord(true);
+//
+//                                newExerciseLabel.setName(newExercise.get(0));
+//                                newExerciseLabel.setText("Name: " + newExercise.get(0) + " " + newExercise.get(1) + " | " + newExercise.get(2) + " " + newExercise.get(3));
+//                                savedExercisesList.add(newExerciseLabel);
+//
+//                                JPanel singleExercise = new JPanel();
+//                                singleExercise.add(newExerciseLabel);
+//
+//                                exercisesPanel.add(singleExercise, gridBagConstraints);
+//                                gridBagConstraints.gridy++;
+//
+//                            }
+//                        }
+//
+//                    }
+//                }
+//        );
 
         returnButton = new JButton(retrieveViewModel.RETURN_BUTTON_LABEL);
 
