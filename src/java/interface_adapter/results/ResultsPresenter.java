@@ -16,7 +16,7 @@ public class ResultsPresenter implements ResultsOutputBoundary {
     private ViewManagerModel viewManagerModel;
     // Creates a private field for the ViewManagerModel.
     public ResultsPresenter(ViewManagerModel viewManagerModel,
-                           ResultsViewModel resultsViewModel) {
+                            ResultsViewModel resultsViewModel) {
         this.viewManagerModel = viewManagerModel;
         // Constructor: Initializes the ViewManagerModel field.
         this.resultsViewModel = resultsViewModel;

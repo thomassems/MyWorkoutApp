@@ -130,7 +130,6 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
                 }
                 ResultsState currentState = resultsViewModel.getState();
                 resultsViewModel.setState(currentState);
-
             }
         });
         // Make pane scrollable
