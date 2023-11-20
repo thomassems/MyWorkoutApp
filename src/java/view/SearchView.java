@@ -180,28 +180,10 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 //        }
 //    }
 
-    private void displaySearchResults(ArrayList<String> query) {
-        searchResultPanel.removeAll(); // Clear previous search results
-        for (String result : query) {
-            JButton resultButton = new JButton("Result " + result);
-            resultButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Handle the result button click here if needed ?? check
-                }
-            });
-            searchResultPanel.add(resultButton); // Add result button to the search results panel
-        }
-        searchResultPanel.revalidate(); // Update the layout
-        searchResultPanel.repaint(); // Repaint the panel
-    }
-
     /**
      * React to a button click that results in evt.
      */
-    public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
-    }
+    public void actionPerformed(ActionEvent evt) {}
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

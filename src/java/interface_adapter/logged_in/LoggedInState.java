@@ -4,11 +4,6 @@ public class LoggedInState {
     private String username = "";
     private String user="";
 
-    public LoggedInState(LoggedInState copy) {
-        username = copy.username;
-        user= copy.user;;
-    }
-
     // Because of the previous copy constructor, the default constructor must be explicit.
     public LoggedInState() {}
 

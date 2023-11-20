@@ -115,7 +115,7 @@ public class SignupInteractor implements SignupInputBoundary {
     }
 
     private boolean containsComma(String input) {
-        return input != null && input.contains(",");
+        return input != null &&(input.contains(",") || input.contains(";"));
     }
 
 }
