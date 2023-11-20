@@ -27,11 +27,11 @@ public class ResultsPresenter implements ResultsOutputBoundary {
     }
     @Override
     public void prepareSuccessView(ResultsOutputData response) {
-        // On success, update the switch view.
+        // On success, update the Results view.
         ResultsState resultsState = resultsViewModel.getState();
-        // Sets the exerciseSearchResults in the SearchState.
+        // Sets the exerciseSearchResults in the ResultsState.
         this.resultsViewModel.setState(resultsState);
-        // Updates the state in the SearchViewModel.
+        // Updates the state in the ResultsViewModel.
         this.resultsViewModel.firePropertyChanged();
         // Notifies observers of the ViewModel change.
 
@@ -41,5 +41,11 @@ public class ResultsPresenter implements ResultsOutputBoundary {
         // Sets the active view in the ViewManagerModel to the logged-in view.
         this.viewManagerModel.firePropertyChanged();
         // Notifies observers of the ViewManagerModel change.
+    }
+    public void prepareFailView(String error) {
+        ResultsState resultsState = resultsViewModel.getState();
+        // Gets the state from the ResultsViewModel.
+        resultsViewModel.firePropertyChanged();
+        // Notifies observers of the ViewModel change.
     }
 }
