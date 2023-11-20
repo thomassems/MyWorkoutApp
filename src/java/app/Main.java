@@ -22,7 +22,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
+import static java.awt.Window.getWindows;
+
 public class Main {
+    private static boolean testing = false;
     public static void main(String[] args) {
         JFrame application = new JFrame("MyWorkout App");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -81,5 +84,14 @@ public class Main {
 
         application.pack();
         application.setVisible(true);
+        if (testing==true){
+            Window[] windows = getWindows();
+            for (Window window : windows)
+            {   window.dispose();
+            }
+        }
+    }
+    public static void setTesting(){
+        testing = true;
     }
 }
