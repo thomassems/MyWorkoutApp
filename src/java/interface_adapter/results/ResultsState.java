@@ -9,11 +9,6 @@ public class ResultsState {
     private ArrayList<ArrayList<String>> exerciseError = null;
 
     /** Copy constructor for creating a new ResultsState instance as a copy of another ResultsState*/
-    public ResultsState(ResultsState copy) {
-        // Copy the values from the provided 'copy' instance
-        exercise = copy.exercise;
-        exerciseError = copy.exerciseError;
-    }
     /** Default constructor to create an empty ResultsState (required due to the presence of a copy constructor)*/
     public ResultsState() {}
 

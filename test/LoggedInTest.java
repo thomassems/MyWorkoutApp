@@ -220,7 +220,7 @@ public class LoggedInTest {
         views.add(loginView, loginView.viewName);
         SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, loggedInViewModel, resultsViewModel, userDataAccessObject);
         views.add(searchView, searchView.viewName);
-        ResultsView resultsView = ResultsUseCaseFactory.create(viewManagerModel, resultsViewModel, searchViewModel, loggedInViewModel, userDataAccessObject);
+        ResultsView resultsView = ResultsUseCaseFactory.create(viewManagerModel, resultsViewModel, searchViewModel, loggedInViewModel, retrieveViewModel, userDataAccessObject);
         views.add(resultsView, resultsView.viewName);
         RetrieveView retrieveView = RetrieveUseCaseFactory.create(viewManagerModel, retrieveViewModel, loggedInViewModel, userDataAccessObject);
         views.add(retrieveView, retrieveView.viewName);
