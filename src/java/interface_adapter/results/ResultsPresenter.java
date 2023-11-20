@@ -1,18 +1,12 @@
 package interface_adapter.results;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.search.SearchState;
-import interface_adapter.search.SearchViewModel;
 import use_case.results.ResultsOutputBoundary;
 import use_case.results.ResultsOutputData;
-import use_case.search.SearchOutputBoundary;
-import use_case.search.SearchOutputData;
-
-import java.util.ArrayList;
 
 public class ResultsPresenter implements ResultsOutputBoundary {
     private final ResultsViewModel resultsViewModel;
-    // Creates a private field for the SearchViewModel.
+    // Creates a private field for the ResultsViewModel.
     private ViewManagerModel viewManagerModel;
     // Creates a private field for the ViewManagerModel.
     public ResultsPresenter(ViewManagerModel viewManagerModel,
@@ -23,11 +17,11 @@ public class ResultsPresenter implements ResultsOutputBoundary {
     }
     @Override
     public void prepareSuccessView(ResultsOutputData response) {
-        // On success, update the switch view.
+        // On success, update the Results view.
         ResultsState resultsState = resultsViewModel.getState();
-        // Sets the exerciseSearchResults in the SearchState.
+        // Sets the exerciseSearchResults in the ResultsState.
         this.resultsViewModel.setState(resultsState);
-        // Updates the state in the SearchViewModel.
+        // Updates the state in the ResultsViewModel.
         this.resultsViewModel.firePropertyChanged();
         // Notifies observers of the ViewModel change.
         this.viewManagerModel.setActiveView(resultsViewModel.getViewName());
