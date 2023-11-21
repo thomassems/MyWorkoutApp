@@ -11,6 +11,8 @@ import interface_adapter.retrieve.RetrieveViewModel;
 import interface_adapter.search.SearchViewModel;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -120,12 +122,12 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
         );
 
         // Add a scroll panel to the screen
-//        JScrollPane scrollPane = new JScrollPane(exercisesPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane scrollPane = new JScrollPane(exercisesPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(returnButton);
-        this.add(exercisesPanel);
+        this.add(scrollPane);
     }
 
     /**
@@ -148,82 +150,6 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
         results = state.getSavedExercises();
     }
 
-//    private JPanel updateRetrieveView(JPanel jPanel, GridBagConstraints gridBagConstraints) {
-//        LoggedInState currentState = loggedInViewModel.getState();
-//        retrieveController.execute(currentState.getUsername());
-////        RetrieveState currentRetrieveState = retrieveViewModel.getState();
-////        retrieveViewModel.setState(currentRetrieveState);
-//
-//
-//        // Create a text area for each exercises in the user's saved list
-//        if (retrieveViewModel.getSavedExercises() != null) {
-//            for (ArrayList<String> exercise : retrieveViewModel.getSavedExercises()) {
-//
-//                JPanel singleExercise = new JPanel();
-//
-//                // Create text area
-//                JTextArea newExerciseLabel = new JTextArea(1, 110);
-//                newExerciseLabel.setEditable(false);
-//                newExerciseLabel.setLineWrap(true);
-//                newExerciseLabel.setWrapStyleWord(true);
-//                newExerciseLabel.setName(exercise.get(0));
-//                newExerciseLabel.setText("Name: " + exercise.get(0) + " " + exercise.get(1) + " | " + exercise.get(2) + " " + exercise.get(3));
-//
-//                // Add the text area to the list of saved exercises arraylist
-//                savedExercisesList.add(newExerciseLabel);
-//
-//                //                                JButton newDeleteButton = new JButton(retrieveViewModel.DELETE_BUTTON_LABEL);
-//                //                                newDeleteButton.setName(exercise.get(0));
-//                //
-//                //                                newDeleteButton.addActionListener(
-//                //                                        new ActionListener() {
-//                //                                            public void actionPerformed(ActionEvent evt) {
-//                //                                                if (evt.getSource().equals(deleteButtons)) {
-//                //                                                    RetrieveState currentState = retrieveViewModel.getState();
-//                //
-//                //                                                    retrieveController.execute(
-//                //                                                            currentState.getUsername()
-//                //                                                    );
-//                //                                                }
-//                //                                            }
-//                //                                        }
-//                //                                );
-//                //                                deleteButtons.add(newDeleteButton);
-//                //                                singleExercise.add(newDeleteButton);
-//
-//                // Add the exercise to the exercises panel
-//                singleExercise.add(newExerciseLabel);
-//                jPanel.add(singleExercise, gridBagConstraints);
-//
-//                // Increment to the next row to display the next exercise
-//                gridBagConstraints.gridy++;
-//            }
-//        }
-//        return jPanel;
-//    }
-
-    //    private JPanel displayNewExercise(JPanel jPanel, ArrayList<ArrayList<String>> exercises, GridBagConstraints gridBagConstraints) {
-//        // Get only the most recently added exercise.
-////        ArrayList<String> newExercise = exercises.get(exercises.size() - 1);
-//        jPanel.removeAll();
-//
-//        for (ArrayList<String> exercise : exercises) {
-//            JTextArea exerciseLabel = new JTextArea();
-//            exerciseLabel.setEditable(false);
-//            exerciseLabel.setLineWrap(true);
-//            exerciseLabel.setWrapStyleWord(true);
-//
-//            exerciseLabel.setName(exercise.get(0));
-//            exerciseLabel.setText("Name: " + exercise.get(0) + " " + exercise.get(1) + " | " + exercise.get(2) + " " + exercise.get(3));
-//
-//            jPanel.add(exerciseLabel);
-//
-//            gridBagConstraints.gridy++;
-//        }
-//
-//        return jPanel;
-//    }
-//}
     private JPanel displayNewExercise(JPanel jPanel, ArrayList<ArrayList<String>> exercises) {
         // Get only the most recently added exercise.
 //        ArrayList<String> newExercise = exercises.get(exercises.size() - 1);
@@ -231,15 +157,33 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
 
         System.out.println(exercises);
 
-        String[] columnNames = {"Name", "Item2", "Item3", "Item4"};
+        String[] columnNames = {"Exercise Name", "Difficulty", "Muscle Group", "Description"};
 
         // Initializing the JTable using SwingUtilities.invokeLater()
         SwingUtilities.invokeLater(() -> {
             JTable j = new JTable(convertTo2DArray(exercises), columnNames);
-//            j.setBounds(30, 40, 400, 300);
 
-            JScrollPane sp = new JScrollPane(j);
-            jPanel.add(sp);
+            j.setDefaultEditor(Object.class, null); // Make all cells non-editable
+
+            j.getColumnModel().getColumn(3).setCellRenderer(new MultilineTableCellRenderer()); // Set custom cell renderer for the last column
+
+            JScrollPane scrollPane = new JScrollPane(j);
+            j.setRowHeight(200);
+
+            // Set selection mode and disable row selection
+            j.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+            j.setRowSelectionAllowed(false);
+
+            // Adjust column widths (example weights, adjust as needed)
+            j.getColumnModel().getColumn(0).setPreferredWidth(200);
+            j.getColumnModel().getColumn(1).setPreferredWidth(80);
+            j.getColumnModel().getColumn(2).setPreferredWidth(80);
+            j.getColumnModel().getColumn(3).setPreferredWidth(300);
+
+            j.setRowHeight(300); // Set the preferred row height for wrapped text
+
+            jPanel.setLayout(new BorderLayout());
+            jPanel.add(scrollPane, BorderLayout.CENTER); // Add the scroll pane directly to the panel
 
             // Repaint the panel after adding components
             jPanel.revalidate();
@@ -257,4 +201,26 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
         }
         return results;
     }
+
+    // TODO: Move this to a separate class
+    public class MultilineTableCellRenderer extends DefaultTableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            JTextArea textArea = new JTextArea(value.toString());
+            textArea.setWrapStyleWord(true);
+            textArea.setLineWrap(true);
+            textArea.setOpaque(true);
+
+            if (isSelected) {
+                textArea.setBackground(table.getSelectionBackground());
+                textArea.setForeground(table.getSelectionForeground());
+            } else {
+                textArea.setBackground(table.getBackground());
+                textArea.setForeground(table.getForeground());
+            }
+
+            return textArea;
+        }
+    }
+
 }
