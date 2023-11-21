@@ -60,9 +60,17 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
         JPanel buttons = new JPanel();
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
+        signUp.setBackground(new java.awt.Color(10, 153, 255));
+        signUp.setOpaque(true);
+        signUp.setBorderPainted(false);
+        signUp.setForeground(Color.white);
         buttons.add(signUp);
-         logIn = new JButton(SignupViewModel.LOGIN_BUTTON_LABEL);
-         buttons.add(logIn);
+        logIn = new JButton(SignupViewModel.LOGIN_BUTTON_LABEL);
+        logIn.setBackground(Color.white);
+        logIn.setOpaque(true);
+        logIn.setBorderPainted(false);
+        logIn.setForeground(new java.awt.Color(10, 153, 255));
+        buttons.add(logIn);
 
         signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.

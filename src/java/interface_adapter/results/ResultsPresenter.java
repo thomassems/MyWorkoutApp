@@ -6,15 +6,12 @@ import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
 import use_case.results.ResultsOutputBoundary;
 import use_case.results.ResultsOutputData;
-import use_case.search.SearchOutputBoundary;
-import use_case.search.SearchOutputData;
-
-import java.util.ArrayList;
 
 public class ResultsPresenter implements ResultsOutputBoundary {
     private final ResultsViewModel resultsViewModel;
     // Creates a private field for the SearchViewModel.
     private final RetrieveViewModel retrieveViewModel;
+    // Creates a private field for the ResultsViewModel.
     private ViewManagerModel viewManagerModel;
     // Creates a private field for the ViewManagerModel.
 
