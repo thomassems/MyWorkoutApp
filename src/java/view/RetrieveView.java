@@ -85,12 +85,13 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
         GridBagConstraints panelGridBagConstraints = new GridBagConstraints();
 
         // Add grid layout to buttons panel
-        exercisesPanel = new JPanel(new GridBagLayout());
+//        exercisesPanel = new JPanel(new GridBagLayout());
+        exercisesPanel = new JPanel();
         // Create grid bag constraints for the exercises panel
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.insets = new Insets(0, 0, 0, 10); // Set the bottom margin (space) between rows
+//        GridBagConstraints gbc = new GridBagConstraints();
+//        gbc.gridx = 0;
+//        gbc.gridy = 0;
+//        gbc.insets = new Insets(0, 0, 0, 10); // Set the bottom margin (space) between rows
 
         retrieveViewModel.addPropertyChangeListener(
                 new PropertyChangeListener() {
@@ -107,7 +108,8 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
 
                             System.out.println(exercises);
                             if (exercises != null && !exercises.isEmpty()) {
-                                displayNewExercise(exercisesPanel, exercises, gbc);
+//                                displayNewExercise(exercisesPanel, exercises, gbc);
+                                displayNewExercise(exercisesPanel, exercises);
                             }
 
 //                            RetrieveState currentRetrieveState = retrieveViewModel.getState();
@@ -118,20 +120,12 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
         );
 
         // Add a scroll panel to the screen
-        //JScrollPane scrollPane = new JScrollPane(exercisesPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        //this.add(scrollPane);
+//        JScrollPane scrollPane = new JScrollPane(exercisesPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        panelGridBagConstraints.gridx = 0;
-        panelGridBagConstraints.gridy = 0;
-        this.add(title, panelGridBagConstraints);
-
-        panelGridBagConstraints.gridx = 2;
-        panelGridBagConstraints.gridy = 0;
-        this.add(returnButton, panelGridBagConstraints);
-
-        panelGridBagConstraints.gridx = 1;
-        panelGridBagConstraints.gridy++;
-        this.add(exercisesPanel, panelGridBagConstraints);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(title);
+        this.add(returnButton);
+        this.add(exercisesPanel);
     }
 
     /**
@@ -140,6 +134,7 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if ("saved exercises".equals(evt.getPropertyName())) {
@@ -149,7 +144,9 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
         }
     }
 
-    private void setFields(RetrieveState state) { results = state.getSavedExercises(); }
+    private void setFields(RetrieveState state) {
+        results = state.getSavedExercises();
+    }
 
 //    private JPanel updateRetrieveView(JPanel jPanel, GridBagConstraints gridBagConstraints) {
 //        LoggedInState currentState = loggedInViewModel.getState();
@@ -205,25 +202,59 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
 //        return jPanel;
 //    }
 
-    private JPanel displayNewExercise(JPanel jPanel, ArrayList<ArrayList<String>> exercises, GridBagConstraints gridBagConstraints) {
+    //    private JPanel displayNewExercise(JPanel jPanel, ArrayList<ArrayList<String>> exercises, GridBagConstraints gridBagConstraints) {
+//        // Get only the most recently added exercise.
+////        ArrayList<String> newExercise = exercises.get(exercises.size() - 1);
+//        jPanel.removeAll();
+//
+//        for (ArrayList<String> exercise : exercises) {
+//            JTextArea exerciseLabel = new JTextArea();
+//            exerciseLabel.setEditable(false);
+//            exerciseLabel.setLineWrap(true);
+//            exerciseLabel.setWrapStyleWord(true);
+//
+//            exerciseLabel.setName(exercise.get(0));
+//            exerciseLabel.setText("Name: " + exercise.get(0) + " " + exercise.get(1) + " | " + exercise.get(2) + " " + exercise.get(3));
+//
+//            jPanel.add(exerciseLabel);
+//
+//            gridBagConstraints.gridy++;
+//        }
+//
+//        return jPanel;
+//    }
+//}
+    private JPanel displayNewExercise(JPanel jPanel, ArrayList<ArrayList<String>> exercises) {
         // Get only the most recently added exercise.
 //        ArrayList<String> newExercise = exercises.get(exercises.size() - 1);
         jPanel.removeAll();
 
-        for (ArrayList<String> exercise : exercises) {
-            JTextArea exerciseLabel = new JTextArea();
-            exerciseLabel.setEditable(false);
-            exerciseLabel.setLineWrap(true);
-            exerciseLabel.setWrapStyleWord(true);
+        System.out.println(exercises);
 
-            exerciseLabel.setName(exercise.get(0));
-            exerciseLabel.setText("Name: " + exercise.get(0) + " " + exercise.get(1) + " | " + exercise.get(2) + " " + exercise.get(3));
+        String[] columnNames = {"Name", "Item2", "Item3", "Item4"};
 
-            jPanel.add(exerciseLabel);
+        // Initializing the JTable using SwingUtilities.invokeLater()
+        SwingUtilities.invokeLater(() -> {
+            JTable j = new JTable(convertTo2DArray(exercises), columnNames);
+//            j.setBounds(30, 40, 400, 300);
 
-            gridBagConstraints.gridy++;
-        }
+            JScrollPane sp = new JScrollPane(j);
+            jPanel.add(sp);
+
+            // Repaint the panel after adding components
+            jPanel.revalidate();
+            jPanel.repaint();
+        });
 
         return jPanel;
+    }
+
+    private String[][] convertTo2DArray(ArrayList<ArrayList<String>> exercises) {
+        String[][] results = new String[exercises.size()][];
+        for (int i = 0; i < exercises.size(); i++) {
+            ArrayList<String> row = exercises.get(i);
+            results[i] = row.toArray(new String[row.size()]);
+        }
+        return results;
     }
 }
