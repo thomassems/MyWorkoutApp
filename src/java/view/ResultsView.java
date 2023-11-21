@@ -23,7 +23,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
+
 public class ResultsView extends JPanel implements ActionListener, PropertyChangeListener {
+    private Boolean testing = false;
     public final String viewName = "results";
     private final ResultsViewModel resultsViewModel;
     private final ViewManagerModel viewManagerModel;
@@ -219,7 +221,9 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
                                 throw new RuntimeException(e);
                             }
 
-                            JOptionPane.showMessageDialog(null, exerciseName.get(0) + " added!");
+                            if (testing == false) {
+                                JOptionPane.showMessageDialog(null, exerciseName.get(0) + " added!");
+                            }
                         }
                     }
                 }
@@ -241,6 +245,9 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
             ResultsState state = (ResultsState) evt.getNewValue();
             setFields(state);
         }
+    }
+    public void setTesting(){
+        this.testing=true;
     }
 
     private void setFields(ResultsState state) {

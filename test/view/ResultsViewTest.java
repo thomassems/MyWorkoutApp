@@ -216,7 +216,7 @@ public class ResultsViewTest {
         LabelTextPanel panel1 = (LabelTextPanel) loginView.getComponent(3);
         JTextField passwordField = (JTextField) panel1.getComponent(1);
         userDataAccessObject.save(new Client("a", "TEST1", "A"));
-
+        resultsView.setTesting();
         KeyEvent event1 = new KeyEvent(
                 usernameField,
                 KeyEvent.KEY_TYPED,
@@ -324,9 +324,22 @@ public class ResultsViewTest {
         JScrollPane scroll = (JScrollPane) resultsView.getComponent(1);
         JViewport port = (JViewport) scroll.getComponent(0);
         JPanel resultpanel = (JPanel) port.getComponent(0);
-        JButton resultbutton = (JButton) resultpanel.getComponent(4);
+        Component[] components = resultpanel.getComponents();
 
-        resultbutton.doClick();
+        for (int i = 0; i < components.length; i++) {
+            Component component = components[i];
+
+            if (component instanceof JButton) {
+                JButton button = (JButton) component;
+                button.doClick();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
         Boolean Results = previous_size < getCsvFileLength("./exercisesTEST.csv");
         Boolean check = Boolean.TRUE;
 
