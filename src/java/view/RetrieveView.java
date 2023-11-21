@@ -108,6 +108,8 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
                                 // Increment to the next row to display the next exercise
                                 gridBagConstraints.gridy++;
                             }
+
+                        }
                             retrieveViewModel.addPropertyChangeListener(
                                     new PropertyChangeListener() {
                                         @Override
@@ -146,8 +148,6 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
                                         }
                                     }
                             );
-                        }
-
                         PropertyChangeListener listener;
                     }
                     }
