@@ -33,7 +33,7 @@ public class LoginPresenter implements LoginOutputBoundary {
         // Sets the username in the LoggedInState.
         this.loggedInViewModel.setState(loggedInState);
         // Updates the state in the LoggedInViewModel.
-        this.loggedInViewModel.firePropertyChanged();
+        this.loggedInViewModel.setLoggedInUser(loginViewModel.getState().getUsername());
         // Notifies observers of the ViewModel change.
         this.viewManagerModel.setActiveView(loggedInViewModel.getViewName());
         // Sets the active view in the ViewManagerModel to the logged-in view.

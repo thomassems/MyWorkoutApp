@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 public class LoggedInView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -85,6 +86,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                     // Switch to the SignupView
                     viewManagerModel.setActiveView(signupViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
+                    retrieveViewModel.logOut();
+                    retrieveViewModel.firePropertyChanged();
 
                     System.out.println("Active view set to: " + signupViewModel.getViewName());
                 }

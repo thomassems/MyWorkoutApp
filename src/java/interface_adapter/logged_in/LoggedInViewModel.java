@@ -47,5 +47,6 @@ public class LoggedInViewModel extends ViewModel {
 
     public void setLoggedInUser(String loggedInUser) {
         this.loggedInUser = loggedInUser;
+        firePropertyChanged();
     }
 }

@@ -24,7 +24,7 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
     private final RetrieveViewModel retrieveViewModel;
     private final ViewManagerModel viewManagerModel;
     private final LoggedInViewModel loggedInViewModel;
-    private final ArrayList<JTextArea> savedExercisesList = new ArrayList<JTextArea>();
+    private ArrayList<JTextArea> savedExercisesList = new ArrayList<JTextArea>();
     final ArrayList<JButton> deleteButtons = new ArrayList<JButton>();
     final JButton returnButton;
     private final RetrieveController retrieveController;
@@ -66,48 +66,47 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
                             retrieveController.execute(currentState.getUsername());
 
                             // Create a text area for each exercises in the user's saved list
-                            if (!retrieveViewModel.getSavedExercises().isEmpty()) {
-                                for (ArrayList<String> exercise : retrieveViewModel.getSavedExercises()) {
+                        if (!retrieveViewModel.getSavedExercises().isEmpty()) {
+                            for (ArrayList<String> exercise : retrieveViewModel.getSavedExercises()) {
 
-                                    JPanel singleExercise = new JPanel();
+                                JPanel singleExercise = new JPanel();
 
-                                    // Create text area
-                                    JTextArea newExerciseLabel = new JTextArea(1, 110);
-                                    newExerciseLabel.setEditable(false);
-                                    newExerciseLabel.setLineWrap(true);
-                                    newExerciseLabel.setWrapStyleWord(true);
-                                    newExerciseLabel.setName(exercise.get(0));
-                                    newExerciseLabel.setText("Name: " + exercise.get(0) + " " + exercise.get(1) + " | " + exercise.get(2) + " " + exercise.get(3));
+                                // Create text area
+                                JTextArea newExerciseLabel = new JTextArea(1, 110);
+                                newExerciseLabel.setEditable(false);
+                                newExerciseLabel.setLineWrap(true);
+                                newExerciseLabel.setWrapStyleWord(true);
+                                newExerciseLabel.setName(exercise.get(0));
+                                newExerciseLabel.setText("Name: " + exercise.get(0) + " " + exercise.get(1) + " | " + exercise.get(2) + " " + exercise.get(3));
 
-                                    // Add the text area to the list of saved exercises arraylist
-                                    savedExercisesList.add(newExerciseLabel);
+                                // Add the text area to the list of saved exercises arraylist
+                                savedExercisesList.add(newExerciseLabel);
 
-                                    //                                JButton newDeleteButton = new JButton(retrieveViewModel.DELETE_BUTTON_LABEL);
-                                    //                                newDeleteButton.setName(exercise.get(0));
-                                    //
-                                    //                                newDeleteButton.addActionListener(
-                                    //                                        new ActionListener() {
-                                    //                                            public void actionPerformed(ActionEvent evt) {
-                                    //                                                if (evt.getSource().equals(deleteButtons)) {
-                                    //                                                    RetrieveState currentState = retrieveViewModel.getState();
-                                    //
-                                    //                                                    retrieveController.execute(
-                                    //                                                            currentState.getUsername()
-                                    //                                                    );
-                                    //                                                }
-                                    //                                            }
-                                    //                                        }
-                                    //                                );
-                                    //                                deleteButtons.add(newDeleteButton);
-                                    //                                singleExercise.add(newDeleteButton);
+                                //                                JButton newDeleteButton = new JButton(retrieveViewModel.DELETE_BUTTON_LABEL);
+                                //                                newDeleteButton.setName(exercise.get(0));
+                                //
+                                //                                newDeleteButton.addActionListener(
+                                //                                        new ActionListener() {
+                                //                                            public void actionPerformed(ActionEvent evt) {
+                                //                                                if (evt.getSource().equals(deleteButtons)) {
+                                //                                                    RetrieveState currentState = retrieveViewModel.getState();
+                                //
+                                //                                                    retrieveController.execute(
+                                //                                                            currentState.getUsername()
+                                //                                                    );
+                                //                                                }
+                                //                                            }
+                                //                                        }
+                                //                                );
+                                //                                deleteButtons.add(newDeleteButton);
+                                //                                singleExercise.add(newDeleteButton);
 
-                                    // Add the exercise to the exercises panel
-                                    singleExercise.add(newExerciseLabel);
-                                    exercisesPanel.add(singleExercise, gridBagConstraints);
+                                // Add the exercise to the exercises panel
+                                singleExercise.add(newExerciseLabel);
+                                exercisesPanel.add(singleExercise, gridBagConstraints);
 
-                                    // Increment to the next row to display the next exercise
-                                    gridBagConstraints.gridy++;
-                                }
+                                // Increment to the next row to display the next exercise
+                                gridBagConstraints.gridy++;
                             }
                             retrieveViewModel.addPropertyChangeListener(
                                     new PropertyChangeListener() {
@@ -116,7 +115,7 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
 
                                             if ("saved exercises".equals(evt.getPropertyName())) {
                                                 ArrayList<ArrayList<String>> exercises = retrieveViewModel.getSavedExercises();
-                                                if (!exercises.isEmpty()) {
+                                                if (exercises != null) {
                                                     ArrayList<String> newExercise = exercises.get(exercises.size() - 1);
 
                                                     JTextArea newExerciseLabel = new JTextArea(1, 110);
@@ -136,7 +135,11 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
 
                                                 }
                                                 else {
-                                                    
+                                                    savedExercisesList = new ArrayList<JTextArea>();
+                                                    if (!retrieveViewModel.getListenerStatus()) {
+                                                        retrieveViewModel.removeListener(this);
+                                                        exercisesPanel.removeAll();
+                                                    }
                                                 }
                                             }
 
@@ -144,9 +147,13 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
                                     }
                             );
                         }
+
+                        PropertyChangeListener listener;
+                    }
                     }
                 }
             );
+
 
 //        retrieveViewModel.addPropertyChangeListener(
 //                new PropertyChangeListener() {

@@ -13,11 +13,13 @@ public class RetrieveViewModel extends ViewModel {
     public static final String RETURN_BUTTON_LABEL = "Return";
     public static final String DELETE_BUTTON_LABEL = "Delete";
     private ArrayList<ArrayList<String>> savedExercisesLabels;
+    private boolean listenerStatus;
 
     private RetrieveState state = new RetrieveState();
 
     public RetrieveViewModel() {
         super("saved exercises");
+        this.listenerStatus = true;
     }
 
     public void setState(RetrieveState state) {
@@ -25,6 +27,23 @@ public class RetrieveViewModel extends ViewModel {
     }
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+
+    public void setListenerStatus(boolean b) {
+        this.listenerStatus = b;
+        firePropertyChanged();
+    }
+
+    public boolean getListenerStatus() {
+        return this.listenerStatus;
+    }
+
+    public void removeListener(PropertyChangeListener listener) {
+        support.removePropertyChangeListener(listener);
+    }
+
+    public void addListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
+    }
 
     // This is what the Signup Presenter will call to let the ViewModel know to alert the View
     public void firePropertyChanged() {
@@ -50,6 +69,7 @@ public class RetrieveViewModel extends ViewModel {
 
     public void logOut() {
         this.savedExercisesLabels = null;
+        this.listenerStatus = false;
         firePropertyChanged();
     }
 }
