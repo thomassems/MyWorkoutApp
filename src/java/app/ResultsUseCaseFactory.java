@@ -29,7 +29,7 @@ public class ResultsUseCaseFactory {
             ResultsDataAccessInterface userDataAccessObject) {
 
         try {
-            ResultsController resultsController = createResultsUseCase(viewManagerModel, resultsViewModel, userDataAccessObject);
+            ResultsController resultsController = createResultsUseCase(viewManagerModel, resultsViewModel, retrieveViewModel, userDataAccessObject);
             return new ResultsView(resultsViewModel, resultsController, viewManagerModel, loggedInViewModel, retrieveViewModel, searchViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open search data.");
@@ -41,10 +41,11 @@ public class ResultsUseCaseFactory {
     private static ResultsController createResultsUseCase(
             ViewManagerModel viewManagerModel,
             ResultsViewModel resultsViewModel,
+            RetrieveViewModel retrieveViewModel,
             ResultsDataAccessInterface userDataAccessObject) throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
-        ResultsOutputBoundary resultsOutputBoundary = new ResultsPresenter(viewManagerModel, resultsViewModel);
+        ResultsOutputBoundary resultsOutputBoundary = new ResultsPresenter(viewManagerModel, resultsViewModel, retrieveViewModel);
 
         ExerciseFactory exerciseFactory = new ExerciseFactory();
 

@@ -38,7 +38,7 @@ public class RetrievePresenter implements RetrieveOutputBoundary {
         // Sets the exercises in the SearchState.
         this.retrieveViewModel.setState(retrieveState);
         // Updates the state in the SearchViewModel.
-        this.retrieveViewModel.firePropertyChanged();
+//        this.retrieveViewModel.firePropertyChanged();
         // Notifies observers of the ViewModel change.
         this.viewManagerModel.setActiveView(retrieveViewModel.getViewName());
         // Sets the active view in the ViewManagerModel to the logged-in view.

@@ -17,7 +17,7 @@ public class RetrieveViewModel extends ViewModel {
     private RetrieveState state = new RetrieveState();
 
     public RetrieveViewModel() {
-        super("Saved Exercises");
+        super("saved exercises");
     }
 
     public void setState(RetrieveState state) {

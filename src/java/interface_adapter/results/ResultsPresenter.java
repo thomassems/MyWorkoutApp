@@ -1,6 +1,7 @@
 package interface_adapter.results;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.retrieve.RetrieveViewModel;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
 import use_case.results.ResultsOutputBoundary;
@@ -13,13 +14,16 @@ import java.util.ArrayList;
 public class ResultsPresenter implements ResultsOutputBoundary {
     private final ResultsViewModel resultsViewModel;
     // Creates a private field for the SearchViewModel.
+    private final RetrieveViewModel retrieveViewModel;
     private ViewManagerModel viewManagerModel;
     // Creates a private field for the ViewManagerModel.
     public ResultsPresenter(ViewManagerModel viewManagerModel,
-                            ResultsViewModel resultsViewModel) {
+                            ResultsViewModel resultsViewModel,
+                            RetrieveViewModel retrieveViewModel) {
         this.viewManagerModel = viewManagerModel;
         // Constructor: Initializes the ViewManagerModel field.
         this.resultsViewModel = resultsViewModel;
+        this.retrieveViewModel = retrieveViewModel;
     }
     @Override
     public void prepareSuccessView(ResultsOutputData response) {
@@ -30,6 +34,9 @@ public class ResultsPresenter implements ResultsOutputBoundary {
         // Updates the state in the SearchViewModel.
         this.resultsViewModel.firePropertyChanged();
         // Notifies observers of the ViewModel change.
+
+        this.retrieveViewModel.firePropertyChanged();
+
         this.viewManagerModel.setActiveView(resultsViewModel.getViewName());
         // Sets the active view in the ViewManagerModel to the logged-in view.
         this.viewManagerModel.firePropertyChanged();
