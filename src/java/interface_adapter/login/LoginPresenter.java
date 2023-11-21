@@ -3,6 +3,7 @@ package interface_adapter.login;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.retrieve.RetrieveViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
 
@@ -11,17 +12,20 @@ public class LoginPresenter implements LoginOutputBoundary {
     // Creates a private field for the LoginViewModel.
     private final LoggedInViewModel loggedInViewModel;
     // Creates a private field for the LoggedInViewModel.
+    private final RetrieveViewModel retrieveViewModel;
     private ViewManagerModel viewManagerModel;
     // Creates a private field for the ViewManagerModel.
     public LoginPresenter(ViewManagerModel viewManagerModel,
                           LoggedInViewModel loggedInViewModel,
-                          LoginViewModel loginViewModel) {
+                          LoginViewModel loginViewModel,
+                          RetrieveViewModel retrieveViewModel) {
         this.viewManagerModel = viewManagerModel;
         // Constructor: Initializes the ViewManagerModel field.
         this.loggedInViewModel = loggedInViewModel;
         // Constructor: Initializes the LoggedInViewModel field.
         this.loginViewModel = loginViewModel;
         // Constructor: Initializes the LoginViewModel field.
+        this.retrieveViewModel = retrieveViewModel;
     }
     @Override
     public void prepareSuccessView(LoginOutputData response) {
@@ -35,6 +39,9 @@ public class LoginPresenter implements LoginOutputBoundary {
         // Updates the state in the LoggedInViewModel.
         this.loggedInViewModel.firePropertyChanged();
         // Notifies observers of the ViewModel change.
+
+        this.retrieveViewModel.firePropertyChanged();
+
         this.viewManagerModel.setActiveView(loggedInViewModel.getViewName());
         // Sets the active view in the ViewManagerModel to the logged-in view.
         this.viewManagerModel.firePropertyChanged();

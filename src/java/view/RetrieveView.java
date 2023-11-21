@@ -11,6 +11,8 @@ import interface_adapter.retrieve.RetrieveViewModel;
 import interface_adapter.search.SearchViewModel;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,10 +26,13 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
     private final RetrieveViewModel retrieveViewModel;
     private final ViewManagerModel viewManagerModel;
     private final LoggedInViewModel loggedInViewModel;
-    private final ArrayList<JTextArea> savedExercisesList = new ArrayList<JTextArea>();
-    final ArrayList<JButton> deleteButtons = new ArrayList<JButton>();
+
+    ArrayList<ArrayList<String>> results = new ArrayList<ArrayList<String>>();
+
     final JButton returnButton;
     private final RetrieveController retrieveController;
+    private JPanel exercisesPanel;  // Create a panel to contain the search results
+
     public RetrieveView(RetrieveViewModel retrieveViewModel, RetrieveController controller, ViewManagerModel viewManagerModel,
                         LoggedInViewModel loggedInViewModel) {
 
@@ -37,112 +42,28 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
         this.loggedInViewModel = loggedInViewModel;
         this.retrieveViewModel.addPropertyChangeListener(this);
 
-        // Set layout for JPanel
-        GridBagLayout panelGridBagLayout = new GridBagLayout();
-        GridBagConstraints panelGridBagConstraints = new GridBagConstraints();
-
-        JLabel title = new JLabel("saved exercises");
+        JLabel title = new JLabel(RetrieveViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        RetrieveState currentState = retrieveViewModel.getState();
+        returnButton = new JButton(retrieveViewModel.RETURN_BUTTON_LABEL);
 
-        // Add grid layout to buttons panel
-        JPanel exercisesPanel = new JPanel(new GridBagLayout());
-
-        // Create grid bag constraints for the exercises panel
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+//        RetrieveState currentState = retrieveViewModel.getState();
 
         // Observe when the user logs in succesfully
-        loggedInViewModel.addPropertyChangeListener(
-                new PropertyChangeListener() {
-                    @Override
-                    public void propertyChange(PropertyChangeEvent evt) {
-                        if ("logged in state".equals(evt.getPropertyName())) {
-
-                            // Get the saved exercises when the user logs in
-                            LoggedInState currentState = loggedInViewModel.getState();
-                            retrieveController.execute(currentState.getUsername());
-
-                            // Create a text area for each exercises in the user's saved list
-                            if (retrieveViewModel.getSavedExercises() != null) {
-                                for (ArrayList<String> exercise : retrieveViewModel.getSavedExercises()) {
-
-                                    JPanel singleExercise = new JPanel();
-
-                                    // Create text area
-                                    JTextArea newExerciseLabel = new JTextArea(1, 110);
-                                    newExerciseLabel.setEditable(false);
-                                    newExerciseLabel.setLineWrap(true);
-                                    newExerciseLabel.setWrapStyleWord(true);
-                                    newExerciseLabel.setName(exercise.get(0));
-                                    newExerciseLabel.setText("Name: " + exercise.get(0) + " " + exercise.get(1) + " | " + exercise.get(2) + " " + exercise.get(3));
-
-                                    // Add the text area to the list of saved exercises arraylist
-                                    savedExercisesList.add(newExerciseLabel);
-
-                                    //                                JButton newDeleteButton = new JButton(retrieveViewModel.DELETE_BUTTON_LABEL);
-                                    //                                newDeleteButton.setName(exercise.get(0));
-                                    //
-                                    //                                newDeleteButton.addActionListener(
-                                    //                                        new ActionListener() {
-                                    //                                            public void actionPerformed(ActionEvent evt) {
-                                    //                                                if (evt.getSource().equals(deleteButtons)) {
-                                    //                                                    RetrieveState currentState = retrieveViewModel.getState();
-                                    //
-                                    //                                                    retrieveController.execute(
-                                    //                                                            currentState.getUsername()
-                                    //                                                    );
-                                    //                                                }
-                                    //                                            }
-                                    //                                        }
-                                    //                                );
-                                    //                                deleteButtons.add(newDeleteButton);
-                                    //                                singleExercise.add(newDeleteButton);
-
-                                    // Add the exercise to the exercises panel
-                                    singleExercise.add(newExerciseLabel);
-                                    exercisesPanel.add(singleExercise, gridBagConstraints);
-
-                                    // Increment to the next row to display the next exercise
-                                    gridBagConstraints.gridy++;
-                                }
-                            }
-                        }
-                    }
-                }
-            );
-
-//        retrieveViewModel.addPropertyChangeListener(
+//        loggedInViewModel.addPropertyChangeListener(
 //                new PropertyChangeListener() {
 //                    @Override
 //                    public void propertyChange(PropertyChangeEvent evt) {
-//                        if ("saved exercises".equals(evt.getPropertyName())) {
-//                            ArrayList<ArrayList<String>> exercises = retrieveViewModel.getSavedExercises();
-//                            ArrayList<String> newExercise = exercises.get(exercises.size()-1);
+//                        if ("logged in state".equals(evt.getPropertyName())) {
+//                            System.out.println("Logged in state updated");
 //
-//                            JTextArea newExerciseLabel = new JTextArea();
-//                            newExerciseLabel.setEditable(false);
-//                            newExerciseLabel.setLineWrap(true);
-//                            newExerciseLabel.setWrapStyleWord(true);
-//
-//                            newExerciseLabel.setName(newExercise.get(0));
-//                            newExerciseLabel.setText("Name: " + newExercise.get(0) + " " + newExercise.get(1) + " | " + newExercise.get(2) + " " + newExercise.get(3));
-//                            savedExercisesList.add(newExerciseLabel);
-//
-//                            JPanel singleExercise = new JPanel();
-//                            singleExercise.add(newExerciseLabel);
-//
-//                            exercisesPanel.add(singleExercise, gridBagConstraints);
-//                            gridBagConstraints.gridy++;
+//                            // Get the saved exercises when the user logs in
+//                            LoggedInState currentState = loggedInViewModel.getState();
+//                            loggedInViewModel.setState(currentState);
 //                        }
-//
 //                    }
 //                }
-//        );
-
-        returnButton = new JButton(retrieveViewModel.RETURN_BUTTON_LABEL);
+//            );
 
         returnButton.addActionListener(
                 new ActionListener() {
@@ -161,21 +82,52 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
 
         );
 
+        // Set layout for JPanel
+        GridBagLayout panelGridBagLayout = new GridBagLayout();
+        GridBagConstraints panelGridBagConstraints = new GridBagConstraints();
+
+        // Add grid layout to buttons panel
+//        exercisesPanel = new JPanel(new GridBagLayout());
+        exercisesPanel = new JPanel();
+        // Create grid bag constraints for the exercises panel
+//        GridBagConstraints gbc = new GridBagConstraints();
+//        gbc.gridx = 0;
+//        gbc.gridy = 0;
+//        gbc.insets = new Insets(0, 0, 0, 10); // Set the bottom margin (space) between rows
+
+        retrieveViewModel.addPropertyChangeListener(
+                new PropertyChangeListener() {
+                    @Override
+                    public void propertyChange(PropertyChangeEvent evt) {
+                        if ("saved exercises".equals(evt.getPropertyName())) {
+
+                            LoggedInState currentState = loggedInViewModel.getState();
+                            retrieveController.execute(currentState.getUsername());
+//                            RetrieveState currentRetrieveState = retrieveViewModel.getState();
+//                            retrieveViewModel.setState(currentRetrieveState);
+                            ArrayList<ArrayList<String>> exercises = retrieveViewModel.getSavedExercises();
+                            System.out.println(exercises);
+
+                            System.out.println(exercises);
+                            if (exercises != null && !exercises.isEmpty()) {
+//                                displayNewExercise(exercisesPanel, exercises, gbc);
+                                displayNewExercise(exercisesPanel, exercises);
+                            }
+
+//                            RetrieveState currentRetrieveState = retrieveViewModel.getState();
+//                            retrieveViewModel.setState(currentRetrieveState);
+                        }
+                    }
+                }
+        );
+
         // Add a scroll panel to the screen
-        //JScrollPane scrollPane = new JScrollPane(exercisesPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        //this.add(scrollPane);
+        JScrollPane scrollPane = new JScrollPane(exercisesPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        panelGridBagConstraints.gridx = 0;
-        panelGridBagConstraints.gridy = 0;
-        this.add(title, panelGridBagConstraints);
-
-        panelGridBagConstraints.gridx = 2;
-        panelGridBagConstraints.gridy = 0;
-        this.add(returnButton, panelGridBagConstraints);
-
-        panelGridBagConstraints.gridx = 1;
-        panelGridBagConstraints.gridy++;
-        this.add(exercisesPanel, panelGridBagConstraints);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(title);
+        this.add(returnButton);
+        this.add(scrollPane);
     }
 
     /**
@@ -184,8 +136,91 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        RetrieveState state = (RetrieveState) evt.getNewValue();
+        if ("saved exercises".equals(evt.getPropertyName())) {
+            System.out.println("Property changed: " + evt.getPropertyName());
+            RetrieveState state = (RetrieveState) evt.getNewValue();
+            setFields(state);
+        }
     }
+
+    private void setFields(RetrieveState state) {
+        results = state.getSavedExercises();
+    }
+
+    private JPanel displayNewExercise(JPanel jPanel, ArrayList<ArrayList<String>> exercises) {
+        // Get only the most recently added exercise.
+//        ArrayList<String> newExercise = exercises.get(exercises.size() - 1);
+        jPanel.removeAll();
+
+        System.out.println(exercises);
+
+        String[] columnNames = {"Exercise Name", "Difficulty", "Muscle Group", "Description"};
+
+        // Initializing the JTable using SwingUtilities.invokeLater()
+        SwingUtilities.invokeLater(() -> {
+            JTable j = new JTable(convertTo2DArray(exercises), columnNames);
+
+            j.setDefaultEditor(Object.class, null); // Make all cells non-editable
+
+            j.getColumnModel().getColumn(3).setCellRenderer(new MultilineTableCellRenderer()); // Set custom cell renderer for the last column
+
+            JScrollPane scrollPane = new JScrollPane(j);
+            j.setRowHeight(200);
+
+            // Set selection mode and disable row selection
+            j.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+            j.setRowSelectionAllowed(false);
+
+            // Adjust column widths (example weights, adjust as needed)
+            j.getColumnModel().getColumn(0).setPreferredWidth(200);
+            j.getColumnModel().getColumn(1).setPreferredWidth(80);
+            j.getColumnModel().getColumn(2).setPreferredWidth(80);
+            j.getColumnModel().getColumn(3).setPreferredWidth(300);
+
+            j.setRowHeight(300); // Set the preferred row height for wrapped text
+
+            jPanel.setLayout(new BorderLayout());
+            jPanel.add(scrollPane, BorderLayout.CENTER); // Add the scroll pane directly to the panel
+
+            // Repaint the panel after adding components
+            jPanel.revalidate();
+            jPanel.repaint();
+        });
+
+        return jPanel;
+    }
+
+    private String[][] convertTo2DArray(ArrayList<ArrayList<String>> exercises) {
+        String[][] results = new String[exercises.size()][];
+        for (int i = 0; i < exercises.size(); i++) {
+            ArrayList<String> row = exercises.get(i);
+            results[i] = row.toArray(new String[row.size()]);
+        }
+        return results;
+    }
+
+    // TODO: Move this to a separate class
+    public class MultilineTableCellRenderer extends DefaultTableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            JTextArea textArea = new JTextArea(value.toString());
+            textArea.setWrapStyleWord(true);
+            textArea.setLineWrap(true);
+            textArea.setOpaque(true);
+
+            if (isSelected) {
+                textArea.setBackground(table.getSelectionBackground());
+                textArea.setForeground(table.getSelectionForeground());
+            } else {
+                textArea.setBackground(table.getBackground());
+                textArea.setForeground(table.getForeground());
+            }
+
+            return textArea;
+        }
+    }
+
 }

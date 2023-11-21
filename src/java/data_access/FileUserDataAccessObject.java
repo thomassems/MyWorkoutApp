@@ -75,7 +75,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                     String name = "";
                     ArrayList<Exercise> exerciselist = new ArrayList<>();
                     for (String i: col){
-                        String[] element = i.split(",");
+                        String[] element = i.split("\\|");
                         if (element.length == 1){
                             name = element[0];
                         }
@@ -135,14 +135,14 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new FileWriter(exerciseFile));
-            writer.write("username; exercises(title, muscle, description, difficulty)");
+            writer.write("username; exercises(title| muscle| description| difficulty)");
             writer.newLine();
 
             for (String username : exercises.keySet()) {
                 String line = username + ";";
                 ArrayList<Exercise> exerList = exercises.get(username);
                 for (Exercise exer: exerList){
-                    line = line + String.format("%s,%s,%s, %s;", exer.getTitle(), exer.getMuscle(), exer.getDescription(), exer.getDifficulty());
+                    line = line + String.format("%s|%s|%s|%s;", exer.getTitle(), exer.getMuscle(), exer.getDescription(), exer.getDifficulty());
                 }
                 writer.write(line);
                 writer.newLine();

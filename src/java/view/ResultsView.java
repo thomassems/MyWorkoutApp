@@ -106,6 +106,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
                     // Switch to retrieve view
                     viewManagerModel.setActiveView(retrieveViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
+                    retrieveViewModel.firePropertyChanged();
                     System.out.println("Active view set to :" + retrieveViewModel.getViewName());
                 }
             }
@@ -124,13 +125,14 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
             public void propertyChange(PropertyChangeEvent evt) {
                 // Handle the property change event, e.g., update the UI with new exercises
                 if ("exercise".equals(evt.getPropertyName())) {
+
                     // TODO: Line below, is it according to CA to get the Usename?
+
                     String username = loggedInViewModel.getState().getUsername();
                     searchResultPanel = updateResultsPanel(searchResultPanel, resultsViewModel.getExercise(), gridBagConstraints, username);
                 }
                 ResultsState currentState = resultsViewModel.getState();
                 resultsViewModel.setState(currentState);
-
             }
         });
         // Make pane scrollable
