@@ -75,6 +75,10 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
                             viewManagerModel.setActiveView(loggedInViewModel.getViewName());
                             viewManagerModel.firePropertyChanged();
                             System.out.println("Active view set to: " + loggedInViewModel.getViewName());
+
+                            // Reset the exercises panel every time the user goes back to the home screen
+                            exercisesPanel.removeAll();
+                            results = new ArrayList<ArrayList<String>>();
                         }
 
                     }

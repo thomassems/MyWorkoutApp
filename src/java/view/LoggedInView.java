@@ -85,6 +85,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                     // Switch to the SignupView
                     viewManagerModel.setActiveView(signupViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
+
                     System.out.println("Active view set to: " + signupViewModel.getViewName());
                 }
             }
@@ -112,6 +113,10 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                     // Switch to retrieve view
                     viewManagerModel.setActiveView(retrieveViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
+
+                    // Make the retrieve view screen match the retrieve view model again (set saved exercises on exercises panel)
+                    retrieveViewModel.firePropertyChanged();
+
                     System.out.println("Active view set to :" + retrieveViewModel.getViewName());
                 }
             }
