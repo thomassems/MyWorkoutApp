@@ -213,18 +213,30 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
                             ResultsState currentState = resultsViewModel.getState();
                             System.out.println(username);
 
-                            try {
-                                resultsController.execute(username,
-                                        exerciseName.get(0),
-                                        exerciseName.get(2),
-                                        exerciseName.get(4),
-                                        exerciseName.get(3));
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
+                            ArrayList exerciseToSave = new ArrayList<>();
+                            exerciseToSave.add(exerciseName.get(0));
+                            exerciseToSave.add(exerciseName.get(3));
+                            exerciseToSave.add(exerciseName.get(2));
+                            exerciseToSave.add(exerciseName.get(4));
 
-                            if (testing == false) {
+                            // Only save the newly added exercise if it does not exist already in the user's saved list.
+                            if (!retrieveViewModel.getSavedExercises().contains(exerciseToSave)) {
+
+                                try {
+                                    resultsController.execute(username,
+                                            exerciseName.get(0),
+                                            exerciseName.get(2),
+                                            exerciseName.get(4),
+                                            exerciseName.get(3));
+                                } catch (IOException e) {
+                                throw new RuntimeException(e);
+                                }
+
                                 JOptionPane.showMessageDialog(null, exerciseName.get(0) + " added!");
+                            }
+                            else {
+                                // Show popup that the exercise has already been added if it exists in the saved list.
+                                JOptionPane.showMessageDialog(null, "This exercise has already been previously saved.");
                             }
                         }
                     }
