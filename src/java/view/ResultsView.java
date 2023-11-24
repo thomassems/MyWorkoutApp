@@ -220,7 +220,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
                             exerciseToSave.add(exerciseName.get(4));
 
                             // Only save the newly added exercise if it does not exist already in the user's saved list.
-                            if (!retrieveViewModel.getSavedExercises().contains(exerciseToSave)) {
+                            if (testing == false && !retrieveViewModel.getSavedExercises().contains(exerciseToSave)) {
 
                                 try {
                                     resultsController.execute(username,
@@ -234,7 +234,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
 
                                 JOptionPane.showMessageDialog(null, exerciseName.get(0) + " added!");
                             }
-                            else {
+                            else if (testing == false && !retrieveViewModel.getSavedExercises().contains(exerciseToSave)) {
                                 // Show popup that the exercise has already been added if it exists in the saved list.
                                 JOptionPane.showMessageDialog(null, "This exercise has already been previously saved.");
                             }
