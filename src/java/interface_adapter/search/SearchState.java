@@ -14,7 +14,7 @@ public class SearchState {
     private String difficulty = "";
     private String difficultyError = null;
     private ArrayList<ArrayList<String>> exerciseSearchResults = new ArrayList<ArrayList<String>>();
-    private ArrayList<ArrayList<String>> exerciseSearchResultsError = null;
+    private String exerciseSearchResultsError = null;
 
     // Copy constructor for creating a new LoginState instance as a copy of another LoginState
     public SearchState(SearchState copy) {
@@ -48,7 +48,7 @@ public class SearchState {
         return exerciseSearchResults;
     }
 
-    public ArrayList<ArrayList<String>> getExerciseSearchResultsError() {
+    public String getExerciseSearchResultsError() {
         return exerciseSearchResultsError;
     }
 
@@ -69,7 +69,7 @@ public class SearchState {
     public void setExerciseSearchResults(ArrayList<ArrayList<String>> searchExerciseResults) {
         this.exerciseSearchResults = searchExerciseResults;
     }
-    public void setExerciseSearchResultsError(ArrayList<ArrayList<String>> searchExerciseResultsError) {
+    public void setExerciseSearchResultsError(String searchExerciseResultsError) {
         this.exerciseSearchResultsError = searchExerciseResultsError;
     }
 
