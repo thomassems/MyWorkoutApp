@@ -43,12 +43,11 @@ public class SearchPresenter implements SearchOutputBoundary {
         this.viewManagerModel.firePropertyChanged();
         // Notifies observers of the ViewManagerModel change.
     }
-    public void prepareFailView(ArrayList<ArrayList<String>> error) {
+    public void prepareFailView(String error) {
         SearchState searchState = searchViewModel.getState();
         // Gets the state from the SearchViewModel.
         searchState.setExerciseSearchResultsError(error);
         // Sets the exercise error message in the SearchState.
-        resultsViewModel.firePropertyChanged();
-        // Notifies observers of the ViewModel change.
+        searchViewModel.firePropertyChanged();
     }
 }

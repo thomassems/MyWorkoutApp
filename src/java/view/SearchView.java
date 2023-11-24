@@ -3,6 +3,7 @@ package view;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.results.ResultsViewModel;
 import interface_adapter.search.SearchController;
@@ -97,8 +98,13 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
-                            viewManagerModel.setActiveView(resultsViewModel.getViewName());
-                            viewManagerModel.firePropertyChanged();
+                            // Only switch to results screen if there are results matching the user's criteria
+                            if (currentState.getExerciseSearchResultsError() == null) {
+                                viewManagerModel.setActiveView(resultsViewModel.getViewName());
+                                viewManagerModel.firePropertyChanged();
+                            }
+                            // Reset search results error in state to null
+                            currentState.setExerciseSearchResultsError(null);
                         }
                     }
                 }
@@ -189,6 +195,12 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     public void propertyChange(PropertyChangeEvent evt) {
         System.out.println("Property changed: " + evt.getPropertyName());
         SearchState state = (SearchState) evt.getNewValue();
+
+        // Display popup that there are no exercises that match the criteria if there is an error
+        if (state.getExerciseSearchResultsError() != null) {
+            JOptionPane.showMessageDialog(this, state.getExerciseSearchResultsError());
+        }
+
         setFields(state);
     }
 
