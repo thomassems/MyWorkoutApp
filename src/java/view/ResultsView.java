@@ -234,7 +234,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
 
                                 JOptionPane.showMessageDialog(null, exerciseName.get(0) + " added!");
                             }
-                            else if (testing == false && !retrieveViewModel.getSavedExercises().contains(exerciseToSave)) {
+                            else if (testing == false && retrieveViewModel.getSavedExercises().contains(exerciseToSave)) {
                                 // Show popup that the exercise has already been added if it exists in the saved list.
                                 JOptionPane.showMessageDialog(null, "This exercise has already been previously saved.");
                             }
