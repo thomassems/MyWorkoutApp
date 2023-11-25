@@ -74,6 +74,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
 
         search.addActionListener(          // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
+                    /** If the search button is clicked, the user is redirected to the search view */
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(search)) {
                             ResultsState currentState = resultsViewModel.getState();
@@ -89,6 +90,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
         );
         home.addActionListener(new ActionListener() {
             @Override
+            /** If the home button is clicked, then the user gets taken back to the logged in view */
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(home)) {
 
@@ -102,6 +104,8 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
 
         workouts.addActionListener(new ActionListener() {
             @Override
+            /** If the workouts button is clicked the user is taken to the retrieve view where they can see their
+             * saved workouts*/
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(workouts)) {
 
@@ -124,11 +128,10 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
         // Add a property change listener to the ResultsViewModel
         resultsViewModel.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
+            /** Handles the property change event,by updating the UI with new exercise */
             public void propertyChange(PropertyChangeEvent evt) {
                 // Handle the property change event, e.g., update the UI with new exercises
                 if ("exercise".equals(evt.getPropertyName())) {
-
-                    // TODO: Line below, is it according to CA to get the Usename?
 
                     String username = loggedInViewModel.getState().getUsername();
                     searchResultPanel = updateResultsPanel(searchResultPanel, resultsViewModel.getExercise(), gridBagConstraints, username);
@@ -208,6 +211,8 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
         JButton resultButton = new JButton(exerciseName.get(0));
         resultButton.addActionListener(          // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
+                    /** If an exercise is clicked, the exercise gets saved to user's saved list if the exercise is valid
+                     * and hasn't been previously saved*/
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(resultButton)) {
                             ResultsState currentState = resultsViewModel.getState();
@@ -248,11 +253,14 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
     /**
      * React to a button click that results in evt.
      */
+
+    /** Logs the action that has been performed*/
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
 
     @Override
+    /** Updates the state, and sets the exercise fields when a property change event occurs*/
     public void propertyChange(PropertyChangeEvent evt) {
         if ("exercise".equals(evt.getPropertyName())) {
             System.out.println("Property changed: " + evt.getPropertyName());
@@ -260,10 +268,12 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
             setFields(state);
         }
     }
+    /** Initializes that testing is being performed*/
     public void setTesting(){
         this.testing=true;
     }
 
+    /** Sets the fields of the exercise */
     private void setFields(ResultsState state) {
         results = state.getExercise();
     }

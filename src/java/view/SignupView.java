@@ -75,6 +75,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
+                    /** Adds a listener to the signup button so when the button is clicked the username, password,
+                     *  and repeat password that were inputted by the user are passed to the controller */
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(signUp)) {
                             SignupState currentState = signupViewModel.getState();
@@ -91,6 +93,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
         logIn.addActionListener(
                 new ActionListener() {
+                    /** Adds a listener to the login button so when the button is clicked, the user
+                     * is taken to the login view */
                     @Override
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(logIn)) {
@@ -110,6 +114,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         // Notice how it has access to instance variables in the enclosing class!
         nameInputField.addKeyListener(
                 new KeyListener() {
+                    /** Updates the state everytime the user types a new character in the name input field*/
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SignupState currentState = signupViewModel.getState();
@@ -117,7 +122,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                         currentState.setName(text);
                         signupViewModel.setState(currentState);
                     }
-
                     @Override
                     public void keyPressed(KeyEvent e) {
                     }
@@ -129,6 +133,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
         usernameInputField.addKeyListener(
                 new KeyListener() {
+                    /** Updates the state everytime the user types a new character in the username input field*/
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SignupState currentState = signupViewModel.getState();
@@ -146,6 +151,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
         passwordInputField.addKeyListener(
                 new KeyListener() {
+                    /** Updates the state everytime the user types a new character in the password input field*/
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SignupState currentState = signupViewModel.getState();
@@ -165,6 +171,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
         repeatPasswordInputField.addKeyListener(
                 new KeyListener() {
+                    /** Updates the state everytime the user types a new character in the repeat password input field*/
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SignupState currentState = signupViewModel.getState();
@@ -192,10 +199,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.add(buttons);
     }
 
-    /**
-     * React to a button click that results in evt.
-     */
-
+    /** Responds to change in property caused by clicking the signup button. It checks for an error and if an error
+     * has occurred when the user is signing up, and a test is not being run. Then a popup is created to notify the
+     * user of the error.  */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         SignupState state = (SignupState) evt.getNewValue();
@@ -207,6 +213,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         }
     }
 
+    /** Testing is initialized to true if a test is being run */
     @Override
     public void actionPerformed(ActionEvent e) {}
     public void setTesting(){
