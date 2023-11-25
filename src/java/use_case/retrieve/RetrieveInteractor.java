@@ -1,12 +1,6 @@
 package use_case.retrieve;
 
 import entity.Exercise;
-import entity.User;
-import use_case.login.LoginInputData;
-import use_case.login.LoginOutputBoundary;
-import use_case.login.LoginOutputData;
-import use_case.login.LoginUserDataAccessInterface;
-
 import java.util.ArrayList;
 
 public class RetrieveInteractor implements RetrieveInputBoundary {
@@ -20,6 +14,8 @@ public class RetrieveInteractor implements RetrieveInputBoundary {
     }
 
     @Override
+    /** Gets a list of the exercises a user has saved and outputs it to the presenter through preparing the success
+     * view. Otherwise, if the user has no saved exercises, then we prepare fail view. */
     public void execute(RetrieveInputData retrieveInputData) {
         String username = retrieveInputData.getUsername();
         if (userDataAccessObject.getSavedExercises(username) != null) {

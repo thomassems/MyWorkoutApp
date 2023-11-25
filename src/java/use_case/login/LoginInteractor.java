@@ -13,6 +13,10 @@ public class LoginInteractor implements LoginInputBoundary {
     }
 
     @Override
+    /** Executes on the login data to see if the user inputted a valid username and password. If one of the fields is
+     * empty, or the username does not exist in the database, or the password is incorrect, then we prompt the user to
+     * provide a valid username and password. Otherwise, we enable them to login, and we pass their information to the
+     * presenter in the success view */
     public void execute(LoginInputData loginInputData) {
         String username = loginInputData.getUsername();
         String password = loginInputData.getPassword();

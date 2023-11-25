@@ -24,6 +24,8 @@ public class SearchInteractor implements SearchInputBoundary {
     }
 
     @Override
+    /** Calls the API, and then loops through the results to get the exercise name, type, muscle, difficulty, and
+     instructions, which it then uses to create exercises, that are then passed as output data to the presenter*/
     public void execute(SearchInputData searchInputData) throws IOException {
         JsonNode root = userDataAccessObject.getApi(searchInputData.getExerciseType(), searchInputData.getMuscleGroup(), searchInputData.getDifficulty());
         if (root.isEmpty()) {

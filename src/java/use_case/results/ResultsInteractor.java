@@ -16,6 +16,7 @@ public class ResultsInteractor implements ResultsInputBoundary{
     }
 
     @Override
+    /** Saves the exercise, and then prepares success view */
     public void execute(ResultsInputData resultsInputData) throws IOException {
         userDataAccessObject.saveExercise(resultsInputData.getUsername(), resultsInputData.getTitle(),
                 resultsInputData.getMuscle(), resultsInputData.getDescription(), resultsInputData.getDifficulty());
