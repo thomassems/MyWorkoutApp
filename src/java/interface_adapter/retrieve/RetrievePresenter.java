@@ -23,10 +23,10 @@ public class RetrievePresenter implements RetrieveOutputBoundary {
         // Constructor: Initializes the LoginViewModel field.
     }
 @Override
+    /** On success update the retrieve view with the user saved exercises*/
     public void prepareSuccessView(RetrieveOutputData response) {
-        // On success, switch to the search view.
+    // Gets the state from the retrieve view model in order to make changes.
         RetrieveState retrieveState = retrieveViewModel.getState();
-        // Gets the state from the SearchViewModel in order to make changes.
         ArrayList<ArrayList<String>> exercisesList = new ArrayList<ArrayList<String>>();
         if (response.getSavedExercises()!=null) {
             for (Exercise exercise : response.getSavedExercises()) {
@@ -35,13 +35,11 @@ public class RetrievePresenter implements RetrieveOutputBoundary {
         }
         this.retrieveViewModel.setSavedExercises(exercisesList);
         retrieveState.setSavedExercises(exercisesList);
-        // Sets the exercises in the SearchState.
+        // Sets the retrieve state
         this.retrieveViewModel.setState(retrieveState);
-        // Updates the state in the SearchViewModel.
-//        this.retrieveViewModel.firePropertyChanged();
         // Notifies observers of the ViewModel change.
         this.viewManagerModel.setActiveView(retrieveViewModel.getViewName());
-        // Sets the active view in the ViewManagerModel to the logged-in view.
+        // Sets the active view in the ViewManagerModel to the retrieve view.
         this.viewManagerModel.firePropertyChanged();
         // Notifies observers of the ViewManagerModel change.
     }

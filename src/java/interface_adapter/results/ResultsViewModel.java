@@ -36,7 +36,7 @@ public class ResultsViewModel extends ViewModel {
         support.firePropertyChange("exercise", null, this.state);
     }
 
-    /** Adds a property change listener to the view model */
+    /** Adds a property change listener to the view model to react to changes*/
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
