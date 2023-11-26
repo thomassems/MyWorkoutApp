@@ -79,6 +79,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         buttons.add(delete);
 
         logOut.addActionListener(new ActionListener() {
+            /** If the logout button is clicked, the user is redirected back to the signup screen*/
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(logOut)) {
 
@@ -93,6 +94,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         );;
 
         search.addActionListener(new ActionListener() {
+            /** If the search button is clicked then the user is taken to the search view*/
             @Override
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(search)) {
@@ -107,6 +109,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
         workouts.addActionListener(new ActionListener() {
             @Override
+            /** If the retrieve button is clicked. Then the user is taken to the retrieve view where they can see all
+             * of their saved workouts*/
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(workouts)) {
 
@@ -123,6 +127,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         });
 
         delete.addActionListener(
+                /** If the delete button is clicked, the users account gets deleted, and they get taken back to the
+                 * signup view*/
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(delete)) {
@@ -144,12 +150,14 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     public void actionPerformed(ActionEvent evt) {}
 
     @Override
+    /** Updates the state, and fields when a property change event occurs*/
     public void propertyChange(PropertyChangeEvent evt) {
         System.out.println("Property changed: " + evt.getPropertyName());
         LoggedInState state = (LoggedInState) evt.getNewValue();
         setFields(state);
     }
 
+    /** Sets the username and user field*/
     public void setFields(LoggedInState state) {
         username.setText(state.getUsername());
         user.setText(state.getUser());

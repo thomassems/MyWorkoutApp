@@ -64,6 +64,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
         logIn.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
+                    /** If the login button is clicked, the user is taken to the login view*/
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(logIn)) {
                             LoginState currentState = loginViewModel.getState();
@@ -80,6 +81,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         cancel.addActionListener(
                 new ActionListener() {
                     @Override
+                    /** If the cancel button is clicked, the user is taken back to the sign up view*/
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(cancel)) {
 
@@ -94,6 +96,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
         usernameInputField.addKeyListener(new KeyListener() {
             @Override
+            /** Updates the login state and the username input field as the user types a key*/
             public void keyTyped(KeyEvent e) {
                 LoginState currentState = loginViewModel.getState();
                 currentState.setUsername(usernameInputField.getText() + e.getKeyChar());
@@ -108,6 +111,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         passwordInputField.addKeyListener(
                 new KeyListener() {
                     @Override
+                    /** Updates the login state and the password input field as the user types a key */
                     public void keyTyped(KeyEvent e) {
                         LoginState currentState = loginViewModel.getState();
                         currentState.setPassword(passwordInputField.getText() + e.getKeyChar());
@@ -131,8 +135,12 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     /**
      * React to a button click that results in evt.
      */
+
+    /** Reacts to an action being performed. i.e; button click*/
     public void actionPerformed(ActionEvent evt) {System.out.println("Click " + evt.getActionCommand());}
     @Override
+    /** In the event of a property change, it updates the login state, and it displays a popup to the user if an
+     * error has occurred such as trying to log in with a username that does not exist*/
     public void propertyChange(PropertyChangeEvent evt) {
         LoginState state = (LoginState) evt.getNewValue();
         if (state.getUsernameError() != null) {
@@ -141,6 +149,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         }
         setFields(state);
     }
+    /** Sets the username field*/
     private void setFields(LoginState state) {
         usernameInputField.setText(state.getUsername());
     }

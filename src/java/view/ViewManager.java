@@ -19,6 +19,7 @@ public class ViewManager implements PropertyChangeListener {
         this.viewManagerModel.addPropertyChangeListener(this);
     }
 
+    /** Called if a property change event occurs, and updates the current view*/
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("view")) {

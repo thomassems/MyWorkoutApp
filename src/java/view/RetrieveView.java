@@ -47,27 +47,11 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
 
         returnButton = new JButton(retrieveViewModel.RETURN_BUTTON_LABEL);
 
-//        RetrieveState currentState = retrieveViewModel.getState();
-
-        // Observe when the user logs in succesfully
-//        loggedInViewModel.addPropertyChangeListener(
-//                new PropertyChangeListener() {
-//                    @Override
-//                    public void propertyChange(PropertyChangeEvent evt) {
-//                        if ("logged in state".equals(evt.getPropertyName())) {
-//                            System.out.println("Logged in state updated");
-//
-//                            // Get the saved exercises when the user logs in
-//                            LoggedInState currentState = loggedInViewModel.getState();
-//                            loggedInViewModel.setState(currentState);
-//                        }
-//                    }
-//                }
-//            );
-
         returnButton.addActionListener(
                 new ActionListener() {
                     @Override
+                    /** If the return button is clicked the user is taken back to the login view, and the exercises
+                     * are removed from the panel */
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(returnButton)) {
 
@@ -90,36 +74,24 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
         GridBagLayout panelGridBagLayout = new GridBagLayout();
         GridBagConstraints panelGridBagConstraints = new GridBagConstraints();
 
-        // Add grid layout to buttons panel
-//        exercisesPanel = new JPanel(new GridBagLayout());
         exercisesPanel = new JPanel();
-        // Create grid bag constraints for the exercises panel
-//        GridBagConstraints gbc = new GridBagConstraints();
-//        gbc.gridx = 0;
-//        gbc.gridy = 0;
-//        gbc.insets = new Insets(0, 0, 0, 10); // Set the bottom margin (space) between rows
 
         retrieveViewModel.addPropertyChangeListener(
                 new PropertyChangeListener() {
                     @Override
+                    /** Updates the retrieve view model if the saved exercises changes*/
                     public void propertyChange(PropertyChangeEvent evt) {
                         if ("saved exercises".equals(evt.getPropertyName())) {
 
                             LoggedInState currentState = loggedInViewModel.getState();
                             retrieveController.execute(currentState.getUsername());
-//                            RetrieveState currentRetrieveState = retrieveViewModel.getState();
-//                            retrieveViewModel.setState(currentRetrieveState);
                             ArrayList<ArrayList<String>> exercises = retrieveViewModel.getSavedExercises();
                             System.out.println(exercises);
 
                             System.out.println(exercises);
                             if (exercises != null && !exercises.isEmpty()) {
-//                                displayNewExercise(exercisesPanel, exercises, gbc);
                                 displayNewExercise(exercisesPanel, exercises);
                             }
-
-//                            RetrieveState currentRetrieveState = retrieveViewModel.getState();
-//                            retrieveViewModel.setState(currentRetrieveState);
                         }
                     }
                 }
@@ -137,11 +109,14 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
     /**
      * React to a button click that results in evt.
      */
+
+    /** Responds to an action being performed. i.e; button click*/
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
 
     @Override
+    /** Updates the state and sets the fields in the retrieve view if a property change has occured*/
     public void propertyChange(PropertyChangeEvent evt) {
         if ("saved exercises".equals(evt.getPropertyName())) {
             System.out.println("Property changed: " + evt.getPropertyName());
@@ -150,12 +125,13 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
         }
     }
 
+    /** Sets the saved exercises*/
     private void setFields(RetrieveState state) {
         results = state.getSavedExercises();
     }
 
+    /** Displays the most recently added exercise in the jpanel*/
     private JPanel displayNewExercise(JPanel jPanel, ArrayList<ArrayList<String>> exercises) {
-        // Get only the most recently added exercise.
 //        ArrayList<String> newExercise = exercises.get(exercises.size() - 1);
         jPanel.removeAll();
 
@@ -197,6 +173,7 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
         return jPanel;
     }
 
+    /** converts the exercises to a 2D array so that they can be properly aligned with the columns in the table*/
     private String[][] convertTo2DArray(ArrayList<ArrayList<String>> exercises) {
         String[][] results = new String[exercises.size()][];
         for (int i = 0; i < exercises.size(); i++) {
@@ -209,6 +186,7 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
     // TODO: Move this to a separate class
     public class MultilineTableCellRenderer extends DefaultTableCellRenderer {
         @Override
+        /** Sets the property's of the table */
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             JTextArea textArea = new JTextArea(value.toString());
             textArea.setWrapStyleWord(true);

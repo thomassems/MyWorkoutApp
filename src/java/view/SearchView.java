@@ -80,6 +80,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
         search.addActionListener(          // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
+                    /** Passes the inputted exercise, muscle group, and difficulty to the search controller when
+                     * the search button has been pressed. It also checks for errors, and if there are results
+                     * that match the user's inputted criteria, the user is taken to the results view. */
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(search)) {
                             SearchState currentState = searchViewModel.getState();
@@ -111,6 +114,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         );
         cancel.addActionListener(new ActionListener() {
             @Override
+            /** If the cancel button is clicked, then the user is taken back to the login view*/
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(cancel)) {
 
@@ -121,35 +125,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 }
             }
         });
-
-//        exerciseTypeInputField.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                SearchState currentState = searchViewModel.getState();
-//                currentState.setExerciseType((String) comboBox.getSelectedItem());
-//                searchViewModel.setState(currentState);
-//            }
-//        });
-//
-//        muscleGroupInputField.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                SearchState currentState = searchViewModel.getState();
-//                JComboBox<String> selectedItem = (JComboBox<String>) e.getSource();
-//                currentState.setMuscleGroup((String) selectedItem.getSelectedItem());
-//                searchViewModel.setState(currentState);
-//            }
-//        });
-//
-//        difficultyInputField.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                SearchState currentState = searchViewModel.getState();
-//                JComboBox<String> selectedItem = (JComboBox<String>) e.getSource();
-//                currentState.setDifficulty((String) selectedItem.getSelectedItem());
-//                searchViewModel.setState(currentState);
-//            }
-//        });
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
@@ -167,24 +142,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
         JLabel subTitle = new JLabel("Search Result Screen");
         subTitle.setAlignmentX(CENTER_ALIGNMENT);
-        JPanel buttonsResult = new JPanel();
     }
-
-//    private void displaySearchResults(ArrayList<String> query){
-//        buttonsResult.removeAll();
-//        for (String result : query) {
-//            JButton resultButton = new JButton("Result " + result);
-//            resultButton.addActionListener(new ActionListener() {
-//                @Override
-//                public void actionPerformed(ActionEvent e) {
-//                    SearchState currentState = searchViewModel.getState();
-//                    currentState.setExercise(exerciseInputField.getText() + e.getKeyChar());
-//                    searchViewModel.setState(currentState);
-//                }
-//            });
-//            this.add(resultButton);
-//        }
-//    }
 
     /**
      * React to a button click that results in evt.
@@ -192,18 +150,19 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     public void actionPerformed(ActionEvent evt) {}
 
     @Override
+    /** In the event of a property change, the search state gets updated, and a popup is displayed if there are
+     * no exercises that match the criteria inputted by the user */
     public void propertyChange(PropertyChangeEvent evt) {
         System.out.println("Property changed: " + evt.getPropertyName());
         SearchState state = (SearchState) evt.getNewValue();
 
-        // Display popup that there are no exercises that match the criteria if there is an error
         if (state.getExerciseSearchResultsError() != null) {
             JOptionPane.showMessageDialog(this, state.getExerciseSearchResultsError());
         }
 
         setFields(state);
     }
-
+    /** Sets the user inputted values */
     private void setFields(SearchState state) {
         exerciseTypeInputField.setSelectedItem(state.getExerciseType());
         muscleGroupInputField.setSelectedItem(state.getMuscleGroup());
