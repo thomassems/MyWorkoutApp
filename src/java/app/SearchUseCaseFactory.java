@@ -22,6 +22,7 @@ public class SearchUseCaseFactory {
     /** Prevent instantiation. */
     private SearchUseCaseFactory() {}
 
+    /** Attempts to create an instance of SearchView, and catches any error that may occur */
     public static SearchView create(
             ViewManagerModel viewManagerModel,
             SearchViewModel searchViewModel,

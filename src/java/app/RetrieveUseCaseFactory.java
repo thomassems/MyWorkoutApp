@@ -33,6 +33,7 @@ public class RetrieveUseCaseFactory {
     private RetrieveUseCaseFactory() {
     }
 
+    /** Attempts to create an instance of RetrieveView, and catches any error that may occur */
     public static RetrieveView create(
             ViewManagerModel viewManagerModel, RetrieveViewModel retrieveViewModel, LoggedInViewModel loggedInViewModel, RetrieveUserDataAccessInterface userDataAccessObject) {
         try {

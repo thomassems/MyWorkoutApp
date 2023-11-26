@@ -22,7 +22,7 @@ public class LoginUseCaseFactory {
 
     /** Prevent instantiation. */
     private LoginUseCaseFactory() {}
-
+    /** Attempts to create an instance of LoginView, and catches any error that may occur */
     public static LoginView create(
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,

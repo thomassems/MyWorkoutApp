@@ -21,6 +21,7 @@ import javax.swing.*;
 import java.io.IOException;
 
 public class ResultsUseCaseFactory {
+    /** Attempts to create an instance of ResultsView, and catches any error that may occur */
     public static ResultsView create(
             ViewManagerModel viewManagerModel,
             ResultsViewModel resultsViewModel,
