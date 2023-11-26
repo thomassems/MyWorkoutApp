@@ -24,11 +24,11 @@ public class LoginViewModel extends ViewModel {
     }
     // Create a PropertyChangeSupport object for managing property change events
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
-    // This method is called by the Signup Presenter to notify the ViewModel to alert the View
+    /** This method is called by the Signup Presenter to notify the ViewModel to alert the View */
     public void firePropertyChanged() {
         support.firePropertyChange("state", null, this.state);
     }
-    // Add a property change listener to the ViewModel
+    /** Adds a property change listener to the ViewModel */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
