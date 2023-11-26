@@ -15,6 +15,8 @@ public class LoggedInViewModel extends ViewModel {
     public static final String WORKOUTS_BUTTON_LABEL = "Workouts";
     private String loggedInUser;
 
+    /** Initializes the loggedin view model, by calling the superclass Viewmodel and passing in the name of the view
+     * as a parameter */
     public LoggedInViewModel() {
         super("logged in");
     }
@@ -26,12 +28,13 @@ public class LoggedInViewModel extends ViewModel {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
 
-    // This is what the Login Presenter will call to let the ViewModel know
-    // to alert the View
+    /** Notifies the view model to alert the view that a change in property has occurred. This method get called by the
+     * login presenter */
     public void firePropertyChanged() {
         support.firePropertyChange("logged in state", null, this.state);
     }
 
+    /** Adds a listener to react to changes in property/state */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
