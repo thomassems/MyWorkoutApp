@@ -1,6 +1,6 @@
 package entity;
 
-import java.time.LocalDateTime;
 public interface UserFactory {
+    /** Interface for creating a user */
     User create(String username, String name, String password);
 }
