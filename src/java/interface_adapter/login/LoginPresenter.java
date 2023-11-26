@@ -28,8 +28,6 @@ public class LoginPresenter implements LoginOutputBoundary {
         this.retrieveViewModel = retrieveViewModel;
     }
     @Override
-    /** Called by the controller to notify the view that the user was able to successfully log in. The loggedin
-     * states get updated, and the user is taken from the login view to the loggedin view*/
     public void prepareSuccessView(LoginOutputData response) {
         // On success, switch to the logged in view.
         LoggedInState loggedInState = loggedInViewModel.getState();
@@ -50,8 +48,6 @@ public class LoginPresenter implements LoginOutputBoundary {
         // Notifies observers of the ViewManagerModel change.
     }
     @Override
-    /** Called by the controller to notify the view that an error has occurred preventing the user from being
-     * able to log in */
     public void prepareFailView(String error) {
         LoginState loginState = loginViewModel.getState();
         // Gets the state from the LoginViewModel.

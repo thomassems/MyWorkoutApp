@@ -9,7 +9,7 @@ public class LoginController {
         this.loginUseCaseInteractor = loginUseCaseInteractor;
         //Constructor that initializes the LoginController with a LoginInputBoundary
     }
-    /** Execute the login use case by passing in the inputted username and password */
+    //Method to execute the login use case with a username and password
     public void execute(String username, String password){
         LoginInputData loginInputData = new LoginInputData(username,password);
         //Creates a new LoginInputData object with the provided username and password

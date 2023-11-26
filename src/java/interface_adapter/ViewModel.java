@@ -12,9 +12,8 @@ public abstract class ViewModel {
     public String getViewName() {
         return this.viewName;
     }
-    /** Called to notify the view of a change in property/state */
+
     public abstract void firePropertyChanged();
-    /** Listens for a change in property/state*/
     public abstract void addPropertyChangeListener(PropertyChangeListener listener);
 
 
