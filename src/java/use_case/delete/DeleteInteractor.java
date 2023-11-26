@@ -8,6 +8,7 @@ public class DeleteInteractor implements DeleteInputBoundary{
         this.deletePresenter = deleteOutputBoundary;
     }
     @Override
+    /** Deletes a user from the database and then passes the output data to the view*/
     public void execute(DeleteInputData deleteInputData){
         userDataAccessObject.delete(deleteInputData.getUsername());
         DeleteOutputData deleteOutputData = new DeleteOutputData();

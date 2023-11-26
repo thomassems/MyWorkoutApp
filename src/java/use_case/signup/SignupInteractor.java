@@ -23,6 +23,8 @@ public class SignupInteractor implements SignupInputBoundary {
     }
 
     @Override
+    /** If the inputted data results in an error we prepare a fail view. Otherwise, we create a user using the inputted
+     * name, username, and password which we save to the database. We then pass the username to the success view.*/
     public void execute(SignupInputData signupInputData) {
         if (validateInput(signupInputData)) {
             presenter.prepareFailView(retrieveError(signupInputData));
