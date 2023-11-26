@@ -26,9 +26,9 @@ public class SearchPresenter implements SearchOutputBoundary {
         this.searchViewModel = searchViewModel;
         this.resultsViewModel=resultsViewModel;
     }
+    /** On success, updates the search view and its state */
     @Override
     public void prepareSuccessView(SearchOutputData workouts) {
-        // On success, update the switch view.
         SearchState searchState = searchViewModel.getState();
         resultsViewModel.setExercise(workouts.getExerciseSearchResults());
         // Gets the state from the SearchViewModel in order to make changes.
@@ -39,10 +39,11 @@ public class SearchPresenter implements SearchOutputBoundary {
         this.searchViewModel.firePropertyChanged();
         // Notifies observers of the ViewModel change.
         this.viewManagerModel.setActiveView(searchViewModel.getViewName());
-        // Sets the active view in the ViewManagerModel to the logged-in view.
+        // Sets the active view in the ViewManagerModel to the search view.
         this.viewManagerModel.firePropertyChanged();
         // Notifies observers of the ViewManagerModel change.
     }
+    /** Alerts the view model of the error that occured while trying to search */
     public void prepareFailView(String error) {
         SearchState searchState = searchViewModel.getState();
         // Gets the state from the SearchViewModel.

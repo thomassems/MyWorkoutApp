@@ -26,11 +26,12 @@ public class SearchViewModel extends ViewModel {
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    // This is what the Signup Presenter will call to let the ViewModel know to alert the View
+    /** Adds support for being able to react to changes in property/state */
     public void firePropertyChanged() {
         support.firePropertyChange("state", null, this.state);
     }
 
+    /** Listens and reacts to change in property*/
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }

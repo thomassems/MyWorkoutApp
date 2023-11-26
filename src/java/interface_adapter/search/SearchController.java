@@ -13,6 +13,7 @@ public class SearchController {
         this.searchUseCaseInteractor = searchUseCaseInteractor;
     }
 
+    /** Calls the search use case using the user inputted exercise type, muscle group, and difficulty */
     public void execute(String exerciseType, String muscleGroup, String difficulty) throws IOException {
         SearchInputData searchInputData = new SearchInputData(exerciseType, muscleGroup, difficulty);
         searchUseCaseInteractor.execute(searchInputData);
