@@ -62,6 +62,10 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         cancel.setForeground(new java.awt.Color(10, 153, 255));
         buttons.add(cancel);
 
+        // Reset password fields every time the user goes back to the login screen
+        passwordInputField.setText("");
+        usernameInputField.setText("");
+
         logIn.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     /** If the login button is clicked, the user is taken to the login view*/
@@ -73,6 +77,10 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                                     currentState.getUsername(),
                                     currentState.getPassword()
                             );
+
+                            // Reset username and password fields after switching to the LoggedIn View
+                            usernameInputField.setText("");  // Clears the username field
+                            passwordInputField.setText("");  // Clears the password field
                         }
                     }
                 }
@@ -88,7 +96,11 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                             // Switch to the LoginView
                             viewManagerModel.setActiveView(signupViewModel.getViewName());
                             viewManagerModel.firePropertyChanged();
-                            System.out.println("Active view set to: " + signupViewModel.getViewName());                        }
+                            System.out.println("Active view set to: " + signupViewModel.getViewName());
+
+                            // Reset password fields after switching to the Signup view
+                            passwordInputField.setText("");  // Clears the password field
+                        }
 
                     }
                 }
@@ -149,6 +161,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         }
         setFields(state);
     }
+
     /** Sets the username field*/
     private void setFields(LoginState state) {
         usernameInputField.setText(state.getUsername());
