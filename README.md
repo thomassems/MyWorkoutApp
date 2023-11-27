@@ -35,5 +35,8 @@ Our team will develop a fitness app for users to search and  save workouts. User
 # Project Blueprint:
 - https://docs.google.com/presentation/d/1oGg363olvigj77IwsNAJisb0NmsgHAeBxkNnJOlKSR8/edit?usp=sharing
 
+# Presentation Link:
+https://utoronto-my.sharepoint.com/:p:/g/personal/catherinez_zheng_mail_utoronto_ca/Ea0KjF8KufRMhn3bxG3IhdUBFkYrcdZRERVlcATYDzpPkQ
+
 # User Interface:
 ![img.png](img.png)
