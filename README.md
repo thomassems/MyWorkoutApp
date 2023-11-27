@@ -36,6 +36,10 @@ Our team will develop a fitness app for users to search and  save workouts. User
 - https://docs.google.com/presentation/d/1oGg363olvigj77IwsNAJisb0NmsgHAeBxkNnJOlKSR8/edit?usp=sharing
 
 # Presentation Link:
+New:
+https://docs.google.com/presentation/d/1pFWa8ZtOIaobjYyr3CXTDaSw1nl-wD772gz_oRMDgZs/edit?usp=sharing
+
+Old:
 https://utoronto-my.sharepoint.com/:p:/g/personal/catherinez_zheng_mail_utoronto_ca/Ea0KjF8KufRMhn3bxG3IhdUBFkYrcdZRERVlcATYDzpPkQ
 
 # Presentation Plan:
