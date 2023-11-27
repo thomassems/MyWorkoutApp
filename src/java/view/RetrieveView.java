@@ -20,6 +20,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
+//* This class is responsible for displaying the saved exercises in a table format. It also allows the user to return
+// to the home screen. */
 public class RetrieveView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "saved exercises";
@@ -70,10 +72,6 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
 
         );
 
-        // Set layout for JPanel
-        GridBagLayout panelGridBagLayout = new GridBagLayout();
-        GridBagConstraints panelGridBagConstraints = new GridBagConstraints();
-
         exercisesPanel = new JPanel();
 
         retrieveViewModel.addPropertyChangeListener(
@@ -97,13 +95,10 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
                 }
         );
 
-        // Add a scroll panel to the screen
-        JScrollPane scrollPane = new JScrollPane(exercisesPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(returnButton);
-        this.add(scrollPane);
+        this.add(exercisesPanel);
     }
 
     /**
@@ -183,8 +178,8 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
         return results;
     }
 
-    // TODO: Move this to a separate class
-    public class MultilineTableCellRenderer extends DefaultTableCellRenderer {
+    /** Sets the properties of the table*/
+    private class MultilineTableCellRenderer extends DefaultTableCellRenderer {
         @Override
         /** Sets the property's of the table */
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
