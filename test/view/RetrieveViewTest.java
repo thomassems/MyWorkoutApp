@@ -278,10 +278,11 @@ public class RetrieveViewTest {
             throw new RuntimeException(e);
         }
 
-        JPanel retrievePanel = (JPanel) retrieveView.getComponent(2);
-        JScrollPane viewScroll = (JScrollPane) retrievePanel.getComponent(0);
-        JViewport retrieveviewport = (JViewport) viewScroll.getComponent(0);
-        JTable table = (JTable) retrieveviewport.getView();
+        JScrollPane scroll = (JScrollPane) retrieveView.getComponent(2);
+        JViewport viewPort = (JViewport)  scroll.getComponent(0);
+        JPanel viewPanel = (JPanel) viewPort.getView();
+        JScrollPane viewScroll = (JScrollPane) viewPanel.getComponent(0);
+        JTable table = (JTable) viewScroll.getViewport().getView();
 
         System.out.println("actual:"+convertTo2DArray(table));
         System.out.println("expected"+workouts);
