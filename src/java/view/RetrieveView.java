@@ -88,6 +88,7 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
                             ArrayList<ArrayList<String>> exercises = retrieveViewModel.getSavedExercises();
                             System.out.println(exercises);
 
+                            System.out.println(exercises);
                             if (exercises != null && !exercises.isEmpty()) {
                                 displayNewExercise(exercisesPanel, exercises);
                             }
@@ -95,6 +96,7 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
                     }
                 }
         );
+
         // Add a scroll panel to the screen
         JScrollPane scrollPane = new JScrollPane(exercisesPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
