@@ -62,10 +62,6 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         cancel.setForeground(new java.awt.Color(10, 153, 255));
         buttons.add(cancel);
 
-        // Reset password fields every time the user goes back to the login screen
-        passwordInputField.setText("");
-        usernameInputField.setText("");
-
         logIn.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     /** If the login button is clicked, the user is taken to the login view*/
