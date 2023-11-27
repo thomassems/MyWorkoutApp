@@ -31,7 +31,7 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
 
     final JButton returnButton;
     private final RetrieveController retrieveController;
-    public JPanel exercisesPanel;  // Create a panel to contain the search results
+    private JPanel exercisesPanel;  // Create a panel to contain the search results
 
     public RetrieveView(RetrieveViewModel retrieveViewModel, RetrieveController controller, ViewManagerModel viewManagerModel,
                         LoggedInViewModel loggedInViewModel) {
