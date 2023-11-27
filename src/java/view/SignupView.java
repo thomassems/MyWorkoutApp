@@ -86,6 +86,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                                     currentState.getPassword(),
                                     currentState.getRepeatPassword()
                             );
+                            resetAllFields();
                         }
                     }
                 }
@@ -102,7 +103,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                             // Switch to the LoginView
                             viewManagerModel.setActiveView(loginViewModel.getViewName());
                             viewManagerModel.firePropertyChanged();
-                            System.out.println("Active view set to: " + loginViewModel.getViewName());                        }
+                            System.out.println("Active view set to: " + loginViewModel.getViewName());
+                            resetAllFields();
+                        }
 
                     }
                 }
@@ -212,6 +215,15 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
             state.setUsernameError(null);
         }
     }
+
+    /** Resets the password fields to empty strings */
+    private void resetAllFields() {
+        nameInputField.setText("");
+        usernameInputField.setText("");
+        passwordInputField.setText("");
+        repeatPasswordInputField.setText("");
+    }
+
 
     /** Testing is initialized to true if a test is being run */
     @Override
