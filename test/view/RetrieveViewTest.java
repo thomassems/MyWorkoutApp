@@ -107,7 +107,7 @@ public class RetrieveViewTest {
         RetrieveView retrieveView = RetrieveUseCaseFactory.create(viewManagerModel, retrieveViewModel, loggedInViewModel, userDataAccessObject);
         views.add(retrieveView, retrieveView.viewName);
 
-        DeleteOutputBoundary deletepresenter = new DeletePresenter(signupViewModel, viewManagerModel);
+        DeleteOutputBoundary deletepresenter = new DeletePresenter(signupViewModel, loginViewModel, loggedInViewModel, retrieveViewModel, viewManagerModel);
         DeleteInputBoundary deleteInteractor = new DeleteInteractor(userDataAccessObject, deletepresenter);
         DeleteController deleteController = new DeleteController(deleteInteractor);
 
@@ -278,9 +278,9 @@ public class RetrieveViewTest {
             throw new RuntimeException(e);
         }
 
-        JScrollPane scroll = (JScrollPane) retrieveView.getComponent(2);
-        JViewport viewPort = (JViewport)  scroll.getComponent(0);
-        JPanel viewPanel = (JPanel) viewPort.getView();
+        //JScrollPane scroll = (JScrollPane) retrieveView.getComponent(2);
+        //JViewport viewPort = (JViewport)  scroll.getComponent(0);
+        JPanel viewPanel = (JPanel) retrieveView.getComponent(2);
         JScrollPane viewScroll = (JScrollPane) viewPanel.getComponent(0);
         JTable table = (JTable) viewScroll.getViewport().getView();
 
@@ -355,7 +355,7 @@ public class RetrieveViewTest {
         RetrieveView retrieveView = RetrieveUseCaseFactory.create(viewManagerModel, retrieveViewModel, loggedInViewModel, userDataAccessObject);
         views.add(retrieveView, retrieveView.viewName);
 
-        DeleteOutputBoundary deletepresenter = new DeletePresenter(signupViewModel, viewManagerModel);
+        DeleteOutputBoundary deletepresenter = new DeletePresenter(signupViewModel, loginViewModel, loggedInViewModel, retrieveViewModel, viewManagerModel);
         DeleteInputBoundary deleteInteractor = new DeleteInteractor(userDataAccessObject, deletepresenter);
         DeleteController deleteController = new DeleteController(deleteInteractor);
 

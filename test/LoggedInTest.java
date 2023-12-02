@@ -154,12 +154,13 @@ public class LoggedInTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel viewModel = new LoggedInViewModel();
         ViewManagerModel viewManagerModel = new ViewManagerModel();
-        DeleteOutputBoundary deletepresenter = new DeletePresenter(signupViewModel, viewManagerModel);
-        DeleteInputBoundary deleteInteractor = new DeleteInteractor(userDataAccessObject, deletepresenter);
         SearchViewModel searchViewModel = new SearchViewModel();
         RetrieveViewModel retrieveViewModel = new RetrieveViewModel();
+        DeleteOutputBoundary deletepresenter = new DeletePresenter(signupViewModel, loginViewModel, viewModel, retrieveViewModel, viewManagerModel);
+        DeleteInputBoundary deleteInteractor = new DeleteInteractor(userDataAccessObject, deletepresenter);
         DeleteController deleteController = new DeleteController(deleteInteractor);
         JPanel loggedinView = new LoggedInView(viewModel,viewManagerModel,signupViewModel,searchViewModel, retrieveViewModel,deleteController);
         JFrame jf = new JFrame();
@@ -224,7 +225,7 @@ public class LoggedInTest {
         views.add(resultsView, resultsView.viewName);
         RetrieveView retrieveView = RetrieveUseCaseFactory.create(viewManagerModel, retrieveViewModel, loggedInViewModel, userDataAccessObject);
         views.add(retrieveView, retrieveView.viewName);
-        DeleteOutputBoundary deletepresenter = new DeletePresenter(signupViewModel, viewManagerModel);
+        DeleteOutputBoundary deletepresenter = new DeletePresenter(signupViewModel, loginViewModel, loggedInViewModel, retrieveViewModel, viewManagerModel);
         DeleteInputBoundary deleteInteractor = new DeleteInteractor(userDataAccessObject, deletepresenter);
         DeleteController deleteController = new DeleteController(deleteInteractor);
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel, viewManagerModel, signupViewModel, searchViewModel,
