@@ -90,6 +90,10 @@ public class RetrieveView extends JPanel implements ActionListener, PropertyChan
                             if (exercises != null && !exercises.isEmpty()) {
                                 displayNewExercise(exercisesPanel, exercises);
                             }
+                            else {
+                                exercisesPanel.removeAll();
+                                results = new ArrayList<ArrayList<String>>();
+                            }
                         }
                     }
                 }

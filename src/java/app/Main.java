@@ -69,7 +69,7 @@ public class Main {
         views.add(retrieveView, retrieveView.viewName);
 
         // Create a LoggedInView
-        DeleteOutputBoundary deletepresenter = new DeletePresenter(signupViewModel, viewManagerModel);
+        DeleteOutputBoundary deletepresenter = new DeletePresenter(signupViewModel, loginViewModel, loggedInViewModel, retrieveViewModel, viewManagerModel);
         DeleteInputBoundary deleteInteractor = new DeleteInteractor(userDataAccessObject, deletepresenter);
         DeleteController deleteController = new DeleteController(deleteInteractor);
         
